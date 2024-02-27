@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const Menu = ({ name, href }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
-
   return (
     <Link
       href={href}
