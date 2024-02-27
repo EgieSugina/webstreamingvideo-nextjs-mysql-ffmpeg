@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 
 import Glide from "@glidejs/glide";
 
-export default function CarouselControlsInside({ children }) {
+export default function CarouselControlsInside({ children, id }) {
   useEffect(() => {
-    const slider = new Glide(".glide-01", {
+    const slider = new Glide(`.${id}`, {
       type: "slider",
       //   focusAt: "left",
       perView: 6,
@@ -22,12 +22,12 @@ export default function CarouselControlsInside({ children }) {
     return () => {
       slider.destroy();
     };
-  }, []);
+  }, [id]);
 
   return (
     <>
       {/*<!-- Component: Carousel with controls inside --> */}
-      <div className="glide-01 w-full">
+      <div className={`${id} w-full`}>
         {/*    <!-- Slides --> */}
         <div className="overflow-hidden" data-glide-el="track">
           <ul className="whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden p-0">
@@ -56,7 +56,7 @@ export default function CarouselControlsInside({ children }) {
         </div>
       </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
+      <script src="./glide.js"></script>
       {/*<!-- End Carousel with controls inside --> */}
     </>
   );

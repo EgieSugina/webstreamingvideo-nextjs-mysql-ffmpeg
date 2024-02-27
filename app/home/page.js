@@ -13,21 +13,9 @@ export default function Home() {
   return (
     <div className="">
       <div>HOME</div>
-      <Slider>
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
+      <Slider id={"slider-1"}>
+        <VideoCards id={"ini-video-id"} />
       </Slider>
-      <div className=" grid grid-cols-6">
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-        <VideoCards />
-      </div>
 
       {/* <VideoPlayer src={hlsUrl} /> */}
     </div>
