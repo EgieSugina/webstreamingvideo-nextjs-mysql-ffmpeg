@@ -15,6 +15,19 @@ export default function Home() {
       <div>HOME</div>
       <Slider id={"slider-1"}>
         <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+      </Slider>
+      <Slider id={"slider-2"} autoplay={false}>
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
+        <VideoCards id={"ini-video-id"} />
       </Slider>
 
       {/* <VideoPlayer src={hlsUrl} /> */}
