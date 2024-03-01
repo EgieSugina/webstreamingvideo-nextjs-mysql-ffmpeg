@@ -1,14 +1,23 @@
 "use client";
 
-import VideoPlayer from "@/components/VideoPlayer";
+import "./home.css";
+
+import Slider from "@/components/Slider";
+import VideoCards from "@/components/VideoCards";
+
+// import VideoPlayer from "@/components/VideoPlayer";
 
 export default function Home() {
-  const hlsUrl = "/hls/video.m3u8";
+  // const hlsUrl = "/hls/video.m3u8";
 
   return (
-    <div className="h-40">
+    <div className="">
       <div>HOME</div>
-      <VideoPlayer src={hlsUrl} />
+      <Slider id={"slider-1"}>
+        <VideoCards id={"ini-video-id"} />
+      </Slider>
+
+      {/* <VideoPlayer src={hlsUrl} /> */}
     </div>
   );
 }
