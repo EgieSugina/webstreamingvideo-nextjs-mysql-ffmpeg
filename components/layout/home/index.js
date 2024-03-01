@@ -22,9 +22,7 @@ export default function HomeLayout({ children }) {
             </div>
           </div>
         </nav>
-        <main>
-          <div className="mx-auto  py-6 sm:px-6 lg:px-8">{children}</div>
-        </main>
+        <main>{children}</main>
       </div>
     </>
   );
