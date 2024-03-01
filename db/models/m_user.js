@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 import sequelize from "../sequelize";
 
 const Model = sequelize.define(
-  "users",
+  "user",
   {
     user_id: {
       type: DataTypes.STRING,
@@ -23,11 +23,14 @@ const Model = sequelize.define(
     },
     password: {
       type: DataTypes.STRING
+    },
+    img: {
+      type: DataTypes.STRING
     }
   },
   {
     timestamps: false,
-    freezeTableName: true,
+    freezeTableName: true
   }
 );
 export default Model;
