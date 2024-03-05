@@ -6,20 +6,20 @@ const Model = sequelize.define(
   "comments",
   {
     comments_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     video_id: {
       type: DataTypes.STRING
     },
     user_id: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     comment_text: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     },
     comment_date: {
-      type: DataTypes.STRING
+      type: DataTypes.DATE
     },
       },
   {

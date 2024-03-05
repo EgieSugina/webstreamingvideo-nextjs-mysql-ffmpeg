@@ -2,9 +2,13 @@
 
 import { signIn, signOut } from "next-auth/react";
 
+import { Button } from "@nextui-org/react";
+import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 
 export const LoginButton = () => {
+  
+
   return (
     <button style={{ marginRight: 10 }} onClick={() => signIn()}>
       Sign in
@@ -22,9 +26,12 @@ export const RegisterButton = () => {
 
 export const LogoutButton = () => {
   return (
-    <button style={{ marginRight: 10 }} onClick={() => signOut()}>
-      Sign Out
-    </button>
+    <Button
+      className=" bg-red-800 rounded-md"
+      onClick={() => signOut({ redirect: true, callbackUrl: "/login" })}
+    >
+      Sign Out <IoIosLogOut className=" font-extrabold text-2xl" />
+    </Button>
   );
 };
 

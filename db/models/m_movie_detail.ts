@@ -6,7 +6,7 @@ const Model = sequelize.define(
   "movie_detail",
   {
     movie_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     video_id: {
@@ -20,8 +20,8 @@ const Model = sequelize.define(
     },
     img_cover: {
       type: DataTypes.STRING
-    }
-  },
+    },
+      },
   {
     timestamps: false,
     freezeTableName: true

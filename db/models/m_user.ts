@@ -6,7 +6,7 @@ const Model = sequelize.define(
   "user",
   {
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     fullname: {
@@ -25,7 +25,7 @@ const Model = sequelize.define(
       type: DataTypes.STRING
     },
     img: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     }
   },
   {

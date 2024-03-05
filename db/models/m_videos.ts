@@ -22,7 +22,7 @@ const Model = sequelize.define(
       type: DataTypes.DATE
     },
     user_id: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     type: {
       type: DataTypes.ENUM('movie','tv_series')

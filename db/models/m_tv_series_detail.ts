@@ -6,17 +6,17 @@ const Model = sequelize.define(
   "tv_series_detail",
   {
     series_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     video_id: {
       type: DataTypes.STRING
     },
     season: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     episodes: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     ongoing: {
       type: DataTypes.BOOLEAN 

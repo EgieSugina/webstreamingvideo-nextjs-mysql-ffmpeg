@@ -1,7 +1,12 @@
+/* eslint-disable no-undef */
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
+import { SessionProvider } from "next-auth/react";
 
-export function Providers({ children }) {
-  return <NextUIProvider>{children}</NextUIProvider>;
-}
+type Props = {
+  children?: React.ReactNode;
+};
+
+export const NextAuthProvider = ({ children }: Props) => {
+  return <SessionProvider>{children}</SessionProvider>;
+};

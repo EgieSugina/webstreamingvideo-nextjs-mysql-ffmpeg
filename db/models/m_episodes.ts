@@ -6,14 +6,14 @@ const Model = sequelize.define(
   "episodes",
   {
     episodes_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     series_id: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     episode_number: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     video_id: {
       type: DataTypes.STRING
@@ -28,7 +28,7 @@ const Model = sequelize.define(
       type: DataTypes.TIME
     },
 	img_cover: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     }
   },
   {

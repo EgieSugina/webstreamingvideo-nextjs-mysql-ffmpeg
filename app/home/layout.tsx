@@ -1,9 +1,16 @@
 import Layout from "@/components/layout/home";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
-export default function HomeLayout({ children }) {
-  return (
-    <>
-      <Layout>{children}</Layout>
-    </>
-  );
+// import { useSession } from "next-auth/react";
+
+export default async function HomeLayout({ children }) {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    return <Layout>{children}</Layout>;
+  }
+
+  return redirect("/login");
 }

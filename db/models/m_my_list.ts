@@ -6,14 +6,17 @@ const Model = sequelize.define(
   "my_list",
   {
     id_mylist: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true
     },
     video_id: {
       type: DataTypes.STRING
     },
     user_id: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
+    },
+	mylistadd_date: {
+      type: DataTypes.DATE
     },
       },
   {
