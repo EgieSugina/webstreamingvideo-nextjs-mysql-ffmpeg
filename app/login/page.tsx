@@ -17,7 +17,7 @@ export default async function LoginPage() {
   return (
     <>
       {/* <Header /> */}
-      <section className=" bg-slate-900  min-h-screen pt-20">
+      <section className=" bg-[#0a0124]  min-h-screen pt-20">
         <div className="custom-shape-divider-top-1709659997 ">
           <svg
             data-name="Layer 1"
@@ -41,7 +41,7 @@ export default async function LoginPage() {
             />
           </div>
 
-          <div className="w-4/12 bg-white px-8 pb-10 pt-6 rounded-xl">
+          <div className="w-4/12 bg-[#8f68ff] px-8 pb-10 pt-6 rounded-xl">
             <h1 className=" text-gray-700 font-bold text-center text-4xl mb-4">
               Login
             </h1>

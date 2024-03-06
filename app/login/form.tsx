@@ -6,6 +6,7 @@ import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import { RegisterButton } from "@/components/buttons.component";
 import { signIn } from "next-auth/react";
 
 export const LoginForm = () => {
@@ -90,14 +91,25 @@ export const LoginForm = () => {
           className={`${input_style}`}
         />
       </div>
-      <button
-        type="submit"
-        style={{ backgroundColor: `${loading ? "#ccc" : "#3446eb"}` }}
-        className="inline-block px-7 py-4 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
-        disabled={loading}
-      >
-        {loading ? "loading..." : "Sign In"}
-      </button>
+      <div className="flex gap-2">
+        <button
+          type="submit"
+          style={{ backgroundColor: `${loading ? "#ccc" : "#161616"}` }}
+          className="inline-block px-7 py-4 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+          disabled={loading}
+        >
+          {loading ? "loading..." : "Sign In"}
+        </button>
+        {/* <RegisterButton /> */}
+        <button
+          type="submit"
+          style={{ backgroundColor: `${loading ? "#ccc" : "#b21010"}` }}
+          className="inline-block px-7  py-4 bg-red-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+          disabled={loading}
+        >
+          {loading ? "loading..." : "Sign Up"}
+        </button>
+      </div>
 
       <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
         <p className="text-center font-semibold mx-4 mb-0 text-gray-700">OR</p>

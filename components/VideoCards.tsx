@@ -32,7 +32,7 @@ export default function VideoCards({ id }) {
           </div>
           <div className="desc p-4 text-gray-200">
             <div className="title font-bold block cursor-pointer hover:underline">
-              Pubg Mobile
+              Judul Video
             </div>
 
             {/* <span className="description text-sm block py-2 border-gray-400 mb-2">

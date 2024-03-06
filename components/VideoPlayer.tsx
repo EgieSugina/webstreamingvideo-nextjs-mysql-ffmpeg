@@ -5,7 +5,7 @@ import { Player, PlayerProvider } from "next-playerjs-wrapper";
 
 const VideoPlayer = ({ src }) => {
   return (
-    <div style={{ width: "500px", height: "281px" }}>
+    <div className="p-4" style={{ width: "80vw", height: "50vh", display: "flex" }}>
       <PlayerProvider player="/playerjs.js">
         <Player id="my-player" file={src} />
       </PlayerProvider>

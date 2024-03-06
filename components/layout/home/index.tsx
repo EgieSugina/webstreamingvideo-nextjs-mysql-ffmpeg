@@ -59,7 +59,7 @@ export default async function HomeLayout({ children }) {
         </nav>
         {/* </VideoBackground> */}
         {/* <pre>{JSON.stringify(session)}</pre> */}
-        {/* <main>{children}</main> */}
+        <main>{children}</main>
       </div>
     </>
   );
