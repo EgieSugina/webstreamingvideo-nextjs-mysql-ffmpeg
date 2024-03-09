@@ -7,7 +7,9 @@ import React, { useState } from "react";
 
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/react";
-import ReactQuill from "react-quill";
+
+// import ReactQuill from "react-quill";
+// <ReactQuill theme="snow"  value={value} onChange={setValue} />
 
 export default function HomeStudio() {
   const variant = "underlined"; //["flat", "bordered", "underlined", "faded"];
@@ -16,7 +18,7 @@ export default function HomeStudio() {
   return (
     <>
       <form>
-        <div className="w-full max-w-3xl  p-3 bg-slate-800 rounded-lg">
+        <div className="w-full max-w-3xl  p-3 bg-[#323949] rounded-lg">
           <h1 className="font-bold text-2xl text-white">INI ISI</h1>
           <hr className="mb-3" />
 
@@ -45,11 +47,9 @@ export default function HomeStudio() {
           </div>
         </div>
       </form>
-      <hr />
+      {/* <hr />
       <br />
-      <div className="w-full max-w-3xl  p-3 bg-white">
-        <ReactQuill   value={value} onChange={setValue} />
-      </div>
+      <div className="w-full max-w-3xl  p-3 bg-white"></div> */}
     </>
   );
 }

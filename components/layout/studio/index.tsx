@@ -1,12 +1,16 @@
 "use client";
 
+import { IoCloseSharp, IoSettingsOutline } from "react-icons/io5";
 import React, { useState } from "react";
 
 import { FaHome } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { MdVideoLibrary } from "react-icons/md";
 import Menu from "./menu";
+import { TbChartSankey } from "react-icons/tb";
 
 //https://react-icons.github.io/react-icons
 export default function Aside() {
@@ -17,10 +21,13 @@ export default function Aside() {
       <button
         title="Side navigation"
         type="button"
-        className={`visible fixed left-6 top-6 z-40 order-10 block h-10 w-10 self-center rounded bg-white opacity-100 lg:hidden ${
-          isSideNavOpen
-            ? "visible opacity-100 [&_span:nth-child(1)]:w-6 [&_span:nth-child(1)]:translate-y-0 [&_span:nth-child(1)]:rotate-45 [&_span:nth-child(3)]:w-0 [&_span:nth-child(2)]:-rotate-45 "
-            : ""
+        // className={`visible fixed left-6 top-6 z-40 order-10 block h-10 w-10 self-center rounded bg-white opacity-100 lg:hidden ${
+        //   isSideNavOpen
+        //     ? "visible opacity-100 [&_span:nth-child(1)]:w-6 [&_span:nth-child(1)]:translate-y-0 [&_span:nth-child(1)]:rotate-45 [&_span:nth-child(3)]:w-0 [&_span:nth-child(2)]:-rotate-45 "
+        //     : ""
+        // }`}
+        className={`visible fixed left-4 top-4 z-40 order-10 block h-10 w-10 self-center rounded bg-white opacity-100 lg:hidden ${
+          isSideNavOpen ? "hidden " : ""
         }`}
         aria-haspopup="menu"
         aria-label="Side navigation"
@@ -48,13 +55,23 @@ export default function Aside() {
       <aside
         id="nav-menu-4"
         aria-label="Side navigation"
-        className={` flex w-64 flex-col   bg-gray-900 transition-transform lg:translate-x-0 ${
+        className={` flex w-64 flex-col z-50 shadow bg-[#212129] transition-transform lg:translate-x-0 ${
           isSideNavOpen ? "translate-x-0" : " -translate-x-full"
         }`}
       >
-        <div className="flex flex-col items-center gap-4 border-b   p-6">
+        <div className=" relative flex flex-col items-center gap-4 border-b   p-6">
+          <div className="absolute visible lg:hidden top-1 right-1">
+            <button
+              className="rounded-full p-1 border-red-700 border bg-red-900"
+              title="Side navigation"
+              type="button"
+              onClick={() => setIsSideNavOpen(!isSideNavOpen)}
+            >
+              <IoCloseSharp className="text-white" />
+            </button>
+          </div>
           <div className="shrink-0">
-            <diiv className="relative flex h-40 w-40 items-center justify-center rounded-full text-white">
+            <div className="relative flex border bg-white p-1 h-40 w-40 items-center justify-center rounded-full text-white">
               <Image
                 src="/assets/images/profile.jpg"
                 alt="user name"
@@ -63,7 +80,7 @@ export default function Aside() {
                 height="500"
                 className="max-w-full rounded-full"
               />
-            </diiv>
+            </div>
           </div>
           <div className="flex min-h-[2rem] w-full min-w-0 flex-col items-start justify-center gap-0 text-center">
             <h4 className="w-full truncate text-base text-slate-700">
@@ -77,8 +94,23 @@ export default function Aside() {
           className="flex-1 divide-y divide-slate-100 overflow-auto"
         >
           <div>
-            <ul className="flex flex-1 flex-col gap-1 py-3">
-              <Menu icons={<FaHome />} name={"AAAAA"} href={"aaaa"} />
+            <ul className="flex flex-1 flex-col    ">
+              <Menu
+                icons={<TbChartSankey />}
+                name={"Dasboard"}
+                href={""}
+              />
+              <Menu
+                icons={<MdVideoLibrary />}
+                name={"Content"}
+                href={"/content"}
+              />
+              <Menu icons={<FaUsers />} name={"Users"} href={"/users"} />
+              <Menu
+                icons={<IoSettingsOutline />}
+                name={"Setting"}
+                href={"/setting"}
+              />
             </ul>
           </div>
         </nav>

@@ -2,10 +2,10 @@ export default function Header() {
   return (
     <>
       {" "}
-      <header className="header bg-gray-900 shadow py-4 px-4">
+      <header className="header bg-[#212129] shadow py-4 px-4">
         <div className="header-content flex items-center flex-row">
           <div className="flex ml-auto">
-            <a href className="flex flex-row items-center">
+            <a className="flex flex-row items-center">
               {"{{"} GAMBAR {"}}"}
               {/* <img
             src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"
