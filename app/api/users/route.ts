@@ -1,5 +1,10 @@
+import * as crypto from "crypto";
+
+import { NextRequest, NextResponse } from "next/server";
+
 import M_User from "@/db/models/m_user";
-import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import { writeFile } from "fs/promises";
 
 export async function GET() {
   try {
@@ -9,9 +14,30 @@ export async function GET() {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
-    const newUser = request.body;
+    const formData = await request.formData();
+    // Extract data from FormData
+    const newUser = {};
+    for (const [key, value] of formData.entries()) {
+      newUser[key] = value;
+    }
+    const { password, image } = newUser;
+    // Encrypt the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+    // Replace the plain text password with the hashed password
+    newUser.password = hashedPassword;
+    // Convert image from binary to base64
+    const file = formData.get("img");
+    if (file) {
+      // If no file is received, return a JSON response with an error and a 400 status code
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const base64Image = buffer.toString("base64");
+      // console.log(base64Image);
+      newUser.img = base64Image;
+    } else {
+      newUser.img = "";
+    }
     const createdUser = await M_User.create(newUser);
     return NextResponse.json(createdUser);
   } catch (error) {

@@ -6,6 +6,9 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import React, { useState } from "react";
 
+import { FormEvent } from "react";
+import Image from "next/image";
+
 // import ReactQuill from "react-quill";
 // <ReactQuill theme="snow"  value={value} onChange={setValue} />
 
@@ -25,22 +28,58 @@ export default function FormUsers() {
   const handleRetypePasswordChange = (e) => {
     setRetypePassword(e.target.value);
   };
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    try {
+      if (password !== retypePassword) {
+        setError("Passwords don't match");
+        return;
+      } else {
+        setError("");
+      }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password !== retypePassword) {
-      setError("Passwords don't match");
-    } else {
-      // Passwords match, proceed with form submission
-      setError("");
-      // Perform any further action like API calls or form submission here
+      event.preventDefault();
+
+      const formData = new FormData(event.currentTarget);
+      console.log(formData);
+
+      const response = await fetch("/api/users", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        // Handle non-2xx status codes (errors)
+        console.log(`Failed to submit form: ${response.statusText}`);
+        
+        throw new Error(`Failed to submit form: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      // Handle any errors that occurred during the fetch or processing
+      console.error("Error:", error.message);
+      // Optionally, set an error state or display an error message to the user
+    }
+  }
+
+  const [imageSrc, setImageSrc] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="w-full max-w-3xl  p-3 bg-[#212129]  rounded-lg">
+      <form onSubmit={onSubmit} className={"flex bg-[#212129] "}>
+        <div className=" w-3/4   p-3  rounded-lg">
           <h1 className="font-bold text-2xl text-white">
             Users {"{{"}Action{"}}"}
           </h1>
@@ -50,6 +89,7 @@ export default function FormUsers() {
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <Input
                 isRequired
+                name={"fullname"}
                 type="text"
                 variant={variant}
                 label="Fullname"
@@ -58,15 +98,22 @@ export default function FormUsers() {
             <div className="w-full md:w-1/2 px-3">
               <Input
                 isRequired
+                name={"username"}
                 type="text"
                 variant={variant}
-                label="username"
+                label="Username"
               />
             </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <Input isRequired type="email" variant={variant} label="Email" />
+              <Input
+                isRequired
+                name={"email"}
+                type="email"
+                variant={variant}
+                label="Email"
+              />
             </div>
             <div className="w-full md:w-1/2 px-3">
               <Select
@@ -82,6 +129,7 @@ export default function FormUsers() {
                   }
                 ]}
                 isRequired
+                name={"role"}
                 label="Role"
                 // type="text"
                 variant={variant}
@@ -96,6 +144,7 @@ export default function FormUsers() {
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
               <Input
                 isRequired
+                name={"password"}
                 variant={variant}
                 className=""
                 label="Password"
@@ -151,6 +200,46 @@ export default function FormUsers() {
               Simpan
             </Button>
             <Button radius="sm">Back</Button>
+          </div>
+        </div>
+        <div className=" w-1/3   p-3  rounded-lg">
+          <div className=" relative flex flex-col items-center gap-4 p-6">
+            <div className="shrink-0">
+              <div className="relative flex border bg-white p-1 h-40 w-40 items-center justify-center rounded-full text-white">
+                {imageSrc ? (
+                  <Image
+                    src={imageSrc}
+                    title="user name"
+                    width="500"
+                    height="500"
+                    style={{ maxWidth: "150px", maxHeight: "150px" }}
+                    className="max-w-full rounded-full"
+                    alt="Uploaded"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/images/profile.jpg"
+                    alt="Uploaded"
+                    title="user name"
+                    style={{ maxWidth: "150px", maxHeight: "150px" }}
+                    width="500"
+                    height="500"
+                    className="max-w-full rounded-full"
+                  />
+                )}
+              </div>
+            </div>
+            <div className="flex border-dashed border p-1  border-green-500 flex-col items-start justify-center gap-0 text-center text-white">
+              <input
+                // isRequired
+                name={"img"}
+                accept="image/*"
+                type="file"
+                variant={variant}
+                onChange={handleFileChange}
+                // label="username"
+              />
+            </div>
           </div>
         </div>
       </form>

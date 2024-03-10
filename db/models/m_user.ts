@@ -25,7 +25,7 @@ const Model = sequelize.define(
       type: DataTypes.STRING
     },
     img: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     }
   },
   {
