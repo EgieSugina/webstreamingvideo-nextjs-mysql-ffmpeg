@@ -14,6 +14,9 @@ import {
   getKeyValue
 } from "@nextui-org/react";
 
+import { CiEdit } from "react-icons/ci";
+import Link from "next/link";
+import { MdDeleteForever } from "react-icons/md";
 import React from "react";
 
 // import { Data } from "./data";
@@ -24,40 +27,42 @@ const statusColorMap = {
 };
 export default function Tables({ Data, className, Columns = [] }) {
   if (!Data) return <>No Data</>;
-  const [page, setPage] = React.useState(1);
-  const rowsPerPage = 4;
+  const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
 
-  const pages = Math.ceil(Data.length / rowsPerPage);
+  const [page, setPage] = React.useState(1);
+  const rowsPerPage = 6;
+
+  const pages = Math.ceil(DataMod.length / rowsPerPage);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return Data.slice(start, end);
-  }, [page, Data]);
+    return DataMod.slice(start, end);
+  }, [page, DataMod]);
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "name":
+      case "fullname":
         return (
           <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
+            avatarProps={{
+              radius: "lg",
+              src: `data:image/png;base64,${user.img}`
+            }}
             description={user.email}
             name={cellValue}
           >
             {user.email}
           </User>
         );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">
-              {user.team}
-            </p>
-          </div>
-        );
+      // case "username":
+      //   return (
+      //     <div className="flex flex-col">
+      //       <p className="text-bold text-sm capitalize">@{cellValue}</p>
+      //     </div>
+      //   );
       // case "status":
       //   return (
       //     <Chip
@@ -72,21 +77,18 @@ export default function Tables({ Data, className, Columns = [] }) {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                {/* <EyeIcon /> */}
-              </span>
-            </Tooltip>
             <Tooltip content="Edit user">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                {/* <EditIcon /> */}
+                <CiEdit />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                {/* <DeleteIcon /> */}
-              </span>
-            </Tooltip>
+            <Link href={`/studio/users/form/${user.id}`}>
+              <Tooltip color="danger" content="Delete user">
+                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                  <MdDeleteForever />
+                </span>
+              </Tooltip>
+            </Link>
           </div>
         );
       default:
