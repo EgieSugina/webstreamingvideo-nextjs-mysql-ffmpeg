@@ -4,26 +4,38 @@ import "react-quill/dist/quill.snow.css";
 
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FormEvent } from "react";
 import Image from "next/image";
 import MsgBox from "@/components/ToastMsgBox";
+import getDataByPk from "./getDataByPk";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-// import ReactQuill from "react-quill";
-// <ReactQuill theme="snow"  value={value} onChange={setValue} />
-
-export default function FormUsers() {
+export default function FormUsers({ params }) {
   const router = useRouter();
-  const variant = "underlined"; //["flat", "bordered", "underlined", "faded"];
-  const [value, setValue] = useState("");
-  //   SELECT `user_id`, `fullname`, `username`, `email`, `role`, `password`, `img` FROM `user` WHERE 1
   const [isVisible, setIsVisible] = React.useState(false);
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
   const [error, setError] = useState("");
+  const [imageSrc, setImageSrc] = useState(null);
+
+  const { id } = params;
+  const [Data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getDataByPk(id);
+      setData(data);
+    };
+    getData();
+  }, []);
+  if (!Data) {
+    return <>Loading...</>;
+  }
+  const variant: any = "underlined"; //["flat", "bordered", "underlined", "faded"];
+  //   SELECT `user_id`, `fullname`, `username`, `email`, `role`, `password`, `img` FROM `user` WHERE 1
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -47,8 +59,8 @@ export default function FormUsers() {
     const formData = new FormData(event.currentTarget);
     console.log(formData);
 
-    const response = await fetch("/api/users", {
-      method: "POST",
+    const response = await fetch(`/api/users/${id}`, {
+      method: "PUT",
       body: formData
     });
     const data = await response.json();
@@ -65,7 +77,7 @@ export default function FormUsers() {
         // transition: Bounce
       });
     }
-    toast.success("Create User Sucsess!", {
+    toast.success("Update User Sucsess!", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -76,15 +88,15 @@ export default function FormUsers() {
       theme: "dark"
       // transition: Bounce
     });
+    router.refresh()
     return router.push("/studio/users");
+
     // } catch (error) {
     //   // Handle any errors that occurred during the fetch or processing
     //   console.error("Error:", error);
     //   // Optionally, set an error state or display an error message to the user
     // }
   }
-
-  const [imageSrc, setImageSrc] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -101,15 +113,14 @@ export default function FormUsers() {
     <>
       <form onSubmit={onSubmit} className={"flex bg-[#212129] "}>
         <div className=" w-3/4   p-3  rounded-lg">
-          <h1 className="font-bold text-2xl text-white">
-            Users {"{{"}Action{"}}"}
-          </h1>
+          <h1 className="font-bold text-2xl text-white">Edit Users {id}</h1>
           <hr className="mb-3" />
-
+          <Input type="text" name="id" className="hidden" value={id} />
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <Input
                 isRequired
+                defaultValue={Data.fullname}
                 name={"fullname"}
                 type="text"
                 variant={variant}
@@ -119,6 +130,7 @@ export default function FormUsers() {
             <div className="w-full md:w-1/2 px-3">
               <Input
                 isRequired
+                defaultValue={Data.username}
                 name={"username"}
                 type="text"
                 variant={variant}
@@ -130,6 +142,7 @@ export default function FormUsers() {
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <Input
                 isRequired
+                defaultValue={Data.email}
                 name={"email"}
                 type="email"
                 variant={variant}
@@ -150,6 +163,7 @@ export default function FormUsers() {
                   }
                 ]}
                 isRequired
+                defaultSelectedKeys={[Data.role]}
                 name={"role"}
                 label="Role"
                 // type="text"
@@ -164,7 +178,6 @@ export default function FormUsers() {
           <div className="flex flex-wrap -mx-3 mb-6 text-white">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
               <Input
-                isRequired
                 name={"password"}
                 variant={variant}
                 className=""
@@ -182,7 +195,6 @@ export default function FormUsers() {
                     )}
                   </button>
                 }
-                value={password}
                 onChange={handlePasswordChange}
                 type={isVisible ? "text" : "password"}
                 color={error ? "danger" : "default"}
@@ -192,7 +204,6 @@ export default function FormUsers() {
             </div>
             <div className="w-full md:w-1/2 px-3">
               <Input
-                isRequired
                 variant={variant}
                 label="Retype Password"
                 endContent={
@@ -220,7 +231,7 @@ export default function FormUsers() {
             <Button type="submit" color="success" radius="sm">
               Simpan
             </Button>
-            <Button radius="sm">Back</Button>
+            <Button radius="sm" onClick={() => router.back()}>Back</Button>
           </div>
         </div>
         <div className=" w-1/3   p-3  rounded-lg">
@@ -239,7 +250,7 @@ export default function FormUsers() {
                   />
                 ) : (
                   <Image
-                    src="/assets/images/profile.jpg"
+                    src={`data:image/png;base64,${Data.img}`}
                     alt="Uploaded"
                     title="user name"
                     style={{ maxWidth: "150px", maxHeight: "150px" }}
@@ -256,7 +267,6 @@ export default function FormUsers() {
                 name={"img"}
                 accept="image/*"
                 type="file"
-                variant={variant}
                 onChange={handleFileChange}
                 // label="username"
               />

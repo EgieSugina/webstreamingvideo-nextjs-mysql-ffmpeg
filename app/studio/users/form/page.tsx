@@ -11,16 +11,9 @@ import Image from "next/image";
 import MsgBox from "@/components/ToastMsgBox";
 import { navigate } from "@/components/Actions";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-
-// import ReactQuill from "react-quill";
-// <ReactQuill theme="snow"  value={value} onChange={setValue} />
 
 export default function FormUsers() {
-  const router = useRouter();
   const variant = "underlined"; //["flat", "bordered", "underlined", "faded"];
-  const [value, setValue] = useState("");
-  //   SELECT `user_id`, `fullname`, `username`, `email`, `role`, `password`, `img` FROM `user` WHERE 1
   const [isVisible, setIsVisible] = React.useState(false);
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
@@ -35,25 +28,37 @@ export default function FormUsers() {
   };
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    // try {
-    if (password !== retypePassword) {
-      setError("Passwords don't match");
-      return;
-    } else {
-      setError("");
-    }
+    try {
+      if (password !== retypePassword) {
+        setError("Passwords don't match");
+        return;
+      } else {
+        setError("");
+      }
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+      const formData = new FormData(event.currentTarget);
 
-    const response = await fetch("/api/users", {
-      method: "POST",
-      body: formData
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      toast.error(<MsgBox MsgError={data} />, {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(<MsgBox MsgError={data} />, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          // transition: Bounce
+        });
+      }
+      toast.success("Create User Sucsess!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -61,27 +66,15 @@ export default function FormUsers() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark"
+        theme: "dark",
         // transition: Bounce
       });
+      return navigate("/studio/users");
+    } catch (error) {
+      // Handle any errors that occurred during the fetch or processing
+      console.error("Error:", error);
+      // Optionally, set an error state or display an error message to the user
     }
-    toast.success("Create User Sucsess!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark"
-      // transition: Bounce
-    });
-    return navigate("/studio/users");
-    // } catch (error) {
-    //   // Handle any errors that occurred during the fetch or processing
-    //   console.error("Error:", error);
-    //   // Optionally, set an error state or display an error message to the user
-    // }
   }
 
   const [imageSrc, setImageSrc] = useState(null);
@@ -101,9 +94,7 @@ export default function FormUsers() {
     <>
       <form onSubmit={onSubmit} className={"flex bg-[#212129] "}>
         <div className=" w-3/4   p-3  rounded-lg">
-          <h1 className="font-bold text-2xl text-white">
-            Users {"{{"}Action{"}}"}
-          </h1>
+          <h1 className="font-bold text-2xl text-white">Users</h1>
           <hr className="mb-3" />
 
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -140,14 +131,14 @@ export default function FormUsers() {
               <Select
                 items={[
                   {
-                    value: "Member"
+                    value: "Member",
                   },
                   {
-                    value: "Staff"
+                    value: "Staff",
                   },
                   {
-                    value: "Admin"
-                  }
+                    value: "Admin",
+                  },
                 ]}
                 isRequired
                 name={"role"}

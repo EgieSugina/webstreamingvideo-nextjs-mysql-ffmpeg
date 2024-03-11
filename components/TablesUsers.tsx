@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  Button,
-  Chip,
   Pagination,
   Table,
   TableBody,
@@ -12,47 +10,40 @@ import {
   TableRow,
   Tooltip,
   User,
-  getKeyValue
 } from "@nextui-org/react";
 
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
 import React from "react";
-import { navigateRevalidatePath } from "@/components/Actions";
-import { useRouter } from "next/navigation";
+
+// import { useRouter } from "next/navigation";
+
+// import { navigateRevalidatePath } from "@/components/Actions";
 
 // import { revalidatePath } from "next/cache";
 
 // import { Data } from "./data";
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning"
-};
-export default function Tables({ Data, className, Columns = [] }) {
-  const router = useRouter();
-  const deleteUsers = (user) => {
-    fetch(`/api/users/${user.id}`, {
-      method: "DELETE"
-    });
-    router.refresh();
-    return navigateRevalidatePath("/studio/users");
-  };
-  if (!Data) return <>No Data</>;
-  const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
-
-  const [page, setPage] = React.useState(1);
+// const statusColorMap = {
+//   active: "success",
+//   paused: "danger",
+//   vacation: "warning",
+// };
+export default function Tables({ Data, Columns = [] }) {
   const rowsPerPage = 6;
+  const [page, setPage] = React.useState(1);
 
-  const pages = Math.ceil(DataMod.length / rowsPerPage);
-
+  const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
+  if (!Data) return <>No Data</>;
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
     return DataMod.slice(start, end);
   }, [page, DataMod]);
+
+  const pages = Math.ceil(DataMod.length / rowsPerPage);
+
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
@@ -62,7 +53,7 @@ export default function Tables({ Data, className, Columns = [] }) {
           <User
             avatarProps={{
               radius: "lg",
-              src: `data:image/png;base64,${user.img}`
+              src: `data:image/png;base64,${user.img}`,
             }}
             description={user.email}
             name={cellValue}
@@ -90,11 +81,14 @@ export default function Tables({ Data, className, Columns = [] }) {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Edit user">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <CiEdit />
-              </span>
-            </Tooltip>
+            <Link href={`/studio/users/form/${user.id}`}>
+              <Tooltip content="Edit user">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <CiEdit />
+                </span>
+              </Tooltip>
+            </Link>
+
             <Link href={`/studio/users/delete/${user.id}`}>
               <Tooltip color="danger" content="Delete user">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
@@ -125,7 +119,7 @@ export default function Tables({ Data, className, Columns = [] }) {
         </div>
       }
       classNames={{
-        wrapper: "min-h-[222px]"
+        wrapper: "min-h-[222px]",
       }}
     >
       <TableHeader columns={Columns}>
@@ -139,7 +133,7 @@ export default function Tables({ Data, className, Columns = [] }) {
         )}
       </TableHeader>
       <TableBody items={items}>
-        {(item) => (
+        {(item: any) => (
           <TableRow key={item.name}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>

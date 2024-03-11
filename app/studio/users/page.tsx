@@ -1,21 +1,32 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+
 import { FaUserPlus } from "react-icons/fa";
-import Image from "next/image";
 import Link from "next/link";
-import M_User from "@/db/models/m_user";
-import React from "react";
-import Tables from "../../../components/TablesUsers";
+import Tables from "@/components/TablesUsers";
 import { Tabs } from "@/components/ui/tabs";
-import { useQuery } from "react-query";
+import getDatafindAll from "./getDatafindAll";
 
-export default async function Users() {
-  const users = await M_User.findAll({
-    raw: true
-  });
+export default function Users() {
+  const [Data, setData] = useState<any>([]);
 
+  // const users = await M_User.findAll({
+  //   raw: true
+  // });
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getDatafindAll();
+      setData(data);
+    };
+    getData();
+  }, []);
+  if (Data.length == 0) {
+    return <>Loading...</>;
+  }
   const columns = [
     { name: "Name", uid: "fullname" },
     { name: "Username", uid: "username" },
-    // { name: "Role", uid: "role" },
     { name: "Actions", uid: "actions" }
   ];
   const tabs = [
@@ -36,9 +47,8 @@ export default async function Users() {
 
           <div className="mt-3">
             <Tables
-              Data={users.filter((v) => v.role === "Member")}
+              Data={Data.filter((v: any) => v.role === "Member")}
               Columns={columns}
-              className="mt-3"
             />
           </div>
         </div>
@@ -48,12 +58,20 @@ export default async function Users() {
       title: "Staff",
       value: "staff",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
-          <p>Staff</p>
+        <div className="w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
+          <div className="flex gap-2">
+          Staff
+            <Link
+              href="users/form"
+              className="flex border px-1 m-2 bg-green-600 rounded shadow-2xl hover:bg-green-950 gap-2  text-medium font-medium items-center"
+            >
+              <FaUserPlus /> Add
+            </Link>
+          </div>
+         
           <Tables
-            Data={users.filter((v) => v.role === "Staff")}
+            Data={Data.filter((v: any) => v.role === "Staff")}
             Columns={columns}
-            className="mt-3"
           />
         </div>
       )
@@ -62,12 +80,19 @@ export default async function Users() {
       title: "Admin",
       value: "admin",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
-          <p>Admin</p>
+        <div className="w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
+          <div className="flex gap-2">
+            Admin
+            <Link
+              href="users/form"
+              className="flex border px-1 m-2 bg-green-600 rounded shadow-2xl hover:bg-green-950 gap-2  text-medium font-medium items-center"
+            >
+              <FaUserPlus /> Add
+            </Link>
+          </div>
           <Tables
-            Data={users.filter((v) => v.role === "Admin")}
+            Data={Data.filter((v: any) => v.role === "Admin")}
             Columns={columns}
-            className="mt-3"
           />
         </div>
       )

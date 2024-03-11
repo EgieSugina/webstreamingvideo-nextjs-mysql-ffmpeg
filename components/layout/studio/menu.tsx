@@ -5,7 +5,7 @@ export default function Menu({ main, icons, name, href }) {
     <>
       <li className=" border-b">
         <Link
-          href={(main || "/studio/") + href}
+          href={(main || "/studio") + href}
           className="flex items-center gap-3   p-3 text-slate-300 transition-colors hover:bg-emerald-50 hover:text-emerald-500 focus:bg-emerald-50 aria-[current=page]:bg-emerald-50 aria-[current=page]:text-emerald-500 "
         >
           <div className="flex items-center self-center">{icons}</div>
