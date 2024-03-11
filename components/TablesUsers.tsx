@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button,
   Chip,
   Pagination,
   Table,
@@ -18,6 +19,8 @@ import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
 import React from "react";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 // import { Data } from "./data";
 const statusColorMap = {
@@ -26,6 +29,13 @@ const statusColorMap = {
   vacation: "warning"
 };
 export default function Tables({ Data, className, Columns = [] }) {
+  const router = useRouter();
+  const deleteUsers = (user) => {
+    fetch(`/api/users/${user.id}`, {
+      method: "DELETE"
+    });
+    router.push("/studio/users");
+  };
   if (!Data) return <>No Data</>;
   const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
 
@@ -82,13 +92,13 @@ export default function Tables({ Data, className, Columns = [] }) {
                 <CiEdit />
               </span>
             </Tooltip>
-            <Link href={`/studio/users/form/${user.id}`}>
+            <Button onClick={() => deleteUsers(user)}>
               <Tooltip color="danger" content="Delete user">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
                   <MdDeleteForever />
                 </span>
               </Tooltip>
-            </Link>
+            </Button>
           </div>
         );
       default:

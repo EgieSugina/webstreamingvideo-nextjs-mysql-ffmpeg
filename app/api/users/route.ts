@@ -59,16 +59,4 @@ export async function PUT(request) {
   }
 }
 
-export async function DELETE(request) {
-  try {
-    const userId = request.params.id;
-    const user = await M_User.findByPk(userId);
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
-    await user.destroy();
-    return NextResponse.json({ message: "User deleted successfully" });
-  } catch (error) {
-    return NextResponse.json({ message: error }, { status: 500 });
-  }
-}
+
