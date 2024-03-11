@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { FormEvent } from "react";
 import Image from "next/image";
 import MsgBox from "@/components/ToastMsgBox";
+import { navigate } from "@/components/Actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -45,7 +46,6 @@ export default function FormUsers() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    console.log(formData);
 
     const response = await fetch("/api/users", {
       method: "POST",
@@ -76,7 +76,7 @@ export default function FormUsers() {
       theme: "dark"
       // transition: Bounce
     });
-    return router.push("/studio/users");
+    return navigate("/studio/users");
     // } catch (error) {
     //   // Handle any errors that occurred during the fetch or processing
     //   console.error("Error:", error);

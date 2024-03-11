@@ -19,8 +19,10 @@ import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
 import React from "react";
-import { revalidatePath } from "next/cache";
+import { navigateRevalidatePath } from "@/components/Actions";
 import { useRouter } from "next/navigation";
+
+// import { revalidatePath } from "next/cache";
 
 // import { Data } from "./data";
 const statusColorMap = {
@@ -34,7 +36,8 @@ export default function Tables({ Data, className, Columns = [] }) {
     fetch(`/api/users/${user.id}`, {
       method: "DELETE"
     });
-    router.push("/studio/users");
+    router.refresh();
+    return navigateRevalidatePath("/studio/users");
   };
   if (!Data) return <>No Data</>;
   const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
@@ -92,13 +95,13 @@ export default function Tables({ Data, className, Columns = [] }) {
                 <CiEdit />
               </span>
             </Tooltip>
-            <Button onClick={() => deleteUsers(user)}>
+            <Link href={`/studio/users/delete/${user.id}`}>
               <Tooltip color="danger" content="Delete user">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
                   <MdDeleteForever />
                 </span>
               </Tooltip>
-            </Button>
+            </Link>
           </div>
         );
       default:
