@@ -113,7 +113,7 @@ export default function FormUsers({ params }) {
     <>
       <form onSubmit={onSubmit} className={"flex bg-[#212129] "}>
         <div className=" w-3/4   p-3  rounded-lg">
-          <h1 className="font-bold text-2xl text-white">Edit Users {id}</h1>
+          <h1 className="font-bold text-2xl text-white center">Edit Users {id}</h1>
           <hr className="mb-3" />
           <Input type="text" name="id" className="hidden" value={id} />
           <div className="flex flex-wrap -mx-3 mb-6">

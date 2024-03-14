@@ -1,15 +1,11 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "react-query";
-
 import Aside from "@/components/layout/studio";
 import Header from "@/components/layout/studio/header";
 
 export default function Layout({ children }) {
-  const queryClient = new QueryClient();
   return (
     <>
-      <QueryClientProvider client={queryClient}>
         <div className="flex flex-row min-h-screen bg-gray-700 text-gray-800">
           <Aside />
           <main className="main flex flex-col flex-grow -ml-64 lg:ml-0 transition-all duration-150 ease-in">
@@ -26,7 +22,6 @@ export default function Layout({ children }) {
             </footer>
           </main>
         </div>
-      </QueryClientProvider>
     </>
   );
 }
