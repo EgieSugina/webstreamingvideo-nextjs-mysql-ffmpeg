@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { LuFileVideo } from "react-icons/lu";
 import Tables from "@/components/TablesContent";
-import { findAll } from "./Data";
+import { findAll } from "./data";
 
 export default function Movie() {
   const columns = [
@@ -15,8 +15,8 @@ export default function Movie() {
     { name: "Genre", uid: "genre" },
     { name: "Status", uid: "status" },
     { name: "Likes", uid: "like_count" },
+    { name: "Comments", uid: "comment_count" },
     { name: "Views", uid: "views" },
-    { name: "Comments", uid: "comments" },
     { name: "Actions", uid: "actions" }
   ];
 

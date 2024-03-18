@@ -2,7 +2,7 @@
 
 // import React, { useEffect, useState } from "react";
 
-import Movie from "./Movie";
+import Movie from "./movie";
 import { Tabs } from "@/components/ui/tabs";
 
 // import getDatafindAll from "./getDatafindAll";
@@ -23,7 +23,7 @@ export default function Users() {
   // if (Data.length == 0) {
   //   return <>Loading...</>;
   // }
- 
+
   const tabs = [
     {
       title: "Movie",

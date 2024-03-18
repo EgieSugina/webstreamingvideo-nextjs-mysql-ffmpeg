@@ -7,8 +7,6 @@ import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 
 export const LoginButton = () => {
-  
-
   return (
     <button style={{ marginRight: 10 }} onClick={() => signIn()}>
       Sign in
@@ -18,7 +16,11 @@ export const LoginButton = () => {
 
 export const RegisterButton = () => {
   return (
-    <Link href="/register" style={{ marginRight: 10 }}>
+    <Link
+      className="inline-block px-7  py-4 bg-red-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out w-full text-center"
+      href="/register"
+      style={{ marginRight: 10 }}
+    >
       Register
     </Link>
   );

@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
-import Like from "./m_likes";
+// import Like from "./m_likes";
+
 import sequelize from "../sequelize";
 
 const Model = sequelize.define(
@@ -23,6 +24,9 @@ const Model = sequelize.define(
       type: DataTypes.DATE
     },
     user_id: {
+      type: DataTypes.INTEGER
+    },
+    views: {
       type: DataTypes.INTEGER
     },
     duration: {

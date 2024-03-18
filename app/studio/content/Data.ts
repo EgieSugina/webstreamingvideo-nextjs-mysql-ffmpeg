@@ -1,11 +1,12 @@
 "use server";
 
+import Comments from "@/db/models/m_comments";
 import Like from "@/db/models/m_likes";
 import Videos from "@/db/models/m_videos";
 import sequelize from "@/db/sequelize";
 
 export async function findAll() {
-  const users = await Videos.findAll({
+  const data = await Videos.findAll({
     raw: true,
     attributes: [
       "video_id",
@@ -18,16 +19,26 @@ export async function findAll() {
       "genre",
       "release_date",
       "type",
-      [sequelize.fn("COUNT", sequelize.col("likes.like_id")), "like_count"]
+      "views",
+      [sequelize.fn("COUNT", sequelize.col("likes.like_id")), "like_count"],
+      [
+        sequelize.fn("COUNT", sequelize.col("comments.comments_id")),
+        "comment_count"
+      ]
     ],
     include: [
       {
         model: Like,
         attributes: [],
-        required: false // Use 'true' if you want to perform an inner join
+        required: false
+      },
+      {
+        model: Comments,
+        attributes: [],
+        required: false
       }
     ],
-    group: ["videos.video_id"] // Group by video_id to count likes per video
+    group: ["videos.video_id"]
   });
-  return users;
+  return data;
 }

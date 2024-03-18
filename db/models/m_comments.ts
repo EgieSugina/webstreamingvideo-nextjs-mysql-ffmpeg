@@ -1,8 +1,9 @@
 const { DataTypes } = require("sequelize");
 
+import Video from "../models/m_videos";
 import sequelize from "../sequelize";
 
-const Model = sequelize.define(
+const Comment = sequelize.define(
   "comments",
   {
     comments_id: {
@@ -20,11 +21,13 @@ const Model = sequelize.define(
     },
     comment_date: {
       type: DataTypes.DATE
-    },
-      },
+    }
+  },
   {
     timestamps: false,
     freezeTableName: true
   }
 );
-export default Model;
+Comment.belongsTo(Video, { foreignKey: "video_id" });
+Video.hasMany(Comment, { foreignKey: "video_id" });
+export default Comment;

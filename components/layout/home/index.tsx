@@ -1,15 +1,14 @@
 import "./layout.css";
 
+import { LoginButton, LogoutButton } from "@/components/buttons.component";
+
 import Image from "next/image";
 import Link from "next/link";
-import { LogoutButton } from "@/components/buttons.component";
 import Menu from "./menu";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth/next";
 
 // import VideoBackground from "@/components/layout/home/videoBackground";
-
-
 
 export default async function HomeLayout({ children }) {
   const session = await getServerSession(authOptions);
@@ -39,20 +38,29 @@ export default async function HomeLayout({ children }) {
               </div>
 
               <div className=" gap-4 flex text-center place-items-center ">
-                <Link
-                  href="/profile"
-                  className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gray-500 text-lg text-white"
-                >
-                  <Image
-                    src={session.user.image}
-                    width={100}
-                    height={100}
-                    alt="Profile"
-                    className=" rounded-full"
-                  />
-                </Link>
-                <span>{session.user.name}</span>
-                <LogoutButton />
+                {session ? (
+                  <>
+                    {" "}
+                    <Link
+                      href="/profile"
+                      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gray-500 text-lg text-white"
+                    >
+                      <Image
+                        src={session.user.image}
+                        width={100}
+                        height={100}
+                        alt="Profile"
+                        className=" rounded-full"
+                      />
+                    </Link>
+                    <span>{session.user.name}</span>
+                    <LogoutButton />
+                  </>
+                ) : (
+                  <>
+                    <LoginButton />
+                  </>
+                )}
               </div>
             </div>
           </div>

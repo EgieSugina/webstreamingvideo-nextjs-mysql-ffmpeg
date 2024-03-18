@@ -11,7 +11,9 @@ import {
   TableRow,
   Tooltip
 } from "@nextui-org/react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
+import { BiSolidVideos } from "react-icons/bi";
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
@@ -46,6 +48,7 @@ export default function Tables({ Data, Columns = [] }) {
 
   const renderCell = React.useCallback((data, columnKey) => {
     const cellValue = data[columnKey];
+    const showRef = React.useRef();
 
     switch (columnKey) {
       // case "fullname":
@@ -62,9 +65,7 @@ export default function Tables({ Data, Columns = [] }) {
       //     </data>
       //   );
       case "description":
-        return (
-          <div  dangerouslySetInnerHTML={{ __html: data.description }} />
-        );
+        return <div dangerouslySetInnerHTML={{ __html: data.description }} />;
       case "status":
         return (
           <Chip
@@ -79,9 +80,27 @@ export default function Tables({ Data, Columns = [] }) {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
+            <Link href=""
+              // onChange={() => {
+              //   showRef.current = !showRef.current;
+              // }}
+            >
+              <Tooltip content="Show/Hidden">
+                <span className="text-lg text-green-900 cursor-pointer active:opacity-50">
+                  {/* {show ? <FaRegEye /> : <FaRegEyeSlash />} */}
+                </span>
+              </Tooltip>
+            </Link>
+            <Link href={`/studio/datas/form/${data.id}`}>
+              <Tooltip content="Process">
+                <span className="text-lg text-cyan-500 cursor-pointer active:opacity-50">
+                  <BiSolidVideos />
+                </span>
+              </Tooltip>
+            </Link>
             <Link href={`/studio/datas/form/${data.id}`}>
               <Tooltip content="Edit data">
-                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <span className="text-lg text-warning cursor-pointer active:opacity-50">
                   <CiEdit />
                 </span>
               </Tooltip>
