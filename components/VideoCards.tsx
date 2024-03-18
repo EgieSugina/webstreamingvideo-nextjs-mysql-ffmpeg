@@ -9,7 +9,7 @@ export default function VideoCards({ id }) {
       <Link href={`/watch/${id}`}>
         <div className=" transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative">
           <Image
-            className="w-full"
+            className="w-full" 
             width={280}
             height={160}
             quality={100}

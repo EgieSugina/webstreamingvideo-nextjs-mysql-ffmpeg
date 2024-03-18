@@ -21,7 +21,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className={"dark " + inter.className}>
       <link rel="icon" href="/assets/images/ico.svg" sizes="any" />
       <body>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        {/* <NextAuthProvider>{children}</NextAuthProvider> */}
+        {children}
         {/* <Providers>{children}</Providers> */}
         <ToastContainer
           position="top-right"
