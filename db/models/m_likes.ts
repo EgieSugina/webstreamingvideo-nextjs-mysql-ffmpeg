@@ -1,8 +1,9 @@
 const { DataTypes } = require("sequelize");
 
+import Video from "../models/m_videos"
 import sequelize from "../sequelize";
 
-const Model = sequelize.define(
+const Like = sequelize.define(
   "likes",
   {
     like_id: {
@@ -24,4 +25,6 @@ const Model = sequelize.define(
     freezeTableName: true
   }
 );
-export default Model;
+Like.belongsTo(Video, { foreignKey: 'video_id' });
+Video.hasMany(Like, { foreignKey: 'video_id' });
+export default Like;

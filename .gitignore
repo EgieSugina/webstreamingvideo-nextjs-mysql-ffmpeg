@@ -16,7 +16,7 @@
 # production
 /build
 /dist
-
+/public/raw
 # misc
 .DS_Store
 *.pem

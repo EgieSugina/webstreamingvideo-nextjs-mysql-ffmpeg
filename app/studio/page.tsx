@@ -8,9 +8,6 @@ import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/react";
 
-// import ReactQuill from "react-quill";
-// <ReactQuill theme="snow"  value={value} onChange={setValue} />
-
 export default function HomeStudio() {
   const variant = "underlined"; //["flat", "bordered", "underlined", "faded"];
   const [value, setValue] = useState("");

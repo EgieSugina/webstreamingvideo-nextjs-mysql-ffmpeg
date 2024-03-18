@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 
+import Like from "./m_likes";
 import sequelize from "../sequelize";
 
 const Model = sequelize.define(
@@ -16,7 +17,7 @@ const Model = sequelize.define(
       type: DataTypes.TEXT
     },
     status: {
-      type: DataTypes.ENUM('done','process')
+      type: DataTypes.ENUM("done", "process")
     },
     upload_date: {
       type: DataTypes.DATE
@@ -24,8 +25,17 @@ const Model = sequelize.define(
     user_id: {
       type: DataTypes.INTEGER
     },
+    duration: {
+      type: DataTypes.STRING
+    },
+    genre: {
+      type: DataTypes.STRING
+    },
+    release_date: {
+      type: DataTypes.STRING
+    },
     type: {
-      type: DataTypes.ENUM('movie','tv_series')
+      type: DataTypes.ENUM("movie", "tv_series")
     }
   },
   {
@@ -33,4 +43,6 @@ const Model = sequelize.define(
     freezeTableName: true
   }
 );
+// Model.hasMany(Like, { foreignKey: "video_id" });
+
 export default Model;
