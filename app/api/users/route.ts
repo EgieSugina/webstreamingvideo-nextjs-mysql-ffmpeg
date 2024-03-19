@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       newUser[key] = value;
     }
     const { password } = newUser;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
     newUser.password = hashedPassword;
     const file: any = formData.get("img");
     

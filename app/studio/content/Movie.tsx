@@ -11,6 +11,8 @@ import { findAll } from "./data";
 export default function Movie() {
   const columns = [
     { name: "Title", uid: "title" },
+    { name: "Thumbnail", uid: "thumbnail" },
+    
     { name: "Description", uid: "description" },
     { name: "Genre", uid: "genre" },
     { name: "Status", uid: "status" },
@@ -31,17 +33,17 @@ export default function Movie() {
   },[]);
   return (
     <>
-      <div className="w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
+      <div className="w-full  h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
         <div className="flex gap-2">
           Movie
           <Link
             href="content/form"
             className="flex border px-1 m-2 bg-green-600 rounded shadow-2xl hover:bg-green-950 gap-2  text-medium font-medium items-center"
           >
-            <LuFileVideo /> Add Video
+            <LuFileVideo /> Add Content
           </Link>
         </div>
-        <div className="mt-3">
+        <div className="mt-3 ">
           <Tables Data={Data} Columns={columns} />
         </div>
       </div>

@@ -4,19 +4,20 @@ import { hash } from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = (await req.json()) as {
+    const { name, email, password, username } = (await req.json()) as {
+      username: string;
       name: string;
       email: string;
       password: string;
     };
     const hashed_password = await hash(password, 12);
+    console.log(name, email, password, username);
 
     const user: any = await M_User.create({
-      data: {
-        name,
-        email: email.toLowerCase(),
-        password: hashed_password
-      }
+      username: username,
+      fullname: name,
+      email: email.toLowerCase(),
+      password: hashed_password
     });
 
     return NextResponse.json({

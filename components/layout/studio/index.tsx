@@ -4,7 +4,8 @@ import { IoCloseSharp, IoSettingsOutline } from "react-icons/io5";
 import React, { useState } from "react";
 
 import { FaPowerOff } from "react-icons/fa6";
-import { FaUsers } from "react-icons/fa";
+import { FaUsers, FaRegCommentAlt } from "react-icons/fa";
+
 import Image from "next/image";
 import Link from "next/link";
 import { MdVideoLibrary } from "react-icons/md";
@@ -14,9 +15,12 @@ import { TbChartSankey } from "react-icons/tb";
 // import { FaHome } from "react-icons/fa";
 
 //https://react-icons.github.io/react-icons
-export default function Aside() {
+import { signOut } from "next-auth/react";
+export default function Aside({ Sesio }) {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-
+  if (!Sesio) {
+    return <>AAAAA</>;
+  }
   return (
     <>
       <button
@@ -73,21 +77,33 @@ export default function Aside() {
           </div>
           <div className="shrink-0">
             <div className="relative flex border bg-white p-1 h-40 w-40 items-center justify-center rounded-full text-white">
-              <Image
-                src="/assets/images/profile.jpg"
-                alt="user name"
-                title="user name"
-                width="500"
-                height="500"
-                className="max-w-full rounded-full"
-              />
+              {Sesio.user.image ? (
+                <>
+                  <Image
+                    src={`data:image/png;base64,${Sesio.user.image}`}
+                    alt={Sesio.user.name}
+                    title={Sesio.user.name}
+                    width="500"
+                    height="500"
+                    className="max-w-full rounded-full"
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="w-[500] h-[500] rounded-full max-w-full   ">
+                    <h1 className="text-5xl text-black ">{Sesio.user.name.split("")[0]}</h1>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="flex min-h-[2rem] w-full min-w-0 flex-col items-start justify-center gap-0 text-center">
-            <h4 className="w-full truncate text-base text-slate-700">
-              Nama User
+            <h4 className="w-full truncate text-base text-slate-100">
+              {Sesio.user.name}
             </h4>
-            <p className="w-full truncate text-sm text-slate-500">Role</p>
+            <p className="w-full truncate text-sm text-slate-500">
+              {Sesio.user.role}
+            </p>
           </div>
         </div>
         <nav
@@ -102,6 +118,11 @@ export default function Aside() {
                 name={"Content"}
                 href={"/content"}
               />
+              <Menu
+                icons={<FaRegCommentAlt />}
+                name={"Comments"}
+                href={"/comments"}
+              />
               <Menu icons={<FaUsers />} name={"Users"} href={"/users"} />
               <Menu
                 icons={<IoSettingsOutline />}
@@ -115,6 +136,7 @@ export default function Aside() {
         <footer className="border-t border-slate-200 p-3">
           <Link
             href="#"
+            onClick={() => signOut({ redirect: true, callbackUrl: "/login" })}
             className="flex items-center gap-3 rounded p-3 text-red-900 transition-colors hover:text-emerald-500 "
           >
             <div className="flex items-center self-center ">

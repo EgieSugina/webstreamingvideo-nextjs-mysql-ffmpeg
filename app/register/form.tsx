@@ -17,7 +17,7 @@ export const RegisterForm = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setFormValues({ name: "", email: "", password: "" });
+    setFormValues({ usernameL: "", name: "", email: "", password: "" });
 
     try {
       const res = await fetch("/api/register", {
@@ -57,7 +57,19 @@ export const RegisterForm = () => {
       <div className="mb-6">
         <input
           required
-          type="name"
+          type="text"
+          name="username"
+          value={formValues.username}
+          onChange={handleChange}
+          placeholder="Username"
+          className={`${input_style}`}
+        />
+      </div>
+
+      <div className="mb-6">
+        <input
+          required
+          type="text"
           name="name"
           value={formValues.name}
           onChange={handleChange}

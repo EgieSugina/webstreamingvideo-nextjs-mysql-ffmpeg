@@ -12,6 +12,8 @@ import { getServerSession } from "next-auth/next";
 
 export default async function HomeLayout({ children }) {
   const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
     <>
       <div className="min-h-full bg-[#666]">
@@ -45,14 +47,30 @@ export default async function HomeLayout({ children }) {
                       href="/profile"
                       className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-gray-500 text-lg text-white"
                     >
-                      <Image
-                        src={session.user.image}
-                        width={100}
-                        height={100}
-                        alt="Profile"
-                        className=" rounded-full"
-                      />
+                      {session.user.image ? (
+                        <>
+                          {" "}
+                          <Image
+                            src={session.user.image}
+                            width={100}
+                            height={100}
+                            alt="Profile"
+                            className=" rounded-full"
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <div className={"w-[100] h-[100] rounded-full"}>
+                            {session.user.name.split("")[0]}
+                          </div>
+                        </>
+                      )}
                     </Link>
+                    {session.user.role.includes(["Admin", "Staff"]) && (
+                      <>
+                        <Link href="/studio">Studio</Link>
+                      </>
+                    )}
                     <span>{session.user.name}</span>
                     <LogoutButton />
                   </>

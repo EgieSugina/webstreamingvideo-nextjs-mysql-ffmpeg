@@ -12,14 +12,14 @@ import {
   Tooltip
 } from "@nextui-org/react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-
-import { BiSolidVideos } from "react-icons/bi";
+import Image from "next/image";
+// import { BiSolidVideos } from "react-icons/bi";
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
 import React from "react";
 import { contentVisibelity } from "@/app/studio/content/data";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 // import { dataouter } from "next/navigation";
 
@@ -31,10 +31,11 @@ import { useRouter } from "next/navigation";
 const statusColorMap = {
   done: "success",
   raw: "danger",
+  failed: "danger",
   process: "warning"
 };
 function Action({ data }) {
-  const router = useRouter();
+  // const router = useRouter();
   const [Public, setPublic] = React.useState(data.public);
   return (
     <>
@@ -42,45 +43,39 @@ function Action({ data }) {
         <Link
           href=""
           onClick={async () => {
-            await contentVisibelity(data.id, !data.public);
-            router.push(`/studio/content?id=${data.id}`);
-            router.refresh();
-            return setPublic(!data.public);
+            await contentVisibelity(data.id, !Public);
+            // router.push(`/studio/content?id=${data.id}`);
+            // router.refresh();
+            return setPublic(!Public);
           }}
         >
           {Public ? (
-            <Tooltip content="Public">
+            <Tooltip color="success" content="Public">
               <span className="text-lg  cursor-pointer active:opacity-50">
-                <FaRegEye className="text-green-900" />
+                <FaRegEye className="text-2xl text-green-900" />
               </span>
             </Tooltip>
           ) : (
-            <Tooltip content="Private">
+            <Tooltip color="danger" content="Private">
               <span className="text-lg  cursor-pointer active:opacity-50">
-                <FaRegEyeSlash className="text-red-900" />
+                <FaRegEyeSlash className="text-2xl text-red-900" />
               </span>
             </Tooltip>
           )}
         </Link>
+        |
         <Link href={`/studio/content/form/${data.id}`}>
-          <Tooltip content="Process">
-            <span className="text-lg text-cyan-500 cursor-pointer active:opacity-50">
-              <BiSolidVideos />
-            </span>
-          </Tooltip>
-        </Link>
-        <Link href={`/studio/content/form/${data.id}`}>
-          <Tooltip content="Edit data">
+          <Tooltip content="Edit data" color="warning">
             <span className="text-lg text-warning cursor-pointer active:opacity-50">
-              <CiEdit />
+              <CiEdit className="text-2xl"/>
             </span>
           </Tooltip>
         </Link>
-
+        |
         <Link href={`/studio/content/delete/${data.id}`}>
           <Tooltip color="danger" content="Delete data">
             <span className="text-lg text-danger cursor-pointer active:opacity-50">
-              <MdDeleteForever />
+              <MdDeleteForever className="text-2xl"/>
             </span>
           </Tooltip>
         </Link>
@@ -99,19 +94,15 @@ export default function Tables({ Data, Columns = [] }) {
     // const showRef = React.useRef(0);
 
     switch (columnKey) {
-      // case "fullname":
-      //   return (
-      //     <data
-      //       avatarProps={{
-      //         radius: "lg",
-      //         src: `data:image/png;base64,${data.img}`,
-      //       }}
-      //       description={data.email}
-      //       name={cellValue}
-      //     >
-      //       {data.email}
-      //     </data>
-      //   );
+      case "thumbnail":
+        return (
+          <Image
+            src={`/hls/${data.id}/thumbnail.png`}
+            width={300}
+            height={300}
+            alt="thumbnail..."
+          />
+        );
       case "description":
         return <div dangerouslySetInnerHTML={{ __html: data.description }} />;
       case "status":
@@ -141,9 +132,15 @@ export default function Tables({ Data, Columns = [] }) {
   const pages = Math.ceil(DataMod.length / rowsPerPage);
   return (
     <Table
+      isHeaderSticky
       aria-label="Example table with client side pagination"
+      classNames={{
+        base: "max-h-[42rem] overflow-y-visible",
+        table: "min-h-[42rem]"
+        //  wrapper: "min-h-[222px]"
+      }}
       bottomContent={
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-center ">
           <Pagination
             isCompact
             showControls
@@ -155,9 +152,6 @@ export default function Tables({ Data, Columns = [] }) {
           />
         </div>
       }
-      classNames={{
-        wrapper: "min-h-[222px]"
-      }}
     >
       <TableHeader columns={Columns}>
         {(column) => (

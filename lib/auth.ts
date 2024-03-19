@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import M_User from "@/db/models/m_user";
 import type { NextAuthOptions } from "next-auth";
 import { compare } from "bcryptjs";
-
+import { v4 as uuidv4 } from "uuid";
 // import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
@@ -40,10 +40,12 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
-          id: user.id,
           email: user.email,
-          name: user.name,
-          randomKey: "Hey cool"
+          name: `${user.fullname} (${user.username})`,
+          image: user.img,
+          role: user.role,
+          id: user.user_id,
+          key: uuidv4()
         };
       }
     }),
@@ -59,7 +61,8 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey
+          key: token.key,
+          role: token.role
         }
       };
     },
@@ -69,7 +72,8 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: u.id,
-          randomKey: u.randomKey
+          key: u.key,
+          role: u.role
         };
       }
       return token;

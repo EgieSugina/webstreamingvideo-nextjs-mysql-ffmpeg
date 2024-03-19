@@ -48,17 +48,37 @@ export default function Tables({ Data, Columns = [] }) {
 
     switch (columnKey) {
       case "fullname":
+        if (user.img) {
+          return (
+            <User
+              avatarProps={{
+                radius: "lg",
+                src: `data:image/png;base64,${user.img}`
+              }}
+              description={user.email}
+              name={cellValue}
+            >
+              {user.email}
+            </User>
+          );
+        }
         return (
-          <User
-            avatarProps={{
-              radius: "lg",
-              src: `data:image/png;base64,${user.img}`
-            }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
+          <>
+            <div className="inline-flex items-center justify-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2">
+              <span
+                className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-10 h-10 text-tiny bg-default text-default-foreground rounded-large"
+                data-hover="true"
+              >
+                {cellValue.split("")[0]}
+              </span>
+              <div className="inline-flex flex-col items-start">
+                <span className="text-small text-inherit">{cellValue}</span>
+                <span className="text-tiny text-foreground-400">
+                  {user.email}
+                </span>
+              </div>
+            </div>
+          </>
         );
       // case "username":
       //   return (
@@ -83,15 +103,15 @@ export default function Tables({ Data, Columns = [] }) {
             <Link href={`/studio/users/form/${user.id}`}>
               <Tooltip content="Edit user">
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                  <CiEdit />
+                  <CiEdit className="text-2xl" />
                 </span>
               </Tooltip>
             </Link>
-
+            |
             <Link href={`/studio/users/delete/${user.id}`}>
               <Tooltip color="danger" content="Delete user">
                 <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <MdDeleteForever />
+                  <MdDeleteForever className="text-2xl" />
                 </span>
               </Tooltip>
             </Link>

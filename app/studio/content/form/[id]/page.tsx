@@ -81,7 +81,8 @@ export default function FormUsers({ params }) {
         theme: "dark"
         // transition: Bounce
       });
-      return navigate(`/studio/content/form/${data.video_id}`);
+      return navigate("/studio/content");
+
     } catch (error) {
       console.error("Error:", error);
     }

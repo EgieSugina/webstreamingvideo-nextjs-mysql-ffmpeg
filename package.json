@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev ",
     "build": "set NODE_OPTIONS=--max-old-space-size=4192 && next build ",
     "start": "next start",
     "lint": "next lint",
