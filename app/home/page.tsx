@@ -12,16 +12,18 @@ export default function Home() {
 
   return (
     <div>
-      <div className="mx-auto    py-6 sm:px-6 lg:px-8">
-        <div>HOME</div>
+      <div className="mx-auto py-6 sm:px-6 lg:px-8">
+        <div>Terbaru</div>
+        
         <Slider id={"slider-1"}>
           <VideoCards id={"ini-video-id"} />
           <VideoCards id={"ini-video-id"} />
           <VideoCards id={"ini-video-id"} />
           <VideoCards id={"ini-video-id"} />
           <VideoCards id={"ini-video-id"} />
-          {/* <VideoCards id={"ini-video-id"} /> */}
+          
         </Slider>
+        
         <Slider id={"slider-2"} autoplay={false}>
           <VideoCards id={"ini-video-id"} />
           <VideoCards id={"ini-video-id"} />

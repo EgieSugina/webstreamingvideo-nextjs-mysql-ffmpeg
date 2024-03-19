@@ -1,26 +1,36 @@
 "use client";
 
+import { FaRegCommentAlt, FaUsers } from "react-icons/fa";
 import { IoCloseSharp, IoSettingsOutline } from "react-icons/io5";
 import React, { useState } from "react";
 
 import { FaPowerOff } from "react-icons/fa6";
-import { FaUsers, FaRegCommentAlt } from "react-icons/fa";
-
 import Image from "next/image";
 import Link from "next/link";
 import { MdVideoLibrary } from "react-icons/md";
 import Menu from "./menu";
 import { TbChartSankey } from "react-icons/tb";
+import getImage from "@/lib/getImg";
+import { signOut } from "next-auth/react";
 
 // import { FaHome } from "react-icons/fa";
 
 //https://react-icons.github.io/react-icons
-import { signOut } from "next-auth/react";
+
 export default function Aside({ Sesio }) {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-  if (!Sesio) {
-    return <>AAAAA</>;
-  }
+  const [Base64Img, setBase64Img] = useState(null);
+  React.useEffect(() => {
+    async function imgs() {
+      const url = await getImage(Sesio.user.id);
+      setBase64Img(url);
+    }
+    if(Sesio){
+      imgs();
+    }
+  }, [Sesio]);
+
+ 
   return (
     <>
       <button
@@ -77,10 +87,10 @@ export default function Aside({ Sesio }) {
           </div>
           <div className="shrink-0">
             <div className="relative flex border bg-white p-1 h-40 w-40 items-center justify-center rounded-full text-white">
-              {Sesio.user.image ? (
+              {Base64Img ? (
                 <>
                   <Image
-                    src={`data:image/png;base64,${Sesio.user.image}`}
+                    src={Base64Img}
                     alt={Sesio.user.name}
                     title={Sesio.user.name}
                     width="500"
@@ -91,7 +101,9 @@ export default function Aside({ Sesio }) {
               ) : (
                 <>
                   <div className="w-[500] h-[500] rounded-full max-w-full   ">
-                    <h1 className="text-5xl text-black ">{Sesio.user.name.split("")[0]}</h1>
+                    <h1 className="text-5xl text-black ">
+                      {Sesio.user.name.split("")[0]}
+                    </h1>
                   </div>
                 </>
               )}

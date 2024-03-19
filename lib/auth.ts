@@ -1,11 +1,13 @@
+
+
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import M_User from "@/db/models/m_user";
 import type { NextAuthOptions } from "next-auth";
 import { compare } from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-// import { prisma } from "@/lib/prisma";
 
+// import { prisma } from "@/lib/prisma";
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login"
@@ -42,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         return {
           email: user.email,
           name: `${user.fullname} (${user.username})`,
-          image: user.img,
+          // image: user.img,
           role: user.role,
           id: user.user_id,
           key: uuidv4()
@@ -80,3 +82,4 @@ export const authOptions: NextAuthOptions = {
     }
   }
 };
+
