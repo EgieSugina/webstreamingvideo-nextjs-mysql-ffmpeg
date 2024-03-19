@@ -3,9 +3,12 @@
 
 import { Player, PlayerProvider } from "next-playerjs-wrapper";
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, width = "80vw" }) => {
   return (
-    <div className="p-4" style={{ width: "80vw", height: "50vh", display: "flex" }}>
+    <div
+      className="p-4"
+      style={{ width: width, height: "50vh", display: " " }}
+    >
       <PlayerProvider player="/playerjs.js">
         <Player id="my-player" file={src} />
       </PlayerProvider>

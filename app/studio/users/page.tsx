@@ -21,9 +21,9 @@ export default function Users() {
     };
     getData();
   }, []);
-  if (Data.length == 0) {
-    return <>Loading...</>;
-  }
+  // if (Data.length == 0) {
+  //   return <>Loading...</>;
+  // }
   const columns = [
     { name: "Name", uid: "fullname" },
     { name: "Username", uid: "username" },

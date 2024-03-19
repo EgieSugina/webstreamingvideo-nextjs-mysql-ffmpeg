@@ -57,22 +57,19 @@ export async function POST(request: NextRequest) {
   const clean_uuid = uuid.replace(/-/g, "").substring(0, 11);
   try {
     const formData: any = await request.formData();
-    const newUser: any = {};
+    const data: any = {};
     for (const [key, value] of formData.entries()) {
-      newUser[key] = value;
+      data[key] = value;
     }
-    newUser["video_id"] = clean_uuid;
+    data["video_id"] = clean_uuid;
     const file: any = formData.get("video_file");
-    console.log(newUser);
 
-    if (file) {
+    if (file.size > 0) {
+      data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
       const buffer = Buffer.from(await file.arrayBuffer());
-      fs.writeFileSync(
-        `public/raw/${clean_uuid}${file.name.match(/\.[^.]+$/)[0]}`,
-        buffer
-      );
+      fs.writeFileSync(`public/raw/${clean_uuid}${data["format_raw"]}`, buffer);
     }
-    const createdUser = await Models.create(newUser);
+    const createdUser = await Models.create(data);
 
     return NextResponse.json(createdUser);
   } catch (error) {

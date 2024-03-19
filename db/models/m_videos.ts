@@ -38,6 +38,9 @@ const Model = sequelize.define(
     genre: {
       type: DataTypes.STRING
     },
+    format_raw: {
+      type: DataTypes.STRING
+    },
     release_date: {
       type: DataTypes.STRING
     },

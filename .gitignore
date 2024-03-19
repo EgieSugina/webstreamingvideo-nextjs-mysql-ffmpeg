@@ -17,6 +17,7 @@
 /build
 /dist
 /public/raw
+/public/hls
 # misc
 .DS_Store
 *.pem

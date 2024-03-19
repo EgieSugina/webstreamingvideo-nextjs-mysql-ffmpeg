@@ -48,3 +48,8 @@ export async function contentVisibelity(id, visibelity) {
 
   await _video.update({ public: visibelity });
 }
+export async function changeStatus(id, status) {
+  const _video = await Videos.findByPk(id);
+
+  await _video.update({ status: status });
+}

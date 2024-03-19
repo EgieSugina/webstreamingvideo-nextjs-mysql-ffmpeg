@@ -1,9 +1,9 @@
 'use server'
 
-import M_User from "@/db/models/m_user";
+import Models from "@/db/models/m_videos";
 
 export default async function getDataByPk(userId) {
-    const user = await M_User.findByPk(userId, {
+    const user = await Models.findByPk(userId, {
       raw: true,
     });
     return user;

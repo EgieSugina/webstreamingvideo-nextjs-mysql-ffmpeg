@@ -1,0 +1,34 @@
+import Models from "@/db/models/m_videos";
+import { NextResponse } from "next/server";
+
+const fs = require("fs");
+
+export async function PUT(request, { params: { id } }) {
+  try {
+    const video = await Models.findByPk(id);
+    if (!video) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+    const formData: any = await request.formData();
+    const data: any = {};
+    for (const [key, value] of formData.entries()) {
+      data[key] = value;
+    }
+    const file: any = formData.get("video_file");
+    console.log(data);
+
+    if (file) {
+      data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
+      const buffer = Buffer.from(await file.arrayBuffer());
+      fs.writeFileSync(
+        `public/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
+        buffer
+      );
+    }
+    const updatedata = await video.update(data);
+
+    return NextResponse.json(updatedata);
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
+}
