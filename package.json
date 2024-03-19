@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next build",
+    "build": "set NODE_OPTIONS=--max-old-space-size=4192 && next build ",
     "start": "next start",
     "lint": "next lint",
     "lint-fix": "next lint --fix"
@@ -30,6 +30,7 @@
     "react-toastify": "^10.0.4",
     "sequelize": "^6.37.1",
     "styled-components": "^6.1.8",
+    "swr": "^2.2.5",
     "tailwind-merge": "^2.2.1",
     "uuid": "^9.0.1"
   },

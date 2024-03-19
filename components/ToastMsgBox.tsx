@@ -1,5 +1,5 @@
 const MsgBox = ({ MsgError }) => {
-  const { name, errors, fields, parent } = MsgError.message;
+  const { errors, parent } = MsgError.message;
 
   return (
     <div>

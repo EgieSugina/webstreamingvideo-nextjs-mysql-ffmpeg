@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import React from "react";
 import { cn } from "@/utils/cn";
 
 export const BackgroundGradientAnimation = ({
@@ -92,7 +93,7 @@ export const BackgroundGradientAnimation = ({
     <div
       className={cn(
         "h-screen w-screen relative overflow-hidden top-0 left-0 bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))]",
-        containerClassName 
+        containerClassName
       )}
     >
       <svg className="hidden">

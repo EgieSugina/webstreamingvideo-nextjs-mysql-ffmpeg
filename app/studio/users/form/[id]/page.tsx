@@ -30,7 +30,7 @@ export default function FormUsers({ params }) {
       setData(data);
     };
     getData();
-  }, []);
+  }, [id]);
   if (!Data) {
     return <>Loading...</>;
   }
@@ -88,7 +88,7 @@ export default function FormUsers({ params }) {
       theme: "dark"
       // transition: Bounce
     });
-    router.refresh()
+    router.refresh();
     return router.push("/studio/users");
 
     // } catch (error) {
@@ -113,7 +113,9 @@ export default function FormUsers({ params }) {
     <>
       <form onSubmit={onSubmit} className={"flex bg-[#212129] "}>
         <div className=" w-3/4   p-3  rounded-lg">
-          <h1 className="font-bold text-2xl text-white center">Edit Users {id}</h1>
+          <h1 className="font-bold text-2xl text-white center">
+            Edit Users {id}
+          </h1>
           <hr className="mb-3" />
           <Input type="text" name="id" className="hidden" value={id} />
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -231,7 +233,9 @@ export default function FormUsers({ params }) {
             <Button type="submit" color="success" radius="sm">
               Simpan
             </Button>
-            <Button radius="sm" onClick={() => router.back()}>Back</Button>
+            <Button radius="sm" onClick={() => router.back()}>
+              Back
+            </Button>
           </div>
         </div>
         <div className=" w-1/3   p-3  rounded-lg">

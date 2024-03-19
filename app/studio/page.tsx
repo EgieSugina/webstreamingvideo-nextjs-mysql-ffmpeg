@@ -3,14 +3,12 @@
 import "./studio.css";
 import "react-quill/dist/quill.snow.css";
 
-import React, { useState } from "react";
-
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/react";
+import React from "react";
 
 export default function HomeStudio() {
   const variant = "underlined"; //["flat", "bordered", "underlined", "faded"];
-  const [value, setValue] = useState("");
 
   return (
     <>

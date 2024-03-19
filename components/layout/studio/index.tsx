@@ -3,7 +3,6 @@
 import { IoCloseSharp, IoSettingsOutline } from "react-icons/io5";
 import React, { useState } from "react";
 
-import { FaHome } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
 import Image from "next/image";
@@ -11,6 +10,8 @@ import Link from "next/link";
 import { MdVideoLibrary } from "react-icons/md";
 import Menu from "./menu";
 import { TbChartSankey } from "react-icons/tb";
+
+// import { FaHome } from "react-icons/fa";
 
 //https://react-icons.github.io/react-icons
 export default function Aside() {
@@ -95,11 +96,7 @@ export default function Aside() {
         >
           <div>
             <ul className="flex flex-1 flex-col    ">
-              <Menu
-                icons={<TbChartSankey />}
-                name={"Dasboard"}
-                href={""}
-              />
+              <Menu icons={<TbChartSankey />} name={"Dasboard"} href={""} />
               <Menu
                 icons={<MdVideoLibrary />}
                 name={"Content"}

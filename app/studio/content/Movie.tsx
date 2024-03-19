@@ -28,8 +28,7 @@ export default function Movie() {
       setData(data);
     };
     getData();
-  }, []);
-  console.log(Data);
+  },[]);
   return (
     <>
       <div className="w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">

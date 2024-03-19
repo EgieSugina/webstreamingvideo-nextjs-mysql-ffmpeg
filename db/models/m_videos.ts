@@ -29,6 +29,9 @@ const Model = sequelize.define(
     views: {
       type: DataTypes.INTEGER
     },
+    public: {
+      type: DataTypes.BOOLEAN
+    },
     duration: {
       type: DataTypes.STRING
     },

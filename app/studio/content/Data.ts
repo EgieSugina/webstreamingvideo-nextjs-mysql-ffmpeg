@@ -20,6 +20,7 @@ export async function findAll() {
       "release_date",
       "type",
       "views",
+      "public",
       [sequelize.fn("COUNT", sequelize.col("likes.like_id")), "like_count"],
       [
         sequelize.fn("COUNT", sequelize.col("comments.comments_id")),
@@ -41,4 +42,9 @@ export async function findAll() {
     group: ["videos.video_id"]
   });
   return data;
+}
+export async function contentVisibelity(id, visibelity) {
+  const _video = await Videos.findByPk(id);
+
+  await _video.update({ public: visibelity });
 }

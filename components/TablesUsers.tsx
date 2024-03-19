@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-  User,
+  User
 } from "@nextui-org/react";
 
 import { CiEdit } from "react-icons/ci";
@@ -34,7 +34,6 @@ export default function Tables({ Data, Columns = [] }) {
   const [page, setPage] = React.useState(1);
 
   const DataMod = Data.map((v) => ({ ...v, id: v.user_id }));
-  if (!Data) return <>No Data</>;
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -53,7 +52,7 @@ export default function Tables({ Data, Columns = [] }) {
           <User
             avatarProps={{
               radius: "lg",
-              src: `data:image/png;base64,${user.img}`,
+              src: `data:image/png;base64,${user.img}`
             }}
             description={user.email}
             name={cellValue}
@@ -102,6 +101,8 @@ export default function Tables({ Data, Columns = [] }) {
         return cellValue;
     }
   }, []);
+  if (!Data) return <>No Data</>;
+
   return (
     <Table
       aria-label="Example table with client side pagination"
@@ -119,7 +120,7 @@ export default function Tables({ Data, Columns = [] }) {
         </div>
       }
       classNames={{
-        wrapper: "min-h-[222px]",
+        wrapper: "min-h-[222px]"
       }}
     >
       <TableHeader columns={Columns}>
