@@ -12,13 +12,20 @@ import {
   Tooltip
 } from "@nextui-org/react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import Image from "next/image";
-// import { BiSolidVideos } from "react-icons/bi";
+
 import { CiEdit } from "react-icons/ci";
+import Image from "next/image";
 import Link from "next/link";
 import { MdDeleteForever } from "react-icons/md";
 import React from "react";
-import { contentVisibelity } from "@/app/studio/content/data";
+import { contentVisibelity } from "@/app/studio/content/Data";
+
+// import { BiSolidVideos } from "react-icons/bi";
+
+
+
+
+
 // import { useRouter } from "next/navigation";
 
 // import { dataouter } from "next/navigation";

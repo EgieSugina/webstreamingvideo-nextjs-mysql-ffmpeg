@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { LuFileVideo } from "react-icons/lu";
 import Tables from "@/components/TablesContent";
-import { findAll } from "./data";
+import { findAll } from "./Data";
 
 export default function Movie() {
   const columns = [

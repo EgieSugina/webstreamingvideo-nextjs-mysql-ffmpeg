@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
 
-import Movie from "./movie";
+import Movie from "./Movie";
 import { Tabs } from "@/components/ui/tabs";
 
 // import getDatafindAll from "./getDatafindAll";
@@ -36,7 +36,7 @@ export default function Users() {
         <div className="w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white ">
           <div className="flex gap-2">TV Series</div>
 
-         Featurs Belum Tersedia
+          Features Belum Tersedia
         </div>
       )
     }

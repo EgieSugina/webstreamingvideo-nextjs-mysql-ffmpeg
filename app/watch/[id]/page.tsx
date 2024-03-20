@@ -1,11 +1,11 @@
 import VideoPlayer from "@/components/VideoPlayer";
 
 export default function Index({ params }) {
-  console.log(params);
-  const hlsUrl = "/hls/video.m3u8";
+  const { id } = params;
+
   return (
     <>
-      <VideoPlayer src={hlsUrl} />
+      <VideoPlayer src={`/hls/${id}/video.m3u8`} />
     </>
   );
 }
