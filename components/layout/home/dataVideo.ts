@@ -10,13 +10,14 @@ export async function findOne() {
   const data = await Videos.findOne({
     where: { public: true },
     raw: true,
-
     order: sequelize.random()
   });
   return data;
 }
 export async function getUserSession() {
   const session = await getServerSession(authOptions);
-  const users = await M_User.findByPk(session.user.id);
+  const users = await M_User.findByPk(session.user.id, {
+    raw: true
+  });
   return { session: session, users: users };
 }

@@ -40,7 +40,7 @@ export default function CarouselControlsInside({
           className="absolute left-0 flex items-center justify-between w-full h-0 px-4 place-self-center z-50"
           data-glide-el="controls"
         >
-          <button
+          {/* <button
             className="inline-flex items-center justify-center w-8 h-8 transition duration-300 bg-white/40 shadow-lg rounded-full  lg:w-12 lg:h-12   hover:border-slate-700 hover:text-green-700  focus-visible:outline-none hover:bg-gray-800 text-white"
             data-glide-dir="<"
             aria-label="prev slide"
@@ -53,7 +53,7 @@ export default function CarouselControlsInside({
             aria-label="next slide"
           >
             <FaAngleRight />
-          </button>
+          </button> */}
         </div>
         {/*    <!-- Slides --> */}
         <div className="overflow-hidden" data-glide-el="track">
