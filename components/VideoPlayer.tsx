@@ -5,7 +5,6 @@ import { Player, PlayerProvider } from "next-playerjs-wrapper";
 
 const VideoPlayer = ({ src, width = "83vw" }) => {
   return (
-    <div className="w-full flex place-content-center ">
       <div
         className="p-4 "
         style={{ width: width, height: "50vh", display: " " }}
@@ -14,7 +13,6 @@ const VideoPlayer = ({ src, width = "83vw" }) => {
           <Player id="my-player" file={src} />
         </PlayerProvider>
       </div>
-    </div>
   );
 };
 

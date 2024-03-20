@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import Slider from "@/components/Slider";
 import VideoCards from "@/components/VideoCards";
-import { findAll } from "@/app/studio/content/Data";
+import { OnlyPublic } from "@/app/studio/content/Data";
 
 // import VideoPlayer from "@/components/VideoPlayer";
 
@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await findAll();
+      const data = await OnlyPublic();
       setData(data);
     };
     getData();

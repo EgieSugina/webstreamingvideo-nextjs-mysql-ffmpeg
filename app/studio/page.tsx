@@ -13,7 +13,7 @@ export default function HomeStudio() {
   return (
     <>
     <h1 className="font-bold text-3xl text-white">
-      Halaman Admin & Staff 
+      Halaman Admin 
 
       
     </h1>

@@ -43,6 +43,13 @@ export async function findAll() {
   });
   return data;
 }
+export async function OnlyPublic() {
+  const data = await Videos.findAll({
+    raw: true,
+    where:{"public":true} 
+  });
+  return data;
+}
 export async function contentVisibelity(id, visibelity) {
   const _video = await Videos.findByPk(id);
 
