@@ -3,8 +3,6 @@
 
 import { Player, PlayerProvider } from "next-playerjs-wrapper";
 
-import CommentsForm from "@/components/CommentsForm"
-
 const VideoPlayer = ({ src, width = "83vw" }) => {
   return (
     <div className="w-full flex place-content-center ">
@@ -15,7 +13,6 @@ const VideoPlayer = ({ src, width = "83vw" }) => {
         <PlayerProvider player="/playerjs.js">
           <Player id="my-player" file={src} />
         </PlayerProvider>
-      <CommentsForm/>
       </div>
     </div>
   );
