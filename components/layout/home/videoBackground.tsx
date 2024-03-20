@@ -1,16 +1,17 @@
-"use client";
+'use client'
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react'
 
-export default function Banner({ children, Data }) {
-  const videoRef = useRef(null);
+
+export default function Banner ({ children, Data }) {
+  const videoRef = useRef(null)
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = videoRef.current
 
     if (video) {
       // Attempt to play the video
-      const playPromise = video.play();
+      const playPromise = video.play()
 
       // Check if the browser allows autoplay
       if (playPromise !== undefined) {
@@ -18,17 +19,17 @@ export default function Banner({ children, Data }) {
           .then(() => {
             // Autoplay started
           })
-          .catch((error) => {
+          .catch(error => {
             // Autoplay was prevented
             // You might want to show a play button for the user to interact with
-            console.error("Autoplay prevented:", error);
-          });
+            console.error('Autoplay prevented:', error)
+          })
       }
     }
-  }, [Data]);
+  }, [Data])
   return (
     <>
-      <div className="relative ">
+      <div className='relative '>
         {Data ? (
           <>
             <video
@@ -36,14 +37,14 @@ export default function Banner({ children, Data }) {
               autoPlay
               muted
               loop
-              className={"fixed  w-full"}
+              className={'fixed  w-full'}
             >
               <source src={`/hls/${Data.video_id}/clip.mp4`} />
             </video>
           </>
         ) : null}
-        <div className="absolute w-full h-screen">{children}</div>
+        <div className='absolute w-full h-screen'>{children}</div>
       </div>
     </>
-  );
+  )
 }
