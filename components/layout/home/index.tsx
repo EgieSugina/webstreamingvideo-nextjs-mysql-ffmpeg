@@ -1,9 +1,10 @@
 'use client'
+
 import './layout.css'
 
-import Account from './Profile'
 import { useEffect, useState } from 'react'
 
+import Account from './Profile'
 import { FaPlay } from 'react-icons/fa'
 import Image from 'next/image'
 import { IoMdInformationCircleOutline } from 'react-icons/io'
@@ -77,7 +78,7 @@ export default function HomeLayout ({ children }) {
                         </button>
                         <button
                           className='z-0 text-gray-800 rounded-md group relative  inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 text-3xl gap-unit-2 [&amp;>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none data-[hover=true]:opacity-hover 
-                    bg-gray-300 bg-opacity-80 hover:bg-opacity-40'
+                          color-secondary hover:bg-opacity-40'
                         >
                           <IoMdInformationCircleOutline /> More Info
                         </button>
