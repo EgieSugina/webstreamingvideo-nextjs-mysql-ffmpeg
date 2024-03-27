@@ -10,12 +10,18 @@ export default async function Index ({ params }) {
 
   return (
     <>
-      <div className={'flex'}>
+      {/* <div className={'flex'}>
         {' '}
-        <div className='w-full grow flex place-content-center '>
+       
+        
+      </div> */}
+      <div class='grid grid-rows-2 grid-flow-col  gap-4'>
+        <div className='w-full  flex place-content-center h-[90vh] '>
           <VideoPlayer src={`/hls/${id}/video.m3u8`} />
         </div>
-        <CommentsForm session={session} VideoID={id} />
+        <div>
+          <CommentsForm session={session} VideoID={id} />
+        </div>
       </div>
     </>
   )

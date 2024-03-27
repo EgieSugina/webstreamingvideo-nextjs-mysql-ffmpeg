@@ -4,7 +4,9 @@ import Comments from "@/db/models/m_comments";
 import Like from "@/db/models/m_likes";
 import Videos from "@/db/models/m_videos";
 import sequelize from "@/db/sequelize";
-
+import MyList from "@/db/models/m_my_list";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth/next";
 export async function findAll() {
   const data = await Videos.findAll({
     raw: true,
@@ -43,10 +45,44 @@ export async function findAll() {
   });
   return data;
 }
+
+export async function OnlyMyList() {
+  const session = await getServerSession(authOptions);
+  const data = await MyList.findAll({
+    raw: true,
+    attributes: [
+      `id_mylist`,
+      `video_id`,
+      `user_id`,
+      `mylistadd_date`,
+      [sequelize.col(`video.video_id`), "video_id"],
+      [sequelize.col(`video.title`), "title"],
+      [sequelize.col(`video.description`), "description"],
+      [sequelize.col(`video.status`), "status"],
+      [sequelize.col(`video.upload_date`), "upload_date"],
+      [sequelize.col(`video.user_id`), "user_id"],
+      [sequelize.col(`video.views`), "views"],
+      [sequelize.col(`video.public`), "public"],
+      [sequelize.col(`video.duration`), "duration"],
+      [sequelize.col(`video.genre`), "genre"],
+      [sequelize.col(`video.format_raw`), "format_raw"],
+      [sequelize.col(`video.release_date`), "release_date"],
+      [sequelize.col(`video.type`), "type"]
+    ],
+    where: { user_id: session.user.id },
+    include: [
+      {
+        model: Videos,
+        required: true
+      }
+    ]
+  });
+  return data;
+}
 export async function OnlyPublic() {
   const data = await Videos.findAll({
     raw: true,
-    where:{"public":true} 
+    where: { public: true }
   });
   return data;
 }

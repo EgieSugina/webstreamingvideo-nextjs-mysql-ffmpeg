@@ -1,4 +1,5 @@
-import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
+'use client'
+// import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
 
 import Image from 'next/image'
 import Link from 'next/link'

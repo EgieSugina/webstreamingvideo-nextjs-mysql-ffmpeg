@@ -56,9 +56,10 @@ export default async function WatchLayout({ children }) {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    <Menu name="Home" href="/home" />
-                    <Menu name="Movie" href="/movie" />
-                    <Menu name="My List" href="/mylist" />
+                  <Menu name='Home' href='/home' />
+                      <Menu name='Movie' href='/movie' />
+                      <Menu name='TV Series' href='/tvseries' />
+                      <Menu name='My List' href='/mylist' />
                   </div>
                 </div>
               </div>
