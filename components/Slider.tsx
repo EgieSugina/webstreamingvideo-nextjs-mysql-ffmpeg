@@ -1,3 +1,4 @@
+"use client"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import React, { useEffect } from "react";
 
