@@ -1,8 +1,9 @@
 const { DataTypes } = require("sequelize");
 
 import sequelize from "../sequelize";
+import Video from "../models/m_videos";
 
-const Model = sequelize.define(
+const MyList = sequelize.define(
   "my_list",
   {
     id_mylist: {
@@ -15,13 +16,14 @@ const Model = sequelize.define(
     user_id: {
       type: DataTypes.INTEGER
     },
-	mylistadd_date: {
+    mylistadd_date: {
       type: DataTypes.DATE
-    },
-      },
+    }
+  },
   {
     timestamps: false,
     freezeTableName: true
   }
 );
-export default Model;
+
+export default MyList;

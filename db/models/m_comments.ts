@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 import Video from "../models/m_videos";
+import Users from "../models/m_user";
 import sequelize from "../sequelize";
 
 const Comment = sequelize.define(
@@ -30,4 +31,7 @@ const Comment = sequelize.define(
 );
 Comment.belongsTo(Video, { foreignKey: "video_id" });
 Video.hasMany(Comment, { foreignKey: "video_id" });
+
+Comment.belongsTo(Users, { foreignKey: "user_id" });
+Users.hasMany(Comment, { foreignKey: "user_id" });
 export default Comment;

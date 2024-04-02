@@ -17,11 +17,11 @@ export default function RootLayout ({ children }) {
     <html lang='en' className={'dark ' + inter.className}>
       <link rel='icon' href='/assets/images/ico.svg' sizes='any' />
       {/* <link rel='preconnect' href='https://fonts.googleapis.com' />
-      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin="true" />
+      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin />
       <link
         href='https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'
         rel='stylesheet'
-      /> */}
+      />  */}
       <body>
         {/* <NextAuthProvider>{children}</NextAuthProvider> */}
         {children}
