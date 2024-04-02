@@ -1,6 +1,6 @@
 "use server";
 import sequelize from "@/db/sequelize";
-import Image from "next/image";
+// import Image from "next/image";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
