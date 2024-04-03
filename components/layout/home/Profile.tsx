@@ -17,7 +17,7 @@ export default function Account () {
     }
     getData()
   }, [])
-
+  console.log(session)
   return (
     <>
       <div className=' gap-4 flex text-center place-items-center '>
@@ -30,21 +30,22 @@ export default function Account () {
               <ImgProfile users={Users} session={session} />
             </Link>
             <span>{session.user.name}</span>
-            {(session.user.role.includes('Admin') ||
-              session.user.role.includes('Staff')) && (
-              <>
-                <Link href='/studio'>
-                  <div
-                    className='z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 text-small gap-unit-2 [&amp;>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none text-default-foreground data-[hover=true]:opacity-hover bg-green-800 rounded-md'
-                    // type="button"
-                    // data-hover="true"
-                  >
-                    Studio{' '}
-                    <MdVideoLibrary className=' font-extrabold text-2xl' />{' '}
-                  </div>
-                </Link>
-              </>
-            )}
+            {session.user.role &&
+              (session.user.role.includes('Admin') ||
+                session.user.role.includes('Staff')) && (
+                <>
+                  <Link href='/studio'>
+                    <div
+                      className='z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 text-small gap-unit-2 [&amp;>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors-opacity motion-reduce:transition-none text-default-foreground data-[hover=true]:opacity-hover bg-green-800 rounded-md'
+                      // type="button"
+                      // data-hover="true"
+                    >
+                      Studio{' '}
+                      <MdVideoLibrary className=' font-extrabold text-2xl' />{' '}
+                    </div>
+                  </Link>
+                </>
+              )}
             <LogoutButton />
           </>
         ) : (
@@ -57,10 +58,21 @@ export default function Account () {
   )
 }
 
-function ImgProfile ({ session, users }) {
-  return (
+function ImgProfile ({ users,session }) {
+  if (session.user.image) {
+    return (
+      <Image
+        src={session.user.image}
+        width={100}
+        height={100}
+        alt='Profile'
+        className=' rounded-full'
+      />
+    )
+  }else{
+     return (
     <>
-      {users.img ? (
+      {users && users.img ? (
         <>
           {' '}
           <Image
@@ -80,4 +92,6 @@ function ImgProfile ({ session, users }) {
       )}
     </>
   )
+  }
+ 
 }

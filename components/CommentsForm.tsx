@@ -15,7 +15,7 @@ export default function CommentsForm ({ session, VideoID }) {
       const dataComments = await getCommentsByVideoID(VideoID)
       const data = await Promise.all(
         dataComments.map(async v => {
-          const img = await imgProp(session.user.id)
+          const img =  await imgProp(session.user.id)
           return { ...v, img }
         })
       )
@@ -44,7 +44,7 @@ export default function CommentsForm ({ session, VideoID }) {
     <>
       <div className={'flex place-content-center mt-5'}>
         <div className={'w-[83vw] '}>
-          <Likes />
+          <Likes videoID={VideoID} userID={session.user.id}/>
           <AddMyListButton userID={session.user.id} VideoID={VideoID} />
           <div className=' mt-4 glass '>
             <h3 className='font-bold p-2'>Komentar</h3>

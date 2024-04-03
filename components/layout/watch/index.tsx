@@ -13,28 +13,40 @@ import { getServerSession } from "next-auth/next";
 // import { Button } from "@nextui-org/react";
 async function ImgProfile({ session }) {
   const users = await M_User.findByPk(session.user.id);
-  return (
+  if (session.user.image) {
+    return (
+      <Image
+        src={session.user.image}
+        width={100}
+        height={100}
+        alt='Profile'
+        className=' rounded-full'
+      />
+    )
+  }else{
+     return (
     <>
-      {users.img ? (
+      {users.img && users.img ? (
         <>
-          {" "}
+          {' '}
           <Image
             src={`data:image/png;base64,${users.img}`}
             width={100}
             height={100}
-            alt="Profile"
-            className=" rounded-full"
+            alt='Profile'
+            className=' rounded-full'
           />
         </>
       ) : (
         <>
-          <div className={"w-[100] h-[100] rounded-full"}>
-            {session.user.name.split("")[0]}
+          <div className={'w-[100] h-[100] rounded-full'}>
+            {session.user.name.split('')[0]}
           </div>
         </>
       )}
     </>
-  );
+  )
+  }
 }
 export default async function WatchLayout({ children }) {
   const session = await getServerSession(authOptions);
@@ -74,8 +86,8 @@ export default async function WatchLayout({ children }) {
                       <ImgProfile session={session} />
                     </Link>
                     <span>{session.user.name}</span>
-                    {session.user.role.includes("Admin") ||
-                      (session.user.role.includes("Staff") && (
+                    {session.user.role && (session.user.role.includes("Admin") ||
+                      session.user.role.includes("Staff")) && (
                         <>
                           <Link href="/studio">
                             <div
@@ -88,7 +100,7 @@ export default async function WatchLayout({ children }) {
                             </div>
                           </Link>
                         </>
-                      ))}
+                      )}
                     <LogoutButton />
                   </>
                 ) : (

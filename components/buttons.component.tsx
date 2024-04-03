@@ -100,18 +100,74 @@ export const AddMyListButton = ({ userID, VideoID }) => {
     </Button>
   )
 }
-export const Likes = () => {
-  const [liked, setLiked] = useState(false)
-  const [likes, setLikes] = useState(0)
+// export const Likes = ({ userID, VideoID }) => {
+//   const [liked, setLiked] = useState(false)
+//   const [likes, setLikes] = useState(0)
 
-  const handleLike = () => {
+//   const handleLike = () => {
+//     setLiked(true)
+//     setLikes(prevLikes => prevLikes + 1)
+//   }
+
+//   const handleUnlike = () => {
+//     setLiked(false)
+//     setLikes(prevLikes => prevLikes - 1)
+//   }
+
+//   return (
+//     <Button
+//       type='submit'
+//       radius='sm'
+//       className='font-semibold rounded-none border-none '
+//       variant='bordered'
+//       onClick={liked ? handleUnlike : handleLike}
+//     >
+//       {liked ? (
+//         <FcLike className='animate-jump-in text-3xl animate-once animate-ease-in animate-normal animate-fill-both text-red-700' />
+//       ) : (
+//         <FaRegHeart className='text-2xl' />
+//       )}
+//       <span>{likes}</span>
+//     </Button>
+//   )
+// }
+export const ProfileButton = () => {
+  return <Link href='/profile'>Profile</Link>
+}
+import { findOne, Count, destroy, create } from './LikesActions'
+export const Likes = ({ userID, videoID }) => {
+  const [liked, setLiked] = useState(false)
+  // const [likes, setLikes] = useState(0)
+  const [totalLikes, setTotalLikes] = useState(0)
+
+  useEffect(() => {
+    const getData = async () => {
+      const _Liked = await findOne(userID, videoID)
+      console.log(_Liked)
+      setLiked(_Liked)
+      const _Count = await Count(videoID)
+      setTotalLikes(_Count)
+    }
+    getData()
+    // Fetch total likes for the video
+  }, [userID, videoID]) // Run this effect whenever userID or videoID changes
+
+  // Function to handle like action
+  const handleLike = async () => {
     setLiked(true)
-    setLikes(prevLikes => prevLikes + 1)
+    // setLikes(prevLikes => prevLikes + 1)
+    await create(userID, videoID)
+    setTotalLikes(prevTotalLikes => prevTotalLikes + 1) //
   }
 
-  const handleUnlike = () => {
+  // Function to handle unlike action
+  const handleUnlike = async () => {
     setLiked(false)
-    setLikes(prevLikes => prevLikes - 1)
+    // setLikes(prevLikes => prevLikes - 1)
+
+    // Delete the like entry from the database
+    await destroy(userID, videoID)
+    setTotalLikes(prevTotalLikes => prevTotalLikes - 1) // Update total likes count
   }
 
   return (
@@ -127,10 +183,7 @@ export const Likes = () => {
       ) : (
         <FaRegHeart className='text-2xl' />
       )}
-      <span>{likes}</span>
+      <span>{totalLikes}</span>
     </Button>
   )
-}
-export const ProfileButton = () => {
-  return <Link href='/profile'>Profile</Link>
 }
