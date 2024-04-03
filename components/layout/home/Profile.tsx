@@ -17,7 +17,6 @@ export default function Account () {
     }
     getData()
   }, [])
-  console.log(session)
   return (
     <>
       <div className=' gap-4 flex text-center place-items-center '>

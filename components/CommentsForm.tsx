@@ -1,13 +1,14 @@
 'use client'
 
+import { AddMyListButton, Likes } from './buttons.component'
 import { Button, Textarea } from '@nextui-org/react'
+import { PostComments, getCommentsByVideoID, imgProp } from './Actions'
+import React, { useEffect } from 'react'
 
 import Image from 'next/image'
-import { Likes, AddMyListButton } from './buttons.component'
 import { LuSend } from 'react-icons/lu'
-import React, { useEffect } from 'react'
-import { PostComments, getCommentsByVideoID, imgProp } from './Actions'
-export default function CommentsForm ({ session, VideoID }) {
+
+export default function CommentsForm ({ session, VideoID,Title}) {
   const [comments, setComments] = React.useState([])
   const formRef = React.useRef(null)
   useEffect(() => {
@@ -43,7 +44,8 @@ export default function CommentsForm ({ session, VideoID }) {
   return (
     <>
       <div className={'flex place-content-center mt-5'}>
-        <div className={'w-[83vw] '}>
+        <div className={'w-[83vw]  px-4'}>
+          <strong className={"text-2xl"}>{Title}</strong><br/>
           <Likes videoID={VideoID} userID={session.user.id}/>
           <AddMyListButton userID={session.user.id} VideoID={VideoID} />
           <div className=' mt-4 glass '>
@@ -98,7 +100,7 @@ export default function CommentsForm ({ session, VideoID }) {
                     </div>
                   ))
                 ) : (
-                  <>Loading Data Komentar...</>
+                 null
                 )}
               </div>
             </form>

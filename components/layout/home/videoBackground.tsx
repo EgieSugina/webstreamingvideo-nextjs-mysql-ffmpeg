@@ -2,26 +2,18 @@
 
 import React, { useEffect, useRef } from 'react'
 
-
 export default function Banner ({ children, Data }) {
+  console.log(Data)
   const videoRef = useRef(null)
 
   useEffect(() => {
     const video = videoRef.current
-
     if (video) {
-      // Attempt to play the video
       const playPromise = video.play()
-
-      // Check if the browser allows autoplay
       if (playPromise !== undefined) {
         playPromise
-          .then(() => {
-            // Autoplay started
-          })
+          .then(() => {})
           .catch(error => {
-            // Autoplay was prevented
-            // You might want to show a play button for the user to interact with
             console.error('Autoplay prevented:', error)
           })
       }
@@ -30,7 +22,7 @@ export default function Banner ({ children, Data }) {
   return (
     <>
       <div className='relative '>
-        {Data ? (
+        {Data?.video_id ? (
           <>
             <video
               ref={videoRef}
