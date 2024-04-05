@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev ",
+    "serve": "node server.js",
     "build": "set NODE_OPTIONS=--max-old-space-size=4192 && next build ",
     "start": "next start",
     "lint": "next lint",
@@ -29,6 +30,7 @@
     "react-quill": "^2.0.0",
     "react-toastify": "^10.0.4",
     "sequelize": "^6.37.1",
+    "sharp": "^0.33.3",
     "styled-components": "^6.1.8",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.2.1",

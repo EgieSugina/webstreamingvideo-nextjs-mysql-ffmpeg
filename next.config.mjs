@@ -21,7 +21,7 @@ const nextConfig = {
   //   ignoreBuildErrors: true
   // },
   
-  distDir: "dist",
+  // distDir: "dist",
   images: {
     // domains: ['lh3.googleusercontent.com'],
     remotePatterns: [

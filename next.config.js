@@ -11,6 +11,8 @@ module.exports = {
     // !! WARN !!
     ignoreBuildErrors: true
   },
+  // distDir: "dist",
+
   experimental: {
     serverActions: {
       allowedOrigins: ["92nqwjqc-3000.asse.devtunnels.ms" /* or Codespace port forward url, no including scheme */, "localhost:3000"]
