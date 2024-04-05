@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // experimental: {
-  //   serverActions: {
-  //     allowedOrigins: ["92nqwjqc-3000.asse.devtunnels.ms" /* or Codespace port forward url, no including scheme */, "localhost:3000"]
-  //   }
-  // },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["92nqwjqc-3000.asse.devtunnels.ms" /* or Codespace port forward url, no including scheme */, "localhost:3000"]
+    }
+  },
   // experimental: {
   //   serverActions: {
   //     // edit: updated to new key. Was previously `allowedForwardedHosts`
