@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     if (file.size > 0) {
       data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
       const buffer = Buffer.from(await file.arrayBuffer());
-      fs.writeFileSync(`public/raw/${clean_uuid}${data["format_raw"]}`, buffer);
+      fs.writeFileSync(`videos/raw/${clean_uuid}${data["format_raw"]}`, buffer);
     }
     const createdUser = await Models.create(data);
 

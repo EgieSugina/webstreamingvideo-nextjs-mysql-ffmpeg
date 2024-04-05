@@ -8,8 +8,8 @@ import { spawn } from "child_process";
 
 export default async function ffmpeg(id, format) {
   await changeStatus(id, "process");
-  const mp4FilePath = `./public/raw/${id}${format}`;
-  const outputDir = `./public/hls/${id}`;
+  const mp4FilePath = `./videos/raw/${id}${format}`;
+  const outputDir = `./videos/hls/${id}`;
 
   if (!fs.existsSync(outputDir)) {
     await fs.mkdirSync(outputDir, { recursive: true });

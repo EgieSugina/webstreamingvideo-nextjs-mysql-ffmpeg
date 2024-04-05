@@ -1,5 +1,5 @@
 "use client"
-import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
+// import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -29,7 +29,7 @@ export default function VideoCards ({ Data }) {
               width={280}
               height={160}
               quality={100}
-              src={`/hls/${Data.video_id}/thumbnail.png`}
+              src={`/api/videos/${Data.video_id}/thumbnail.png`}
               alt={Data.video_id}
             />
             {compareDates(Data.upload_date) && (

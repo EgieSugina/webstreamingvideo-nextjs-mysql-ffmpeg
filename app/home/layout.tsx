@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/home";
+// import Layout from "@/components/layout/home";
 
 // import { authOptions } from "@/lib/auth";
 // import { getServerSession } from "next-auth/next";

@@ -2,7 +2,7 @@
 
 import './home.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import Layout from '@/components/layout/home'
 import { OnlyPublic } from '@/app/studio/content/Data'
@@ -12,14 +12,18 @@ import VideoCards from '@/components/VideoCards'
 // import VideoPlayer from "@/components/VideoPlayer";
 
 export default function Home () {
+  const hasFetchedData = useRef(false)
   const [Data, setData] = useState<any>([])
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await OnlyPublic()
-      setData(data)
+    const fetchData = async () => {
+      const result = await OnlyPublic()
+      setData(result)
     }
-    getData()
+    if (!hasFetchedData.current) {
+      hasFetchedData.current = true
+      fetchData()
+    }
   }, [])
   // const hlsUrl = "/hls/video.m3u8";
 
@@ -37,7 +41,6 @@ export default function Home () {
               </Slider>
             </>
           )}
-          
         </div>
       </Layout>
     </>

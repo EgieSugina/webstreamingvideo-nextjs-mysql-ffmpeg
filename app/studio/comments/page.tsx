@@ -14,14 +14,13 @@ export default function Comments () {
     const get = async () => {
       const data = await getData()
       setData(data)
-      console.log(data)
     }
     get()
   }, [])
   if (Data.length == 0) return <>No Data</>
   const itemsPerPage = 10
   const totalItems = Data.length
-  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  // const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
@@ -50,17 +49,17 @@ export default function Comments () {
                   className={'rounded-full'}
                 />
               </div>
-              <div>
+              <div className="grow">
                 <div>@nama</div>
                 <div>{item.comment_text}</div>
               </div>
               <div>
                 <Image
-                  src='/assets/images/profile.jpg'
-                  width={50}
+                  src='/hls/e7adce04726/thumbnail.png'
+                  width={200}
                   height={50}
                   alt='Picture of the author'
-                  className={'rounded-full'}
+                  className={''}
                 />
               </div>
             </div>
@@ -69,7 +68,7 @@ export default function Comments () {
         <div className='flex flex-row-reverse p-4'>
           <Pagination
             total={totalItems - 1}
-            current={currentPage}
+            // current={currentPage}
             pageSize={itemsPerPage}
             onChange={handlePageChange}
             className=''

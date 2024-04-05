@@ -16,7 +16,6 @@ export default async function Home() {
   // }
   return redirect("/home");
   // return redirect("/login");
-  // console.log(session);
 
   // return (
   //   <main

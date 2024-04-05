@@ -23,7 +23,7 @@ export default function CommentsForm ({ session, VideoID,Title}) {
       setComments(data)
     }
     getData()
-  }, [VideoID])
+  }, [VideoID,session])
 
   async function onSubmit (event) {
     event.preventDefault()

@@ -57,7 +57,6 @@ export default function FormUsers({ params }) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    console.log(formData);
 
     const response = await fetch(`/api/users/${id}`, {
       method: "PUT",

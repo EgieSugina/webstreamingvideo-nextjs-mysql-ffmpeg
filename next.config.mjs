@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // experimental: {
+  //   serverActions: {
+  //     allowedOrigins: ["92nqwjqc-3000.asse.devtunnels.ms" /* or Codespace port forward url, no including scheme */, "localhost:3000"]
+  //   }
+  // },
+  // experimental: {
+  //   serverActions: {
+  //     // edit: updated to new key. Was previously `allowedForwardedHosts`
+  //     allowedOrigins: ['92nqwjqc-3000.asse.devtunnels.ms'],
+  //   },
+  // },
   //   basePath: "/test",
   // output: "export",
   // typescript: {
@@ -9,6 +20,7 @@ const nextConfig = {
   //   // !! WARN !!
   //   ignoreBuildErrors: true
   // },
+  
   distDir: "dist",
   images: {
     // domains: ['lh3.googleusercontent.com'],

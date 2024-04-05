@@ -16,6 +16,7 @@ export async function findOne() {
 }
 export async function getUserSession() {
   const session = await getServerSession(authOptions);
+  if (!session) return { session: null, users: null };
   const users = await M_User.findByPk(session.user.id, {
     raw: true
   });

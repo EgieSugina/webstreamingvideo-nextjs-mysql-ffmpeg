@@ -9,7 +9,6 @@ export async function findOne(userID, videoID) {
       user_id: userID
     }
   });
-  console.log("COUNT:",liked)
   if (liked) {
     return true;
   } else {

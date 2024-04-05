@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { LoginButton, LogoutButton } from '@/components/buttons.component'
 import { MdVideoLibrary } from 'react-icons/md'
@@ -57,7 +58,7 @@ export default function Account () {
   )
 }
 
-function ImgProfile ({ users,session }) {
+function ImgProfile ({ users, session }) {
   if (session.user.image) {
     return (
       <Image
@@ -68,29 +69,28 @@ function ImgProfile ({ users,session }) {
         className=' rounded-full'
       />
     )
-  }else{
-     return (
-    <>
-      {users && users.img ? (
-        <>
-          {' '}
-          <Image
-            src={`data:image/png;base64,${users.img}`}
-            width={100}
-            height={100}
-            alt='Profile'
-            className=' rounded-full'
-          />
-        </>
-      ) : (
-        <>
-          <div className={'w-[100] h-[100] rounded-full'}>
-            {session.user.name.split('')[0]}
-          </div>
-        </>
-      )}
-    </>
-  )
+  } else {
+    return (
+      <>
+        {users && users.img ? (
+          <>
+            {' '}
+            <Image
+              src={`data:image/png;base64,${users.img}`}
+              width={100}
+              height={100}
+              alt='Profile'
+              className=' rounded-full'
+            />
+          </>
+        ) : (
+          <>
+            <div className={'w-[100] h-[100] rounded-full'}>
+              {session.user.name.split('')[0]}
+            </div>
+          </>
+        )}
+      </>
+    )
   }
- 
 }

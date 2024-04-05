@@ -33,7 +33,7 @@ export async function PUT(request, { params: { id } }) {
       data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
       const buffer = Buffer.from(await file.arrayBuffer());
       fs.writeFileSync(
-        `public/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
+        `videos/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
         buffer
       );
     }

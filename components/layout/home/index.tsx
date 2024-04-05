@@ -2,7 +2,7 @@
 
 import './layout.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef } from 'react'
 
 import Account from './Profile'
 import { FaPlay } from 'react-icons/fa'
@@ -16,13 +16,19 @@ import { findOne } from './dataVideo'
 
 export default function HomeLayout ({ children }) {
   const [Data, setData] = useState<any>(null)
+  const hasFetchedData = useRef(false)
+
+
   useEffect(() => {
-    const getData = async () => {
-      const data = await findOne()
-      setData(data)
+    const fetchData = async () => {
+      const result = await findOne();
+      setData(result);
+    };
+    if (!hasFetchedData.current) {
+      hasFetchedData.current = true
+      fetchData();
     }
-    getData()
-  }, [])
+  }, [hasFetchedData]);
   return (
     <>
       <VideoBackground Data={Data}>
@@ -49,12 +55,10 @@ export default function HomeLayout ({ children }) {
                     </div>
                   </div>
                 </div>
-
                 <Account />
               </div>
             </div>
           </nav>
-
           <main>
             {Data && (
               <>

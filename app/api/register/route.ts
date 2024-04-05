@@ -11,7 +11,6 @@ export async function POST(req: Request) {
       password: string;
     };
     const hashed_password = await hash(password, 12);
-    console.log(name, email, password, username);
 
     const user: any = await M_User.create({
       username: username,

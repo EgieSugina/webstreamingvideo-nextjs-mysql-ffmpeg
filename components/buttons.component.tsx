@@ -55,7 +55,7 @@ export const AddMyListButton = ({ userID, VideoID }) => {
       setHave(inList)
     }
     getData()
-  }, [])
+  }, [userID, VideoID])
   const handleAdd = async () => {
     setIsLoading(true)
     const data = {
@@ -112,7 +112,6 @@ export const Likes = ({ userID, videoID }) => {
   useEffect(() => {
     const getData = async () => {
       const _Liked = await findOne(userID, videoID)
-      console.log(_Liked)
       setLiked(_Liked)
       const _Count = await Count(videoID)
       setTotalLikes(_Count)

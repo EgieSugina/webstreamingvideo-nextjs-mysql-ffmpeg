@@ -3,9 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 
 export default function Banner ({ children, Data }) {
-  console.log(Data)
   const videoRef = useRef(null)
-
   useEffect(() => {
     const video = videoRef.current
     if (video) {
@@ -31,7 +29,7 @@ export default function Banner ({ children, Data }) {
               loop
               className={'fixed  w-full'}
             >
-              <source src={`/hls/${Data.video_id}/clip.mp4`} />
+              <source src={`/api/videos/${Data.video_id}/clip.mp4`} />
             </video>
           </>
         ) : null}
