@@ -1,5 +1,3 @@
-
-
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import M_User from "@/db/models/m_user";
@@ -53,7 +51,10 @@ export const authOptions: NextAuthOptions = {
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
+      clientSecret: process.env.GOOGLE_SECRET,
+      profile(profile) {
+        return { role: profile.role ?? "Member" }
+      },
     })
   ],
   callbacks: {
