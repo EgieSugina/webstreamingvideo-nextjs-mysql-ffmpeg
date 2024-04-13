@@ -4,7 +4,7 @@ import Aside from '@/components/layout/studio'
 import Header from '@/components/layout/studio/header'
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth/next'
-
+import { redirect } from 'next/navigation'
 export default async function Layout ({ children }) {
   const session = await getServerSession(authOptions)
   if (session) {

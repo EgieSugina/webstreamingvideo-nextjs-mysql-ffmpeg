@@ -7,7 +7,10 @@ import Videos from "@/db/models/m_videos";
 import sequelize from "@/db/sequelize";
 import { v4 as uuidv4 } from "uuid";
 
-const fs = require("fs");
+import fs from "fs";
+import { pipeline } from "stream";
+import { promisify } from "util";
+const pump = promisify(pipeline);
 export async function GET() {
   try {
     const data = await Videos.findAll({
@@ -53,10 +56,10 @@ export async function GET() {
 }
 export async function POST(request: NextRequest) {
   const uuid = uuidv4();
-
   const clean_uuid = uuid.replace(/-/g, "").substring(0, 11);
   try {
     const formData: any = await request.formData();
+
     const data: any = {};
     for (const [key, value] of formData.entries()) {
       data[key] = value;
@@ -65,9 +68,18 @@ export async function POST(request: NextRequest) {
     const file: any = formData.get("video_file");
 
     if (file.size > 0) {
-      data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
-      const buffer = Buffer.from(await file.arrayBuffer());
-      fs.writeFileSync(`videos/raw/${clean_uuid}${data["format_raw"]}`, buffer);
+      data["format_raw"] = file.name.split(".").pop();
+      const buffer = await file.arrayBuffer();
+      console.log(buffer);
+      console.log(data);
+      await pump(
+        file.stream(),
+        fs.createWriteStream(`videos/raw/${clean_uuid}.${data["format_raw"]}`)
+      );
+      // fs.writeFileSync(
+      //   `videos/raw/${clean_uuid}.${data["format_raw"]}`,
+      //   Buffer.from(buffer)
+      // );
     }
     const createdUser = await Models.create(data);
 

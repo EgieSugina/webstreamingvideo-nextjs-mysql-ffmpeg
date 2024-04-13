@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import { Pagination } from '@nextui-org/react'
@@ -9,13 +9,18 @@ import { getData } from './data'
 export default function Comments () {
   const [Data, setData] = useState<any>([])
   const [currentPage, setCurrentPage] = useState(1)
+  const hasFetchedData = useRef(false)
 
   useEffect(() => {
     const get = async () => {
       const data = await getData()
+      console.log(data)
       setData(data)
     }
-    get()
+    if (!hasFetchedData.current) {
+      hasFetchedData.current = true
+      get()
+    }
   }, [])
   if (Data.length == 0) return <>No Data</>
   const itemsPerPage = 10
@@ -49,19 +54,20 @@ export default function Comments () {
                   className={'rounded-full'}
                 />
               </div>
-              <div className="grow">
+              <div className='grow'>
                 <div>@nama</div>
                 <div>{item.comment_text}</div>
               </div>
               <div>
                 <Image
-                  src='/hls/e7adce04726/thumbnail.png'
+                  src={`/api/videos/${item.video_id}/thumbnail.png`}
                   width={200}
                   height={50}
                   alt='Picture of the author'
                   className={''}
                 />
               </div>
+              <div className={"max-w-36 font-normal self-center"}>{item['video.title']}</div>
             </div>
           </>
         ))}

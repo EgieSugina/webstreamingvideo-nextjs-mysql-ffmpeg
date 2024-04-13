@@ -5,7 +5,7 @@ import './home.css'
 import { useEffect, useState, useRef } from 'react'
 
 import Layout from '@/components/layout/home'
-import { OnlyPublic } from '@/app/studio/content/Data'
+import { OnlyPublic } from '@/app/studio/content/data'
 import Slider from '@/components/Slider'
 import VideoCards from '@/components/VideoCards'
 

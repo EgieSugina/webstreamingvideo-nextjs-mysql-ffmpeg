@@ -10,7 +10,7 @@ const VideoPlayer = ({ src, width = "83vw" }) => {
         style={{ width: width, height: "50vh", display: " " }}
       >
         <PlayerProvider player="/playerjs.js">
-          <Player id="my-player" file={src} />
+          <Player id="my-player" file={src} subtitle={[]}/>
         </PlayerProvider>
       </div>
   );
