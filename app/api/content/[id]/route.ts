@@ -19,7 +19,7 @@ export async function DELETE(request, context) {
       return NextResponse.json({ message: error }, { status: 500 });
     }
   }
-export async function PUT(request, { params: { id } }) {
+export async function POST(request, { params: { id } }) {
   try {
     const video = await Models.findByPk(id);
     if (!video) {
@@ -32,14 +32,14 @@ export async function PUT(request, { params: { id } }) {
     }
     const file: any = formData.get("video_file");
 
-    if (file.size > 0) {
-      data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
-      const buffer = Buffer.from(await file.arrayBuffer());
-      fs.writeFileSync(
-        `videos/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
-        buffer
-      );
-    }
+    // if (file.size > 0) {
+    //   data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
+    //   const buffer = Buffer.from(await file.arrayBuffer());
+    //   fs.writeFileSync(
+    //     `videos/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
+    //     buffer
+    //   );
+    // }
     if (file.size > 0) {
       data["format_raw"] = file.name.split(".").pop();
       const buffer = await file.arrayBuffer();

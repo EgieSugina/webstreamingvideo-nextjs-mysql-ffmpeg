@@ -36,11 +36,32 @@ export default function CommentsForm ({ session, VideoID,Title}) {
     data['user_id'] = session.user.id
     data['video_id'] = VideoID
     data['img'] = await imgProp(session.user.id)
+    data['comment_date']= new Date()
+
     PostComments(data)
     setComments([...comments, data])
     formRef.current.reset()
   }
+function formatDate(date) {
+  const now = new Date();
+  const diff = now - date;
+  console.log(date)
+  // Convert milliseconds to seconds, minutes, hours, and days
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
+  if (days > 0) {
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0) {
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else if (minutes > 0) {
+    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  } else {
+    return 'Just now';
+  }
+}
   return (
     <>
       <div className={'flex place-content-center mt-5'}>
@@ -80,7 +101,7 @@ export default function CommentsForm ({ session, VideoID,Title}) {
                       className='glass  p-3  border-b-1 border-white'
                     >
                       <div className='flex gap-3 items-center'>
-                        {comment.img && (
+                        {/* {comment.img && (
                           <Image
                             alt=''
                             src={comment.img}
@@ -88,14 +109,36 @@ export default function CommentsForm ({ session, VideoID,Title}) {
                             height={100}
                             className='object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'
                           />
+                        )} */}
+                         {comment.img ? (
+                          <>
+                            <Image
+                              src={comment.img}
+                              alt={""}
+                              title={""}
+                              width='100'
+                              height='100'
+                              className='object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'
+
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <div className='object-cover w-8 text-center h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'>
+                              <h1 className='text-xl text-gray '>
+                                {comment.fullname.split('')[0]}
+                              </h1>
+                            </div>
+                          </>
                         )}
                         <h3 className='font-bold'>
                           {comment.nama ||
-                            comment.fullname + ' (' + comment.username + ')'}
-                        </h3>{' '}
+                            comment.fullname + ' (' + comment.username + ')'} <span className="text-neutral-500 font-semibold text-center self-center text-small  p-1  ">{'•'} {formatDate(comment.comment_date)}</span>
+                        </h3>
+                        
                       </div>
                       <p className='text-gray-200 mt-2'>
-                        {comment.comment_text}
+                       {comment.comment_text}
                       </p>{' '}
                     </div>
                   ))

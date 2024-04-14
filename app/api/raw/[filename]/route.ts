@@ -16,17 +16,25 @@ export async function GET(request, { params }) {
     });
   }
 
-  // Use a stream instead of reading the file directly to handle large files
-  const _readStream = fs.createReadStream(FilePath);
-
-  // Stream the file directly to the response
-  return new NextResponse(_readStream, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/x-mpegURL",
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      Pragma: "no-cache",
-      Expires: "0"
-    }
+  const readStreamPromise = new Promise((resolve, reject) => {
+    const chunks = [];
+    const _readStream = fs.createReadStream(FilePath);
+    _readStream.on("data", (chunk) => chunks.push(chunk));
+    _readStream.on("end", () => resolve(Buffer.concat(chunks)));
+    _readStream.on("error", reject);
   });
+
+  return readStreamPromise.then(buffer => 
+    new NextResponse(buffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "video/mp2t",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+        "Accept-Ranges": "bytes", // Added Accept-Ranges header for seeking support
+        "Content-Length": buffer.length.toString() // Added Content-Length header for video duration
+      }
+    })
+  );
 }

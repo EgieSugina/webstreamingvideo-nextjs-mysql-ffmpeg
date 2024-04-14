@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Pagination } from '@nextui-org/react'
 import { getData } from './data'
 
@@ -34,6 +35,26 @@ export default function Comments () {
   const handlePageChange = page => {
     setCurrentPage(page)
   }
+  function formatDate (date) {
+    const now = new Date()
+    const diff = now - date
+    console.log(date)
+    // Convert milliseconds to seconds, minutes, hours, and days
+    const seconds = Math.floor(diff / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+
+    if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
+    } else {
+      return 'Just now'
+    }
+  }
   return (
     <>
       <div className='bg-[#212129] w-full shadow-3xl  text-white relative rounded-md'>
@@ -45,33 +66,54 @@ export default function Comments () {
               key={item.id}
               className='flex flex-row  gap-3 border-b-2 p-4 border-gray-500'
             >
-              <div className='  '>
-                <Image
-                  src='/assets/images/profile.jpg'
-                  width={50}
-                  height={50}
-                  alt='Picture of the author'
-                  className={'rounded-full'}
-                />
-              </div>
+              {item['user.img'] ? (
+                <>
+                  <Image
+                    src={item['user.img']}
+                    alt={''}
+                    title={''}
+                    width='100'
+                    height='100'
+                    className='object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'
+                  />
+                </>
+              ) : (
+                <>
+                  <div className='object-cover w-8 text-center h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'>
+                    <h1 className='text-xl text-gray '>
+                      {item['user.fullname'].split('')[0]}
+                    </h1>
+                  </div>
+                </>
+              )}
               <div className='grow'>
-                <div>@nama</div>
+                <div className='font-bold'>
+                  {item['user.fullname'] + ' (' + item['user.username'] + ')'}{' '}
+                  <span className='text-neutral-500 font-semibold text-center self-center text-small  p-1  '>
+                    {'•'} {formatDate(item.comment_date)}
+                  </span>
+                </div>
                 <div>{item.comment_text}</div>
               </div>
               <div>
-                <Image
-                  src={`/api/videos/${item.video_id}/thumbnail.png`}
-                  width={200}
-                  height={50}
-                  alt='Picture of the author'
-                  className={''}
-                />
+                <Link href={`/watch/${item.video_id}`}>
+                  <Image
+                    src={`/api/videos/${item.video_id}/thumbnail.png`}
+                    width={120}
+                    height={50}
+                    alt='Picture of the author'
+                    className={'rounded shadow'}
+                  />
+                </Link>
               </div>
-              <div className={"max-w-36 font-normal self-center"}>{item['video.title']}</div>
+              <div className={'max-w-36 font-normal self-center'}>
+                {item['video.title']}
+              </div>
             </div>
           </>
         ))}
         <div className='flex flex-row-reverse p-4'>
+          aaa
           <Pagination
             total={totalItems - 1}
             // current={currentPage}

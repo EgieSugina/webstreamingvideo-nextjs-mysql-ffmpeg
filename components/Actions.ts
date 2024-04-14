@@ -42,6 +42,7 @@ export async function getCommentsByVideoID(id) {
       `video_id`,
       `user_id`,
       `comment_text`,
+      `comment_date`,
       [sequelize.col("user.fullname"), "fullname"],
       [sequelize.col("user.username"), "username"]
     ],
@@ -57,5 +58,6 @@ export async function getCommentsByVideoID(id) {
 }
 export async function imgProp(id) {
   const users = await Users.findByPk(id);
+  if(!users.img) return null
   return `data:image/png;base64,${users.img}`;
 }
