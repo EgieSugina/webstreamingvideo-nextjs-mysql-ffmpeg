@@ -3,7 +3,7 @@
 
 import * as fs from "fs";
 
-import { changeStatus } from "@/app/studio/content/Data";
+import { changeStatus } from "@/app/studio/content/data";
 import { spawn } from "child_process";
 
 export default async function clip(
@@ -33,7 +33,6 @@ export default async function clip(
     if (code === 0) {
       await changeStatus(id, "done");
 
-      fs.unlinkSync(mp4FilePath);
       console.log("FFmpeg process completed successfully");
     } else {
       await changeStatus(id, "failed");

@@ -33,19 +33,20 @@ export default function CommentsForm ({ session, VideoID,Title}) {
       data[key] = value
     }
     data['nama'] = session.user.name
+    data['fullname'] = session.user.name
     data['user_id'] = session.user.id
     data['video_id'] = VideoID
     data['img'] = await imgProp(session.user.id)
-    data['comment_date']= new Date()
+    data['comment_date'] = new Date()
 
     PostComments(data)
-    setComments([...comments, data])
+    const updatedComments = [data, ...comments].sort((a, b) => new Date(b.comment_date) - new Date(a.comment_date))
+    setComments(updatedComments)
     formRef.current.reset()
   }
 function formatDate(date) {
   const now = new Date();
   const diff = now - date;
-  console.log(date)
   // Convert milliseconds to seconds, minutes, hours, and days
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);

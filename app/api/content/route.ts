@@ -70,8 +70,7 @@ export async function POST(request: NextRequest) {
     if (file.size > 0) {
       data["format_raw"] = file.name.split(".").pop();
       const buffer = await file.arrayBuffer();
-      console.log(buffer);
-      console.log(data);
+       
       await pump(
         file.stream(),
         fs.createWriteStream(`videos/raw/${clean_uuid}.${data["format_raw"]}`)

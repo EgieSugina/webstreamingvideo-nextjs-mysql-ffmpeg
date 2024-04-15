@@ -42,9 +42,7 @@ export async function POST(request, { params: { id } }) {
     // }
     if (file.size > 0) {
       data["format_raw"] = file.name.split(".").pop();
-      const buffer = await file.arrayBuffer();
-      console.log(buffer);
-      console.log(data);
+      // const buffer = await file.arrayBuffer();
       await pump(
         file.stream(),
         fs.createWriteStream(`videos/raw/${id}.${data["format_raw"]}`)

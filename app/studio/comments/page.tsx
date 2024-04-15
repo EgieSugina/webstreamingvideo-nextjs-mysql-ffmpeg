@@ -24,9 +24,9 @@ export default function Comments () {
     }
   }, [])
   if (Data.length == 0) return <>No Data</>
-  const itemsPerPage = 10
+  const itemsPerPage = 6
   const totalItems = Data.length
-  // const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
@@ -113,9 +113,8 @@ export default function Comments () {
           </>
         ))}
         <div className='flex flex-row-reverse p-4'>
-          aaa
           <Pagination
-            total={totalItems - 1}
+            total={totalPages}
             // current={currentPage}
             pageSize={itemsPerPage}
             onChange={handlePageChange}

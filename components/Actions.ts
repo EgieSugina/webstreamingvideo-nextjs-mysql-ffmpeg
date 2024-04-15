@@ -52,7 +52,8 @@ export async function getCommentsByVideoID(id) {
         attributes: [],
         required: false
       }
-    ]
+    ],
+    order: [['comment_date', 'DESC']] // Added order by comment_date desc
   });
   return users;
 }
