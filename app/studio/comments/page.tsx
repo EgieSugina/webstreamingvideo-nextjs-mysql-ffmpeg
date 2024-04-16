@@ -1,10 +1,11 @@
 'use client'
 
+import { Pagination, Tooltip } from '@nextui-org/react'
 import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Pagination } from '@nextui-org/react'
+import { MdDeleteForever } from 'react-icons/md'
 import { getData } from './data'
 
 export default function Comments () {
@@ -15,7 +16,6 @@ export default function Comments () {
   useEffect(() => {
     const get = async () => {
       const data = await getData()
-      console.log(data)
       setData(data)
     }
     if (!hasFetchedData.current) {
@@ -24,7 +24,7 @@ export default function Comments () {
     }
   }, [])
   if (Data.length == 0) return <>No Data</>
-  const itemsPerPage = 6
+  const itemsPerPage = 5
   const totalItems = Data.length
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
@@ -38,7 +38,6 @@ export default function Comments () {
   function formatDate (date) {
     const now = new Date()
     const diff = now - date
-    console.log(date)
     // Convert milliseconds to seconds, minutes, hours, and days
     const seconds = Math.floor(diff / 1000)
     const minutes = Math.floor(seconds / 60)
@@ -57,62 +56,73 @@ export default function Comments () {
   }
   return (
     <>
-      <div className='bg-[#212129] w-full shadow-3xl  text-white relative rounded-md'>
+      <div className='bg-[#212129] w-full min-h-full shadow-3xl text-white relative rounded-md'>
         <h1 className='font-semibold text-3xl p-4 '>Comments</h1>
-
-        {displayedItems.map(item => (
-          <>
-            <div
-              key={item.id}
-              className='flex flex-row  gap-3 border-b-2 p-4 border-gray-500'
-            >
-              {item['user.img'] ? (
-                <>
-                  <Image
-                    src={item['user.img']}
-                    alt={''}
-                    title={''}
-                    width='100'
-                    height='100'
-                    className='object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'
-                  />
-                </>
-              ) : (
-                <>
-                  <div className='object-cover w-8 text-center h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'>
-                    <h1 className='text-xl text-gray '>
-                      {item['user.fullname'].split('')[0]}
-                    </h1>
+        <div className='  '>
+          {displayedItems.map(item => (
+            <>
+              <div
+                key={item.id}
+                className='flex flex-row  gap-3 h-fit border-t-2 p-4 border-gray-500'
+              >
+                {item['user.img'] ? (
+                  <>
+                    <Image
+                      src={`data:image/png;base64,${item['user.img']}`}
+                      alt={''}
+                      title={''}
+                      width='100'
+                      height='100'
+                      className='object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'
+                    />
+                  </>
+                ) : (
+                  <>
+                    <div className='object-cover w-8 text-center h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400'>
+                      <h1 className='text-xl text-gray '>
+                        {item['user.fullname'].split('')[0]}
+                      </h1>
+                    </div>
+                  </>
+                )}
+                <div className='grow'>
+                  <div className='font-bold'>
+                    {item['user.fullname'] + ' (' + item['user.username'] + ')'}{' '}
+                    <span className='text-neutral-500 font-semibold text-center self-center text-small  p-1  '>
+                      {'•'} {formatDate(item.comment_date)}
+                    </span>
                   </div>
-                </>
-              )}
-              <div className='grow'>
-                <div className='font-bold'>
-                  {item['user.fullname'] + ' (' + item['user.username'] + ')'}{' '}
-                  <span className='text-neutral-500 font-semibold text-center self-center text-small  p-1  '>
-                    {'•'} {formatDate(item.comment_date)}
-                  </span>
+                  <div>{item.comment_text}</div>
                 </div>
-                <div>{item.comment_text}</div>
+                <div>
+                  <Link href={`/watch/${item.video_id}`}>
+                    <Image
+                      src={`/api/videos/${item.video_id}/thumbnail.png`}
+                      width={120}
+                      height={50}
+                      alt='Picture of the author'
+                      className={'rounded shadow'}
+                    />
+                  </Link>
+                </div>
+                <div className={'max-w-36 min-w-36 font-normal self-center'}>
+                  {item['video.title']}
+                </div>
+                <div className=" content-center">
+                  <Link href={`/studio/comments/delete/${item.comments_id}`}>
+                    <Tooltip color='danger' content='Delete Comments'>
+                      <span className='text-lg text-danger cursor-pointer active:opacity-50'>
+                        <MdDeleteForever className='text-2xl' />
+                      </span>
+                    </Tooltip>
+                  </Link>
+                </div>
               </div>
-              <div>
-                <Link href={`/watch/${item.video_id}`}>
-                  <Image
-                    src={`/api/videos/${item.video_id}/thumbnail.png`}
-                    width={120}
-                    height={50}
-                    alt='Picture of the author'
-                    className={'rounded shadow'}
-                  />
-                </Link>
-              </div>
-              <div className={'max-w-36 font-normal self-center'}>
-                {item['video.title']}
-              </div>
-            </div>
-          </>
-        ))}
-        <div className='flex flex-row-reverse p-4'>
+            </>
+          ))}
+        </div>
+
+        <div className='flex absolute bottom-0 w-full flex-row-reverse p-4 border-t-2'>
           <Pagination
             total={totalPages}
             // current={currentPage}

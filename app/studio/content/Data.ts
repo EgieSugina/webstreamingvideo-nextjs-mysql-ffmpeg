@@ -2,11 +2,12 @@
 
 import Comments from "@/db/models/m_comments";
 import Like from "@/db/models/m_likes";
-import Videos from "@/db/models/m_videos";
-import sequelize from "@/db/sequelize";
 import MyList from "@/db/models/m_my_list";
+import Videos from "@/db/models/m_videos";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth/next";
+import sequelize from "@/db/sequelize";
+
 export async function findAll() {
   const data = await Videos.findAll({
     raw: true,
@@ -46,6 +47,13 @@ export async function findAll() {
   return data;
 }
 
+export async function ListMovie() {
+  const data = await Videos.findAll({
+    raw: true,
+    where: { public: true,type:'movie' }
+  });
+  return data;
+}
 export async function OnlyMyList() {
   const session = await getServerSession(authOptions);
   const data = await MyList.findAll({

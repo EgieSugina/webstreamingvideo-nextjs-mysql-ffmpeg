@@ -98,7 +98,9 @@ export default function Aside ({ Sesio }) {
                     title={Sesio.user.name}
                     width='500'
                     height='500'
-                    className='max-w-full rounded-full'
+                    style={{ maxWidth: "150px", maxHeight: "150px" }}
+
+                    className='  h-[150px] w-[150px] rounded-full'
                   />
                 </>
               ) : (

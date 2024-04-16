@@ -5,6 +5,7 @@ import Header from '@/components/layout/studio/header'
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth/next'
 import { redirect } from 'next/navigation'
+
 export default async function Layout ({ children }) {
   const session = await getServerSession(authOptions)
   if (session) {
@@ -19,11 +20,11 @@ export default async function Layout ({ children }) {
                 {children}
               </div>
             </div>
-            <footer className='footer px-4 py-6'>
+            {/* <footer className='footer px-4 py-6'>
               <div className='footer-content'>
                 <p className='text-sm text-gray-600 text-center'></p>
               </div>
-            </footer>
+            </footer> */}
           </main>
         </div>
       </>
