@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import { pipeline } from "stream";
 import { promisify } from "util";
+
 const pump = promisify(pipeline);
 
 export async function DELETE(request, context) {
@@ -32,25 +33,14 @@ export async function POST(request, { params: { id } }) {
     }
     const file: any = formData.get("video_file");
 
-    // if (file.size > 0) {
-    //   data["format_raw"] = file.name.match(/\.[^.]+$/)[0];
-    //   const buffer = Buffer.from(await file.arrayBuffer());
-    //   fs.writeFileSync(
-    //     `videos/raw/${id}${file.name.match(/\.[^.]+$/)[0]}`,
-    //     buffer
-    //   );
-    // }
+  
     if (file.size > 0) {
       data["format_raw"] = file.name.split(".").pop();
-      // const buffer = await file.arrayBuffer();
       await pump(
         file.stream(),
         fs.createWriteStream(`videos/raw/${id}.${data["format_raw"]}`)
       );
-      // fs.writeFileSync(
-      //   `videos/raw/${clean_uuid}.${data["format_raw"]}`,
-      //   Buffer.from(buffer)
-      // );
+  
     }
     const updatedata = await video.update(data);
 
