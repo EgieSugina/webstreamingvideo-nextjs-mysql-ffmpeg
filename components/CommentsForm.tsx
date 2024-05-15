@@ -1,6 +1,7 @@
 'use client'
 
 import { AddMyListButton, Likes } from './buttons.component'
+import DescriptionVideo from "./DescriptionVideo";
 import { Button, Textarea } from '@nextui-org/react'
 import { PostComments, getCommentsByVideoID, imgProp } from './Actions'
 import React, { useEffect } from 'react'
@@ -65,11 +66,12 @@ function formatDate(date) {
 }
   return (
     <>
-      <div className={'flex place-content-center mt-5'}>
+      <div className={'flex place-content-center'}>
         <div className={'w-[83vw]  px-4'}>
           <strong className={"text-2xl"}>{Title}</strong><br/>
           <Likes videoID={VideoID} userID={session.user.id}/>
           <AddMyListButton userID={session.user.id} VideoID={VideoID} />
+          <DescriptionVideo VideoID={VideoID}/>
           <div className=' mt-4 glass '>
             <h3 className='font-bold p-2'>Komentar</h3>
             <form ref={formRef} onSubmit={onSubmit}>

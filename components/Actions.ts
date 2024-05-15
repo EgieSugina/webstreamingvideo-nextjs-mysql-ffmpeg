@@ -5,6 +5,7 @@ import sequelize from "@/db/sequelize";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import Comments from "@/db/models/m_comments";
+import Videos from "@/db/models/m_videos";
 import Users from "@/db/models/m_user";
 import MyList from "@/db/models/m_my_list";
 
@@ -13,6 +14,12 @@ export async function navigate(link) {
 }
 export async function navigateRevalidatePath(link) {
   revalidatePath(link);
+}
+
+export async function getDescriptionVideo(video_id) {
+  const myListEntry = await Videos.findOne({raw: true, where: { video_id: video_id } });
+
+  return myListEntry;
 }
 export async function getOnListMyList(data) {
   const { user_id, video_id } = data;
@@ -44,21 +51,21 @@ export async function getCommentsByVideoID(id) {
       `comment_text`,
       `comment_date`,
       [sequelize.col("user.fullname"), "fullname"],
-      [sequelize.col("user.username"), "username"]
+      [sequelize.col("user.username"), "username"],
     ],
     include: [
       {
         model: Users,
         attributes: [],
-        required: false
-      }
+        required: false,
+      },
     ],
-    order: [['comment_date', 'DESC']] // Added order by comment_date desc
+    order: [["comment_date", "DESC"]], // Added order by comment_date desc
   });
   return users;
 }
 export async function imgProp(id) {
   const users = await Users.findByPk(id);
-  if(!users.img) return null
+  if (!users.img) return null;
   return `data:image/png;base64,${users.img}`;
 }

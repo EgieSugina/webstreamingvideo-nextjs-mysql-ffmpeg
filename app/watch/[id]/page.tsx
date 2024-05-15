@@ -17,11 +17,11 @@ export default async function Index ({ params }) {
         
       </div> */}
       <div class='grid grid-rows-3 grid-flow-col gap-4  '>
-        <div className='w-full  flex place-content-center h-[90vh] '>
+        <div className='w-full  flex place-content-center  '>
           {/* <VideoPlayer src={`/hls/${id}/video.m3u8`} /> */}
           <VideoPlayer src={`/api/videos/${id}/video.m3u8`} />
         </div>
-
+       
         <div>
           <CommentsForm session={session} VideoID={id} Title={title} />
         </div>
