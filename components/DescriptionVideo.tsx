@@ -35,11 +35,23 @@ export default function DescriptionVideo({ VideoID }) {
     }
   }, [VideoID])
   if (!Desc) return null
+  console.log(Desc)
+
   return (
     <>
       <div className=" bg-zinc-800 p-4 rounded-xl my-4">
-        <div className="font-bold">
+        <div className="font-bold gap-2">
           {Desc?.views} views {formatDate(Desc?.upload_date)}
+          <div className="flex gap-1 capitalize py-2">
+            {Desc?.genre.split(', ').map((genre) => (
+              <span
+                key={genre}
+                className=" bg-sky-600 bg-opacity-60 rounded-full px-2 text-sm"
+              >
+                {genre}
+              </span>
+            ))}
+          </div>
         </div>
         <p
           className="text-justif text-medium"

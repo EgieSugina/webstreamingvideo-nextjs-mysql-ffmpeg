@@ -35,7 +35,7 @@ export default function CarouselControlsInside({
   return (
     <>
       {/*<!-- Component: Carousel with controls inside --> */}
-      <div className={`${id} w-full grid max-h-[17rem] relative`}>
+      <div className={`${id} w-full grid min-h-[13rem] max-h-[13rem] relative`}>
         {/*    <!-- Controls --> */}
         <div
           className="absolute left-0 flex items-center justify-between w-full h-0 px-4 place-self-center z-50"

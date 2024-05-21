@@ -4,8 +4,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function VideoCards ({ Data }) {
-  const compareDates = date1 => {
+export default function VideoCards({ Data }) {
+  const compareDates = (date1) => {
     const date1Obj = new Date(date1)
     const date2Obj = new Date()
 
@@ -22,10 +22,10 @@ export default function VideoCards ({ Data }) {
   return (
     <>
       <Link href={`/watch/${Data.video_id}`}>
-        <div className=' group/item transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative'>
-          <div className='max-h-[160]'>
+        <div className=" group/item transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative">
+          <div className="max-h-[160]">
             <Image
-              className='w-full'
+              className="w-full"
               width={280}
               height={160}
               quality={100}
@@ -33,7 +33,7 @@ export default function VideoCards ({ Data }) {
               alt={Data.video_id}
             />
             {compareDates(Data.upload_date) && (
-              <div className='badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded'>
+              <div className="badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded">
                 Recently Added
               </div>
             )}
@@ -49,15 +49,14 @@ export default function VideoCards ({ Data }) {
               <FaComment /> {Data.comment_count}
             </div>
           </div> */}
-          <div className='hidden group/edit group-hover/item:flex group-hover/item:flex-col  desc p-4 text-gray-200'>
-            <div className='title font-bold block cursor-pointer hover:underline'>
-              {Data.title}
-            </div>
-
+          <div className="title font-bold block cursor-pointer hover:underline desc p-4">
+            {Data.title}
+          </div>
+          <div className="hidden group/edit group-hover/item:flex group-hover/item:flex-col  desc px-4 py-1 text-gray-200">
             <span
-              className='description text-justify text-wrap text-sm block py-2 border-gray-400 mb-2'
+              className="description text-justify text-wrap text-sm block border-gray-400 mb-2"
               dangerouslySetInnerHTML={{
-                __html: Data.description.split('</p><p>')[0].replace('<p>', '')
+                __html: Data.description.split('</p><p>')[0].replace('<p>', ''),
               }}
             ></span>
           </div>

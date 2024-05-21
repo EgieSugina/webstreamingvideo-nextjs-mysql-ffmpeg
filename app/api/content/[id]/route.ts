@@ -31,6 +31,8 @@ export async function POST(request, { params: { id } }) {
     for (const [key, value] of formData.entries()) {
       data[key] = value;
     }
+    console.log(data);
+    
     const file: any = formData.get("video_file");
 
   

@@ -254,7 +254,7 @@ export default function FormUsers ({ params }) {
                   <Select
                     onChange={handleSelectionChange}
                     isRequired
-                    name={'genre'}
+                    // name={'genre'}
                     defaultSelectedKeys={Genres}
                     label='Genre'
                     selectionMode='multiple'

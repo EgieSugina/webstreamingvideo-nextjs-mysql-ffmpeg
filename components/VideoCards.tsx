@@ -1,11 +1,11 @@
-"use client"
+'use client'
 // import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
 
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function VideoCards ({ Data }) {
-  const compareDates = date1 => {
+export default function VideoCards({ Data, isRecentlyWatched = false }) {
+  const compareDates = (date1) => {
     const date1Obj = new Date(date1)
     const date2Obj = new Date()
 
@@ -22,10 +22,10 @@ export default function VideoCards ({ Data }) {
   return (
     <>
       <Link href={`/watch/${Data.video_id}`}>
-        <div className=' group/item transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative'>
-          <div className='max-h-[160]'>
+        <div className=" group/item transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative">
+          <div className="max-h-[160]">
             <Image
-              className='w-full'
+              className="w-full"
               width={280}
               height={160}
               quality={100}
@@ -33,10 +33,15 @@ export default function VideoCards ({ Data }) {
               alt={Data.video_id}
             />
             {compareDates(Data.upload_date) && (
-              <div className='badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded'>
+              <div className="badge absolute top-0 right-0 bg-red-500 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded">
                 Recently Added
               </div>
             )}
+            {isRecentlyWatched || Data['histories.isRecentlyWatched'] ? (
+              <div className="badge absolute top-0 bg-indigo-700 m-1 text-gray-200 p-1 px-2 text-xs font-bold rounded">
+                Recently Watched
+              </div>
+            ) : null}
           </div>
           {/* <div className='hidden group/edit group-hover/item:flex info-box w-full text-xs p-1 font-semibold text-gray-500 bg-gray-300 text-center'>
             <div className=' grow mr-1 p-1 px-2 font-bold flex flex-nowrap gap-1 items-center justify-center'>
@@ -49,8 +54,8 @@ export default function VideoCards ({ Data }) {
               <FaComment /> {Data.comment_count}
             </div>
           </div> */}
-          <div className='hidden group/edit group-hover/item:flex  desc p-4 text-gray-200'>
-            <div className='title font-bold block cursor-pointer hover:underline'>
+          <div className="hidden group/edit group-hover/item:flex  desc p-4 text-gray-200">
+            <div className="title font-bold block cursor-pointer hover:underline">
               {Data.title}
             </div>
 

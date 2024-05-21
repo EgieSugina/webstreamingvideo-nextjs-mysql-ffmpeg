@@ -1,55 +1,56 @@
-import "../home/layout.css";
+import '../home/layout.css'
 
-import { LoginButton, LogoutButton } from "@/components/buttons.component";
+import { LoginButton, LogoutButton } from '@/components/buttons.component'
 
-import Image from "next/image";
-import Link from "next/link";
-import M_User from "@/db/models/m_user";
-import { MdVideoLibrary } from "react-icons/md";
-import Menu from "../home/menu";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth/next";
+import Image from 'next/image'
+import Link from 'next/link'
+import M_User from '@/db/models/m_user'
+import { MdVideoLibrary } from 'react-icons/md'
+import Menu from '../home/menu'
+import Genre from '../home/menuGenre'
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth/next'
 
 // import { Button } from "@nextui-org/react";
 async function ImgProfile({ session }) {
-  const users = await M_User.findByPk(session.user.id);
+  const users = await M_User.findByPk(session.user.id)
   if (session.user.image) {
     return (
       <Image
         src={session.user.image}
         width={100}
         height={100}
-        alt='Profile'
-        className=' rounded-full'
+        alt="Profile"
+        className=" rounded-full"
       />
     )
-  }else{
-     return (
-    <>
-      {users.img && users.img ? (
-        <>
-          {' '}
-          <Image
-            src={`data:image/png;base64,${users.img}`}
-            width={100}
-            height={100}
-            alt='Profile'
-            className=' rounded-full'
-          />
-        </>
-      ) : (
-        <>
-          <div className={'w-[100] h-[100] rounded-full'}>
-            {session.user.name.split('')[0]}
-          </div>
-        </>
-      )}
-    </>
-  )
+  } else {
+    return (
+      <>
+        {users.img && users.img ? (
+          <>
+            {' '}
+            <Image
+              src={`data:image/png;base64,${users.img}`}
+              width={100}
+              height={100}
+              alt="Profile"
+              className=" rounded-full"
+            />
+          </>
+        ) : (
+          <>
+            <div className={'w-[100] h-[100] rounded-full'}>
+              {session.user.name.split('')[0]}
+            </div>
+          </>
+        )}
+      </>
+    )
   }
 }
 export default async function WatchLayout({ children }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   return (
     <>
       <div className="min-h-full    to-slate-900">
@@ -60,7 +61,7 @@ export default async function WatchLayout({ children }) {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <Image
-                    src={"/assets/images/logo.svg"}
+                    src={'/assets/images/logo.svg'}
                     width={150}
                     height={150}
                     alt="Logo"
@@ -68,10 +69,10 @@ export default async function WatchLayout({ children }) {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                  <Menu name='Home' href='/home' />
-                      <Menu name='Movie' href='/movie' />
-                      <Menu name='TV Series' href='/tvseries' />
-                      <Menu name='My List' href='/mylist' />
+                    <Menu name="Home" href="/home" />
+                    <Genre name="Movie" href="/movie" />
+                    <Genre name="TV Series" href="/tvseries" />
+                    <Menu name="My List" href="/mylist" />
                   </div>
                 </div>
               </div>
@@ -86,8 +87,9 @@ export default async function WatchLayout({ children }) {
                       <ImgProfile session={session} />
                     </Link>
                     <span>{session.user.name}</span>
-                    {session.user.role && (session.user.role.includes("Admin") ||
-                      session.user.role.includes("Staff")) && (
+                    {session.user.role &&
+                      (session.user.role.includes('Admin') ||
+                        session.user.role.includes('Staff')) && (
                         <>
                           <Link href="/studio">
                             <div
@@ -95,8 +97,8 @@ export default async function WatchLayout({ children }) {
                               // type="button"
                               // data-hover="true"
                             >
-                              Studio{" "}
-                              <MdVideoLibrary className=" font-extrabold text-2xl" />{" "}
+                              Studio{' '}
+                              <MdVideoLibrary className=" font-extrabold text-2xl" />{' '}
                             </div>
                           </Link>
                         </>
@@ -116,5 +118,5 @@ export default async function WatchLayout({ children }) {
         <main>{children}</main>
       </div>
     </>
-  );
+  )
 }

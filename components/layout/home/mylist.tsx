@@ -9,6 +9,7 @@ import Account from './Profile'
 import Image from 'next/image'
 // import { IoMdInformationCircleOutline } from 'react-icons/io'
 import Menu from './menu'
+import Genre from './menuGenre'
 // import VideoBackground from '@/components/layout/home/videoBackground'
 // import { findOne } from './dataVideo'
 
@@ -43,8 +44,8 @@ export default function HomeLayout ({ children }) {
                 <div className='hidden md:block'>
                   <div className='ml-10 flex items-baseline space-x-4'>
                     <Menu name='Home' href='/home' />
-                    <Menu name='Movie' href='/movie' />
-                    <Menu name='TV Series' href='/tvseries' />
+                    <Genre name='Movie' href='/movie' />
+                    <Genre name='TV Series' href='/tvseries' />
                     <Menu name='My List' href='/mylist' />
                   </div>
                 </div>

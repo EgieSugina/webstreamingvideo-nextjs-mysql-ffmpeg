@@ -4,10 +4,11 @@ import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth/next'
 import { getTitle } from './data'
 
-export default async function Index ({ params }) {
+export default async function Index({ params }) {
   const session = await getServerSession(authOptions)
   const { id } = params
   const { title } = await getTitle(id)
+
 
   return (
     <>
@@ -16,12 +17,12 @@ export default async function Index ({ params }) {
        
         
       </div> */}
-      <div class='grid grid-rows-3 grid-flow-col gap-4  '>
-        <div className='w-full  flex place-content-center  '>
+      <div class="grid grid-rows-3 grid-flow-col gap-4  ">
+        <div className="w-full  flex place-content-center  ">
           {/* <VideoPlayer src={`/hls/${id}/video.m3u8`} /> */}
           <VideoPlayer src={`/api/videos/${id}/video.m3u8`} />
         </div>
-       
+
         <div>
           <CommentsForm session={session} VideoID={id} Title={title} />
         </div>
