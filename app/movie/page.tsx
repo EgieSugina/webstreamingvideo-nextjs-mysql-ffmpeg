@@ -13,10 +13,10 @@ export default function Home({ searchParams: { genre } }) {
       const data = await ListMovie({ genre: genre })
       setData(data)
     }
-    if (!hasFetchedData.current) {
-      hasFetchedData.current = true
+    // if (!hasFetchedData.current) {
+    //   hasFetchedData.current = true
       getData()
-    }
+    // }
   }, [genre])
 
   return (

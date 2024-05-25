@@ -33,7 +33,7 @@ const MenuGenre = ({ href, name }) => {
         {name}
       </button>
       <div
-        className={`absolute z-10 mt-2 w-96 rounded-md shadow-lg glass ring-1 ring-black ring-opacity-5 ${
+        className={`absolute z-10 mt-2 w-96 rounded-md shadow-lg bg-zinc-700 ring-1 ring-black ring-opacity-5 ${
           showGenreList ? 'block' : 'hidden'
         } delay-150`}
       >

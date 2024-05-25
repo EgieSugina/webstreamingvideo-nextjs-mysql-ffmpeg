@@ -109,7 +109,7 @@ export const LoginForm = () => {
         </button> */}
       </div>
 
-      <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+      {/* <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
         <p className="text-center font-semibold mx-4 mb-0 text-gray-700">OR</p>
       </div>
 
@@ -128,7 +128,7 @@ export const LoginForm = () => {
           style={{ height: "2rem" }}
         />
         Continue with Google
-      </Button>
+      </Button> */}
     </form>
   );
 };
