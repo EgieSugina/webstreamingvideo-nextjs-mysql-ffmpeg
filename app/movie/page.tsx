@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-
+import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/breadcrumbs'
 import { ListMovie } from '@/app/studio/content/data'
 import VideoCardsWithDetails from '@/components/VideoCardsWithDetails'
 
@@ -15,13 +15,17 @@ export default function Home({ searchParams: { genre } }) {
     }
     // if (!hasFetchedData.current) {
     //   hasFetchedData.current = true
-      getData()
+    getData()
     // }
   }, [genre])
 
   return (
     <div>
       <div className="mx-auto py-6 sm:px-6 lg:px-8">
+        <Breadcrumbs className={"ml-2 mb-2 text-2xl"}>
+          <BreadcrumbItem>Movie</BreadcrumbItem>
+          <BreadcrumbItem>{genre}</BreadcrumbItem>
+        </Breadcrumbs>
         <div className="w-full grid grid-cols-6 max-h-[17rem] relative">
           {Data.map((v, i) => (
             <VideoCardsWithDetails key={i + 'mylist'} Data={v} />

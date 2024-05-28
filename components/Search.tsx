@@ -23,16 +23,6 @@ export default function Search() {
       }
     },
   })
-  //   React.useEffect(() => {
-  //     const fetchData = async () => {
-  //       const result = await OnlyPublic()
-  //       setData(result)
-  //     }
-  //     if (!hasFetchedData.current) {
-  //       hasFetchedData.current = true
-  //       fetchData()
-  //     }
-  //   }, [])
 
   const handleSearch = (value) => {
     console.log('SEARCH:', value)
