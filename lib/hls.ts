@@ -26,7 +26,6 @@ export default async function hls (id, format) {
     stdio: 'ignore',
     shell: true
   })
-
   ffmpegProcess.on('exit', async code => {
     if (code === 0) {
       await changeStatus(id, 'done')
