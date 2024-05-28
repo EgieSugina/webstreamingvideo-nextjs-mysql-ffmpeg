@@ -1,6 +1,6 @@
 'use client'
 // import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
-import {Select, SelectItem} from "@nextui-org/react";
+import { Select, SelectItem } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -22,7 +22,7 @@ export default function VideoCards({ Data }) {
   // href={`/watch/${Data.video_id}`}
   return (
     <>
-      {/* <Link > */}
+      <Link href={`/tvseries/${Data.video_id}`}>
         <div className=" group/item transition duration-200 hover:shadow-2xl ease-in-out transform hover:scale-105 hover:z-50 each mb-10 m-2 shadow-lg border-gray-800 bg-gray-800 relative">
           <div className="max-h-[160]">
             <Image
@@ -55,24 +55,24 @@ export default function VideoCards({ Data }) {
               {Data.title}
             </div>
             <div className="description text-sm block py-2 border-gray-400 mb-2">
-            <Select 
-            variant={"underlined"}
-            label="Select season" 
-            className="max-w-xs" 
-          >
-            {[1, 2, 3].map((season) => (
-              <SelectItem key={season} value={season}>
-                {`Season ${season}`}
-              </SelectItem>
-            ))}
-          </Select>
+              <Select
+                variant={'underlined'}
+                label="Select season"
+                className="max-w-xs"
+              >
+                {[1, 2, 3].map((season) => (
+                  <SelectItem key={season} value={season}>
+                    {`Season ${season}`}
+                  </SelectItem>
+                ))}
+              </Select>
             </div>
             {/* <span className="description text-sm block py-2 border-gray-400 mb-2">
             lorem ipsum bekhum bukhum !lorem ipsum bekhum bukhum !
           </span> */}
           </div>
         </div>
-      {/* </Link> */}
+      </Link>
     </>
   )
 }
