@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 import sequelize from "../sequelize";
+import Episodes from "./m_episodes"; // Added import for m_episodes model
 
 const Season = sequelize.define(
   "season",
@@ -24,5 +25,7 @@ const Season = sequelize.define(
     freezeTableName: true
   }
 );
-export default Season;
 
+Season.hasMany(Episodes, { foreignKey: 'season_id' }); 
+
+export default Season;

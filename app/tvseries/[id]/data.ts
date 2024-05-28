@@ -37,3 +37,37 @@ export async function getVideoById(videoId) {
   });
   return video;
 }
+
+export async function getTVSeriesWithSeasonsAndEpisodes(id) {
+  const tvSeries = await TVSeriesDetail.findAll({
+    include: [
+      {
+        required: true,
+
+        model: Season,
+        include: [
+          {
+            required: true,
+
+            model: Episodes,
+            include: [
+              {
+                required: true,
+                model: Video,
+                where: {
+                  video_id: id,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    raw: true,
+  });
+  if (tvSeries.length > 0) {
+    const { series_id } = tvSeries[0];
+    return series_id;
+  }
+  return null
+}

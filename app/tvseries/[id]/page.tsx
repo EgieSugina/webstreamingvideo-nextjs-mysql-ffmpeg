@@ -148,7 +148,7 @@ export default function TVSeriesDetails({ params: { id } }) {
               id="genre"
               className="flex h-5 items-center space-x-4 text-sm flex-wrap my-2 "
             >
-              {/* {Genre.map((v, i) => {
+              {Genre.map((v, i) => {
                 return (
                   <>
                     <Link className=" text-white" href={`/tvseries?genre=${v}`}>
@@ -161,7 +161,7 @@ export default function TVSeriesDetails({ params: { id } }) {
                     )}
                   </>
                 )
-              })} */}
+              })}
             </div>
           </div>
         </div>

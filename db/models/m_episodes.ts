@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 
 import sequelize from "../sequelize";
-import TVSeriesDetail from "./m_tv_series_detail";
 
 const Episodes = sequelize.define(
   "episodes",
@@ -27,7 +26,5 @@ const Episodes = sequelize.define(
   }
 );
 
-Episodes.hasMany(TVSeriesDetail, { foreignKey: "series_id" });
-TVSeriesDetail.belongsTo(Episodes, { foreignKey: "series_id" });
 
 export default Episodes;
