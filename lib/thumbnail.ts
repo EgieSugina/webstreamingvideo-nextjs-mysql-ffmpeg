@@ -6,7 +6,7 @@ import * as fs from "fs";
 import { changeStatus } from "@/app/studio/content/data";
 import { spawn } from "child_process";
 
-export default async function thumbnail(id, format, minutes = "00:00:55") {
+export default async function thumbnail(id, format, minutes = "00:08:55") {
   await changeStatus(id, "process");
   const mp4FilePath = `./videos/raw/${id}.${format}`;
   const outputDir = `./videos/hls/${id}`;

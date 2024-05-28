@@ -33,9 +33,9 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <VideoBackground Data={Data}>
-        <div className="h-full bg-gradient-to-b from-slate-50/10 via-slate-300/40 to-slate-900 w-full fixed">
+        {/* <div className="h-full bg-gradient-to-b from-slate-50/10 via-slate-300/40 to-slate-900 w-full fixed">
           A
-        </div>
+        </div> */}
 
         {/* <VideoBackground> */}
         <nav className="glass sticky top-0 z-50">

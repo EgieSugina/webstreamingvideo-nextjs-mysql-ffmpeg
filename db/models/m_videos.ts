@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 
 import MyList from "./m_my_list";
 import History from "./m_history"; // Added import for History model
+import Episodes from "./m_episodes"; // Added import for Episodes model
 
 import sequelize from "../sequelize";
 
@@ -59,5 +60,7 @@ Video.hasMany(MyList, { foreignKey: "video_id", sourceKey: "video_id" });
 MyList.belongsTo(Video, { foreignKey: "video_id", targetKey: "video_id" });
 Video.hasMany(History, { foreignKey: "video_id", targetKey: "video_id" });
 History.belongsTo(Video, { foreignKey: "video_id", targetKey: "video_id" });
+Video.hasOne(Episodes, { foreignKey: "video_id", sourceKey: "video_id" });
+Episodes.belongsTo(Video, { foreignKey: "video_id", targetKey: "video_id" });
 
 export default Video;

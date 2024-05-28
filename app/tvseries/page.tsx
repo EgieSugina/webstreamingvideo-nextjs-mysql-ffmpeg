@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 
 // import Slider from '@/components/Slider'
 import VideoCardsTVSeries from '@/components/VideoCardsTVSeries'
-import { OnlyMyList } from '@/app/studio/content/Data'
+import { getTVSeries } from './data'
 
 // import VideoPlayer from "@/components/VideoPlayer";
 
@@ -13,7 +13,7 @@ export default function Home () {
   const [Data, setData] = useState<any>([])
   useEffect(() => {
     const getData = async () => {
-      const data = await OnlyMyList()
+      const data = await getTVSeries()
       setData(data)
     }
     if (!hasFetchedData.current) {
@@ -21,14 +21,15 @@ export default function Home () {
       getData()
     }
   }, [])
+  
   // const hlsUrl = "/hls/video.m3u8";
 
   return (
     <div>
       <div className='mx-auto py-6 sm:px-6 lg:px-8'>
-        <div className='w-full grid grid-cols-6 max-h-[17rem] relative'>
+        <div className='w-full grid grid-cols-8 max-h-[17rem] relative'>
           {Data.map((v, i) => (
-            <VideoCardsTVSeries key={i + 'mylist'} Data={v} />
+            <VideoCardsTVSeries key={i + 'tvseries'} Data={v} />
           ))}
         </div>
       </div>

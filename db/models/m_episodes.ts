@@ -1,39 +1,33 @@
 const { DataTypes } = require("sequelize");
 
 import sequelize from "../sequelize";
+import TVSeriesDetail from "./m_tv_series_detail";
 
-const Model = sequelize.define(
+const Episodes = sequelize.define(
   "episodes",
   {
     episodes_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
     },
-    series_id: {
-      type: DataTypes.INTEGER
+    season_id: {
+      type: DataTypes.INTEGER,
     },
     episode_number: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     video_id: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
-    description: {
-      type: DataTypes.STRING
-    },
-    release_date: {
-      type: DataTypes.DATE
-    },
-    duration: {
-      type: DataTypes.TIME
-    },
-	img_cover: {
-      type: DataTypes.INTEGER
-    }
+
   },
   {
     timestamps: false,
-    freezeTableName: true
+    freezeTableName: true,
   }
 );
-export default Model;
+
+Episodes.hasMany(TVSeriesDetail, { foreignKey: "series_id" });
+TVSeriesDetail.belongsTo(Episodes, { foreignKey: "series_id" });
+
+export default Episodes;

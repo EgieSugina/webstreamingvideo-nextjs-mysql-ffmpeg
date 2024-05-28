@@ -11,6 +11,9 @@ module.exports = {
     // !! WARN !!
     ignoreBuildErrors: true
   },
+  images: {
+    domains: ['cdn.myanimelist.net'],
+  },
   // distDir: "dist",
 
   experimental: {

@@ -2,27 +2,27 @@ const { DataTypes } = require("sequelize");
 
 import sequelize from "../sequelize";
 
-const Model = sequelize.define(
-  "tv_series_details",
+const Season = sequelize.define(
+  "season",
   {
-    series_id: {
+    season_id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    title: {
+    series_id: {
       type: DataTypes.STRING
     },
-    
-    ongoing: {
-      type: DataTypes.BOOLEAN 
+    total_episode: {
+      type: DataTypes.INTEGER
     },
-    description: {
-      type: DataTypes.TEXT
+    season_number: {
+      type: DataTypes.INTEGER
     },
-  },
+      },
   {
     timestamps: false,
     freezeTableName: true
   }
 );
-export default Model;
+export default Season;
+
