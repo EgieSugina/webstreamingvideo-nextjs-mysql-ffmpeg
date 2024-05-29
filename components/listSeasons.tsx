@@ -1,14 +1,17 @@
 'use client'
-import Image from 'next/image'
-import { Divider, Link, Accordion, AccordionItem } from '@nextui-org/react'
+
+import { Accordion, AccordionItem, Divider, Link } from '@nextui-org/react'
 import {
-  getTVSeriesByid,
-  getSeasonBySeries,
   getEpisodesBySeason,
-  getVideoById,
+  getSeasonBySeries,
+  getTVSeriesByid,
   getTVSeriesWithSeasonsAndEpisodes,
-} from '@/app/tvseries/[id]/data'
+  getVideoById,
+} from '@/tvseries/[id]/data'
 import { useEffect, useState } from 'react'
+
+import Image from 'next/image'
+
 const CardEpisodes = ({ Data, Season, VideoID }) => {
   const { episode_number, video_id } = Data
   const [Video, setVideo] = useState([])

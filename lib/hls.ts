@@ -3,7 +3,7 @@
 
 import * as fs from 'fs'
 
-import { changeStatus } from '@/app/studio/content/data'
+import { changeStatus } from '@/studio/content/data'
 import { spawn } from 'child_process'
 
 export default async function hls (id, format) {

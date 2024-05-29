@@ -2,10 +2,10 @@
 
 import './home.css'
 
-import { useEffect, useState, useRef } from 'react'
+import { OnlyPublic, OnlyRecentlyWatched } from '@/studio/content/data'
+import { useEffect, useRef, useState } from 'react'
 
 import Layout from '@/components/layout/home'
-import { OnlyPublic, OnlyRecentlyWatched } from '@/app/studio/content/data'
 import Slider from '@/components/Slider'
 import VideoCards from '@/components/VideoCards'
 
