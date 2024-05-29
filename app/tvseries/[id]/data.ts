@@ -1,9 +1,10 @@
 "use server";
-import { Op } from "sequelize";
-import TVSeriesDetail from "@/db/models/m_tv_series_detail";
+// import { Op } from "sequelize";
+
 import Episodes from "@/db/models/m_episodes";
-import Video from "@/db/models/m_videos";
 import Season from "@/db/models/m_season"; // Added import for m_season model
+import TVSeriesDetail from "@/db/models/m_tv_series_detail";
+import Video from "@/db/models/m_videos";
 
 export async function getTVSeriesByid(id) {
   const tvSeries = await TVSeriesDetail.findByPk(id, {

@@ -18,7 +18,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MdDeleteForever } from 'react-icons/md'
 import React from 'react'
-import { contentVisibelity } from '@/studio/content/data'
+import { contentVisibelity } from '@/app/studio/content/data'
 
 const statusColorMap = {
   done: 'success',

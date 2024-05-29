@@ -1,13 +1,13 @@
 'use client'
 
 import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/breadcrumbs'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { ListMovie } from '@/studio/content/data'
+import { ListMovie } from '@/app/studio/content/data'
 import VideoCardsWithDetails from '@/components/VideoCardsWithDetails'
 
 export default function Home({ searchParams: { genre } }) {
-  const hasFetchedData = useRef(false)
+  // const hasFetchedData = useRef(false)
   const [Data, setData] = useState<any>([])
   useEffect(() => {
     const getData = async () => {

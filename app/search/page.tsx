@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Search } from '@/studio/content/data'
+import { Search } from '@/app/studio/content/data'
 import SearchInput from '@/components/Search'
 import VideoCardsWithDetails from '@/components/VideoCardsWithDetails'
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { OnlyMyList } from '@/studio/content/Data'
+import { OnlyMyList } from '@/app/studio/content/data'
 import VideoCards from '@/components/VideoCards'
 
 // import Slider from '@/components/Slider'

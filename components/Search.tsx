@@ -1,19 +1,14 @@
 import {
   Autocomplete,
   AutocompleteItem,
-  Avatar,
-  Button,
 } from '@nextui-org/react'
 
 import { IoSearch } from 'react-icons/io5'
-import { OnlyPublic } from '@/studio/content/data'
 import React from 'react'
 import { useAsyncList } from '@react-stately/data'
 import { useRouter } from 'next/navigation'
 
 export default function Search() {
-  const hasFetchedData = React.useRef(false)
-  const [data, setData] = React.useState<any>([])
   const [valueSearch, setValueSearch] = React.useState<any>([])
   const { push,refresh } = useRouter()
   let list = useAsyncList({

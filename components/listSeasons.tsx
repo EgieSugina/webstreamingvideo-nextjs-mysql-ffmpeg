@@ -1,13 +1,13 @@
 'use client'
 
-import { Accordion, AccordionItem, Divider, Link } from '@nextui-org/react'
+import { Accordion, AccordionItem, Link } from '@nextui-org/react'
 import {
   getEpisodesBySeason,
   getSeasonBySeries,
   getTVSeriesByid,
   getTVSeriesWithSeasonsAndEpisodes,
   getVideoById,
-} from '@/tvseries/[id]/data'
+} from '@/app/tvseries/[id]/data'
 import { useEffect, useState } from 'react'
 
 import Image from 'next/image'
@@ -25,7 +25,7 @@ const CardEpisodes = ({ Data, Season, VideoID }) => {
     if (video_id) {
       getData(video_id)
     }
-  }, [Data])
+  }, [video_id])
   return (
     <>
       <Link
@@ -113,19 +113,19 @@ export default function ListSeasons({ id }) {
     }
   }, [Series])
 
-  const Genre = [
-    'Documentary',
-    'Drama',
-    'Family',
-    'Fantasy',
-    'Horror',
-    'Romance',
-    'Science Fiction',
-    'Thriller',
-    'War',
-    'Slice of Life',
-    'Sports',
-  ]
+  // const Genre = [
+  //   'Documentary',
+  //   'Drama',
+  //   'Family',
+  //   'Fantasy',
+  //   'Horror',
+  //   'Romance',
+  //   'Science Fiction',
+  //   'Thriller',
+  //   'War',
+  //   'Slice of Life',
+  //   'Sports',
+  // ]
 
   const itemClasses = {
     trigger: 'px-2 py-0 bg-zinc-800 h-14 flex items-center',

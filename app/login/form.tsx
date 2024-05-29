@@ -4,8 +4,6 @@
 import { ChangeEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { Button } from "@nextui-org/react";
-import Image from "next/image";
 import { RegisterButton } from "@/components/buttons.component";
 import { signIn } from "next-auth/react";
 
@@ -14,7 +12,7 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [error, setError] = useState("");
 
@@ -31,7 +29,7 @@ export const LoginForm = () => {
         redirect: false,
         email: formValues.email,
         password: formValues.password,
-        callbackUrl
+        callbackUrl,
       });
 
       setLoading(false);
@@ -41,7 +39,7 @@ export const LoginForm = () => {
       } else {
         setError("invalid email or password");
       }
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false);
       setError(error);
     }
@@ -54,14 +52,14 @@ export const LoginForm = () => {
 
   const input_style =
     "form-control block w-full px-4 py-5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none";
-  const handleGoogleLogin = async () => {
-    const result = await signIn("google");
+  // const handleGoogleLogin = async () => {
+  //   const result = await signIn("google");
 
-    if (result) {
-      router.push(callbackUrl);
-      // Redirect to home after successful login
-    }
-  };
+  //   if (result) {
+  //     router.push(callbackUrl);
+  //     // Redirect to home after successful login
+  //   }
+  // };
   return (
     <form onSubmit={onSubmit}>
       {error && (

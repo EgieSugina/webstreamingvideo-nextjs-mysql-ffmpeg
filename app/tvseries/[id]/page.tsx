@@ -1,13 +1,16 @@
 'use client'
-import Image from 'next/image'
-import { Divider, Link, Accordion, AccordionItem } from '@nextui-org/react'
+
+import { Accordion, AccordionItem, Divider, Link } from '@nextui-org/react'
 import {
-  getTVSeriesByid,
-  getSeasonBySeries,
   getEpisodesBySeason,
+  getSeasonBySeries,
+  getTVSeriesByid,
   getVideoById,
 } from './data'
 import { useEffect, useState } from 'react'
+
+import Image from 'next/image'
+
 const CardEpisodes = ({ Data, Season }) => {
   const { episode_number, video_id } = Data
   const [Video, setVideo] = useState([])
@@ -21,7 +24,7 @@ const CardEpisodes = ({ Data, Season }) => {
     if (video_id) {
       getData(video_id)
     }
-  }, [Data])
+  }, [video_id])
   return (
     <>
       <Link

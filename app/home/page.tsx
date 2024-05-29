@@ -2,7 +2,7 @@
 
 import './home.css'
 
-import { OnlyPublic, OnlyRecentlyWatched } from '@/studio/content/data'
+import { OnlyPublic, OnlyRecentlyWatched } from '@/app/studio/content/data'
 import { useEffect, useRef, useState } from 'react'
 
 import Layout from '@/components/layout/home'

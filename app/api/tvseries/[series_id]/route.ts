@@ -1,10 +1,8 @@
 /* eslint-disable no-case-declarations */
 
 import { NextResponse } from "next/server";
-import { createReadStream } from "fs";
 import fs from "fs";
 import path from "path";
-import zlib from "zlib";
 
 export async function GET(request, { params }) {
   const { series_id: FileName } = params;
