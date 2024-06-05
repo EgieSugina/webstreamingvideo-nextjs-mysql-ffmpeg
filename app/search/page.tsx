@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Search } from '@/app/studio/content/data'
-import VideoCardsWithDetails from '@/components/VideoCardsWithDetails'
 import SearchInput from '@/components/Search'
+import VideoCardsWithDetails from '@/components/VideoCardsWithDetails'
+
 export default function Home({ searchParams: { search } }) {
   // const hasFetchedData = useRef(false)
   const [Data, setData] = useState<any>([])

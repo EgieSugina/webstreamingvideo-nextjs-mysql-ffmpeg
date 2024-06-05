@@ -1,24 +1,11 @@
 'use client'
 // import { FaComment, FaEye, FaHeart } from 'react-icons/fa6'
-import { Select, SelectItem } from '@nextui-org/react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function VideoCards({ Data }) {
-  const compareDates = (date1) => {
-    const date1Obj = new Date(date1)
-    const date2Obj = new Date()
-
-    const diffMs = Math.abs(date2Obj - date1Obj)
-
-    const diffDays = diffMs / (1000 * 60 * 60 * 24)
-
-    if (diffDays <= 2) {
-      return true
-    } else {
-      return false
-    }
-  }
+ 
   // href={`/watch/${Data.video_id}`}
   return (
     <>
