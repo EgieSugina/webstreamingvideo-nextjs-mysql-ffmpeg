@@ -43,12 +43,10 @@ export async function getTVSeriesWithSeasonsAndEpisodes(id) {
     include: [
       {
         required: true,
-
         model: Season,
         include: [
           {
             required: true,
-
             model: Episodes,
             include: [
               {
@@ -71,3 +69,4 @@ export async function getTVSeriesWithSeasonsAndEpisodes(id) {
   }
   return null
 }
+

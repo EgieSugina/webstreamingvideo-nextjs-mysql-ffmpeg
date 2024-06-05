@@ -8,12 +8,12 @@ import { getTVSeries } from './data'
 
 // import VideoPlayer from "@/components/VideoPlayer";
 
-export default function Home () {
+export default function Home ({searchParams: { genre } }) {
   const hasFetchedData = useRef(false)
   const [Data, setData] = useState<any>([])
   useEffect(() => {
     const getData = async () => {
-      const data = await getTVSeries()
+      const data = await getTVSeries(genre)
       setData(data)
     }
     if (!hasFetchedData.current) {

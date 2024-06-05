@@ -13,7 +13,9 @@ const Model = sequelize.define(
     title: {
       type: DataTypes.STRING
     },
-    
+    genre: {
+      type: DataTypes.STRING
+    },
     ongoing: {
       type: DataTypes.BOOLEAN 
     },

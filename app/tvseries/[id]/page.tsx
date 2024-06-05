@@ -7,7 +7,7 @@ import {
   getEpisodesBySeason,
   getVideoById,
 } from './data'
-import { useEffect, useState } from 'react'
+import React , { useEffect, useState } from 'react'
 const CardEpisodes = ({ Data, Season }) => {
   const { episode_number, video_id } = Data
   const [Video, setVideo] = useState([])
@@ -126,6 +126,8 @@ export default function TVSeriesDetails({ params: { id } }) {
     // indicator: 'text-medium',
     // content: 'text-small px-2 ',
   }
+  console.log("Series?.genre",Series?.genre?.slice(","));
+  
   return (
     <>
       <div className="w-full flex flex-col items-center ">
@@ -148,20 +150,14 @@ export default function TVSeriesDetails({ params: { id } }) {
               id="genre"
               className="flex h-5 items-center space-x-4 text-sm flex-wrap my-2 "
             >
-              {Genre.map((v, i) => {
-                return (
-                  <>
-                    <Link className=" text-white" href={`/tvseries?genre=${v}`}>
-                      {v}
-                    </Link>
-                    {i != Genre.length - 1 && (
-                      <>
-                        <Divider orientation="vertical" />
-                      </>
-                    )}
-                  </>
-                )
-              })}
+              {Series.genre && Series.genre.includes(",") ? Series.genre.split(", ").map((v, i) => (
+                <React.Fragment key={i}>
+                  <Link className="text-white" href={`/tvseries?genre=${v}`}>
+                    {v}
+                  </Link>
+                  {i !== Series.genre.split(", ").length - 1 && <Divider orientation="vertical" />}
+                </React.Fragment>
+              )) : <Link className="text-white" href={`/tvseries?genre=${Series.genre}`}>{Series.genre}</Link>}
             </div>
           </div>
         </div>
