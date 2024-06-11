@@ -7,12 +7,18 @@ import Videos from "@/db/models/m_videos";
 import History from "@/db/models/m_history"; // Import History model
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth/next";
+import Episodes from "@/db/models/m_episodes";
+import Season from "@/db/models/m_season"; 
+import TVSeriesDetail from "@/db/models/m_tv_series_detail";
 import sequelize from "@/db/sequelize";
 import { Op } from "sequelize";
 
 export async function findAll() {
   const data = await Videos.findAll({
     raw: true,
+    where: {
+      type: 'movie',
+    },
     attributes: [
       "video_id",
       "title",
@@ -47,6 +53,46 @@ export async function findAll() {
     group: ["videos.video_id"],
   });
   return data;
+}
+export async function findAllTvSeries() {
+  const tvSeries = await TVSeriesDetail.findAll({
+     
+    include: [
+      {
+        required: true,
+        model: Season,
+        include: [
+          {
+            required: true,
+            model: Episodes,
+            include: [
+              {
+                required: true,
+                model: Videos,
+                include: [
+                  {
+                    model: Like,
+                    attributes: [],
+                    required: false,
+                  },
+                  {
+                    model: Comments,
+                    attributes: [],
+                    required: false,
+                  },
+                ],
+                
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    raw: true,
+  });
+  console.log(tvSeries);
+  
+  return tvSeries;
 }
 export async function Search({ search }) {
   const data = await Videos.findAll({

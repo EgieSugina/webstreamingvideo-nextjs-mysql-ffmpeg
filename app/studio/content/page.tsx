@@ -1,4 +1,5 @@
 import Movie from './movie'
+import TVSeries from './tvseries'
 import { Tabs } from '@/components/ui/tabs'
 
 export default function Users () {
@@ -12,12 +13,7 @@ export default function Users () {
     {
       title: 'TV Series',
       value: 'tv-series',
-      content: (
-        <div className='w-full overflow-hidden relative h-full rounded-2xl  bg-[#212129]  p-4 text-xl md:text-4xl font-bold text-white '>
-          <div className='flex gap-2'>TV Series</div>
-          Features Belum Tersedia
-        </div>
-      )
+      content: <TVSeries/>
     }
   ]
 

@@ -61,7 +61,6 @@ function ListEpisodes({ Season }) {
   useEffect(() => {
     async function getData(id) {
       const data_episode = await getEpisodesBySeason(id)
-
       setEpisode(data_episode)
     }
 
