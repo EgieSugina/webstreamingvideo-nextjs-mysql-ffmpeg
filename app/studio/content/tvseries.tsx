@@ -11,7 +11,7 @@ import { findAllTvSeries } from './data'
 export default function TVSeries () {
   const columns = [
     { name: 'Series', uid: 'title' },
-    { name: 'Cover', uid: 'thumbnailtvseries' },
+    // { name: 'Cover', uid: 'thumbnailtvseries' },
     { name: 'Title', uid: 'seasons.episodes.video.title' },
     { name: 'Season', uid: 'seasons.season_number' },
     { name: 'Episode', uid: 'seasons.episodes.episode_number' },

@@ -141,11 +141,11 @@ export default function Aside ({ Sesio }) {
                 href={'/comments'}
               />
               <Menu icons={<FaUsers />} name={'Users'} href={'/users'} />
-              <Menu
+              {/* <Menu
                 icons={<IoSettingsOutline />}
                 name={'Setting'}
                 href={'/setting'}
-              />
+              /> */}
             </ul>
           </div>
         </nav>
