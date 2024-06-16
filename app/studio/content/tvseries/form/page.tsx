@@ -56,7 +56,7 @@ export default function TVSeriesForm() {
     <>
       <form onSubmit={onSubmit} className={'flex bg-[#212129] '}>
         <div className=" w-full   p-3  rounded-lg">
-          <h1 className="font-bold text-2xl text-white">Video Content</h1>
+          <h1 className="font-bold text-2xl text-white">Add TV Series</h1>
           <hr className="mb-3" />
           <input name={'description'} type="text" value={value} hidden />
           <input

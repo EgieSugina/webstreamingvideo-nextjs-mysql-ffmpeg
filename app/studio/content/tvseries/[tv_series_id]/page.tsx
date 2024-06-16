@@ -10,6 +10,8 @@ import {
   updateSeason,
   deleteSeason,
 } from './data'
+import { contentVisibelityTVSeries } from '../../data'
+
 import { Tooltip, Button } from '@nextui-org/react'
 import React, { useState, useRef, useEffect } from 'react'
 import {
@@ -64,6 +66,9 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
   const itemClasses = {
     trigger: 'px-2 py-0 bg-zinc-800 h-14 flex items-center',
   }
+  if (!data) {
+    return <>Loading...</>
+  }
   const MenuAccordion = ({ SeasonID, SeriesID }) => {
     return (
       <>
@@ -77,6 +82,8 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
       </>
     )
   }
+  const [Public, setPublic] = React.useState(data.public)
+
   return (
     <>
       <div className="container flex gap-4  p-8 border-b-2 border-zinc-600 border-double text-zinc-300  ">
@@ -94,22 +101,63 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
           {data && data.title && (
             <div className="text-4xl my-2 flex items-center gap-2">
               {data.title}
-              <Tooltip color="success" content="Public">
-                <span className="text-lg  cursor-pointer active:opacity-50">
-                  <FaRegEye className="text-2xl text-green-600" />
-                </span>
-              </Tooltip>
-              <Tooltip content="Edit TV Series">
-                <span className="text-lg text-yellow-600 cursor-pointer active:opacity-50">
-                  <CiEdit className="text-2xl" />
-                </span>
-              </Tooltip>
 
-              <Tooltip color="danger" content="Delete TV Series">
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <MdDeleteForever className="text-2xl" />
-                </span>
-              </Tooltip>
+              <Button
+                isIconOnly
+                className="px-0 border-none"
+                size="sm"
+                variant="ghost"
+                onClick={async () => {
+                  await contentVisibelityTVSeries(data.series_id, !Public)
+                  // router.push(`/studio/content?id=${data.series_id}`);
+                  // router.refresh();
+                  return setPublic(!Public)
+                }}
+              >
+                {Public ? (
+                  <Tooltip color="success" content="Public">
+                    <span className="text-lg  cursor-pointer active:opacity-50">
+                      <FaRegEye className="text-2xl text-green-700" />
+                    </span>
+                  </Tooltip>
+                ) : (
+                  <Tooltip color="danger" content="Private">
+                    <span className="text-lg  cursor-pointer active:opacity-50">
+                      <FaRegEyeSlash className="text-2xl text-red-900" />
+                    </span>
+                  </Tooltip>
+                )}
+              </Button>
+              <Button
+                isIconOnly
+                className="px-0 border-none"
+                size="sm"
+                variant="ghost"
+              >
+                <Link href={`/studio/content/tvseries/form/${data.series_id}`}>
+                  <Tooltip content="Edit data" color="warning">
+                    <span className="text-lg text-warning cursor-pointer active:opacity-50">
+                      <CiEdit className="text-2xl" />
+                    </span>
+                  </Tooltip>
+                </Link>
+              </Button>
+              <Button
+                isIconOnly
+                className="px-0 border-none"
+                size="sm"
+                variant="ghost"
+              >
+                <Link
+                  href={`/studio/content/tvseries/delete/${data.series_id}`}
+                >
+                  <Tooltip color="danger" content="Delete data">
+                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                      <MdDeleteForever className="text-2xl" />
+                    </span>
+                  </Tooltip>
+                </Link>
+              </Button>
             </div>
           )}
           {data && data.description && (
