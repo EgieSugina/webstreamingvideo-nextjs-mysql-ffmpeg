@@ -5,6 +5,10 @@ import {
   getSeasonBySeries,
   getEpisodesBySeason,
   getVideoById,
+  getSeasonById,
+  createSeason,
+  updateSeason,
+  deleteSeason,
 } from './data'
 import { Tooltip, Button } from '@nextui-org/react'
 import React, { useState, useRef, useEffect } from 'react'
@@ -14,16 +18,21 @@ import {
   Divider,
   Link,
   Modal,
+  Input,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Code,
 } from '@nextui-org/react'
+import { FaTrashCanArrowUp } from 'react-icons/fa6'
+import { LuSaveAll } from 'react-icons/lu'
+import { IoReturnDownBack } from 'react-icons/io5'
 import { CiEdit } from 'react-icons/ci'
 import { MdDeleteForever, MdFormatListBulletedAdd } from 'react-icons/md'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
-
+import { useRouter } from 'next/navigation'
 export default function TvSeriesSeason({ params: { tv_series_id } }) {
   const [data, setData] = useState({})
   const [season, setSeason] = useState([])
@@ -56,14 +65,10 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
   const itemClasses = {
     trigger: 'px-2 py-0 bg-zinc-800 h-14 flex items-center',
   }
-  const MenuAccordion = ({ indicator, isOpen, isDisabled }) => {
+  const MenuAccordion = ({ SeasonID, SeriesID }) => {
     return (
       <>
-        <Tooltip content="Edit Season">
-          <span className="text-lg text-yellow-600 cursor-pointer active:opacity-50">
-            <CiEdit className="text-2xl" />
-          </span>
-        </Tooltip>
+        <FormSeason SeriesID={SeriesID} Status={'Edit'} SeasonID={SeasonID} />
 
         <Tooltip content="Add Episode">
           <span className="text-lg text-sky-600 cursor-pointer active:opacity-50">
@@ -75,7 +80,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
   }
   return (
     <>
-      <div className="container flex gap-4  p-8 border-b-2 border-zinc-600 border-double text-zinc-300">
+      <div className="container flex gap-4  p-8 border-b-2 border-zinc-600 border-double text-zinc-300  ">
         <div className="row-span-3 w-56 min-w-56  ">
           {data.series_id && (
             <Image
@@ -153,12 +158,12 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
         <h2 className="mb-2 text-xl font-semibold text-zinc-200 flex gap-3 items-center ">
           <div>Seasons </div>
           <div>
-            <FormSeason Status={"New"}/>
+            <FormSeason SeriesID={tv_series_id} Status={'New'} />
           </div>
         </h2>
-        <div>
+        <div className=" bg-zinc-800">
           <Accordion
-            defaultExpandedKeys={['0']}
+            defaultExpandedKeys={[season.length - 1 || '0']}
             itemClasses={itemClasses}
             motionProps={{
               variants: {
@@ -204,7 +209,11 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
                   aria-label={`Season ${item.season_number}`}
                   title={
                     <p className="flex items-center gap-2">
-                      Season {item.season_number} <MenuAccordion />
+                      Season {item.season_number}{' '}
+                      <MenuAccordion
+                        SeasonID={item.season_id}
+                        SeriesID={tv_series_id}
+                      />
                     </p>
                   }
                   subtitle={
@@ -244,8 +253,8 @@ const CardEpisodes = ({ Data, Season }) => {
   }, [video_id])
   return (
     <>
-      <Link
-        href={`/watch/${video_id}`}
+      <div
+        // href={`/watch/${video_id}`}
         className=" border-b-1 mx-4 flex items-center gap-4  text-zinc-300 "
       >
         <div className="min-w-28">
@@ -287,19 +296,17 @@ const CardEpisodes = ({ Data, Season }) => {
             </span>
           </Tooltip>
         </div>
-      </Link>
+      </div>
     </>
   )
 }
 const ListEpisodes = ({ Season }) => {
   const [Episode, setEpisode] = useState([])
-
   useEffect(() => {
     async function getData(id) {
       const data_episode = await getEpisodesBySeason(id)
       setEpisode(data_episode)
     }
-
     if (Season.season_id) {
       getData(Season.season_id)
     }
@@ -316,14 +323,68 @@ const ListEpisodes = ({ Season }) => {
             />
           ))
         ) : (
-          <p>No episodes available</p>
+          <p className="text-white">No episodes available</p>
         )}
       </div>
     </>
   )
 }
-const FormSeason = ({ Status }) => {
+const FormSeason = ({ Status, SeriesID, SeasonID = null }) => {
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [seasonToDelete, setSeasonToDelete] = useState(null)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [season, setSeason] = useState('')
+  const [totalEpisode, setTotalEpisode] = useState('')
+
+  useEffect(() => {
+    async function getData(id) {
+      const _season = await getSeasonById(id)
+      console.log(_season)
+
+      setSeason(_season.season_number)
+      setTotalEpisode(_season.total_episode)
+    }
+    if (SeasonID && isOpen) {
+      getData(SeasonID)
+    }
+  }, [SeasonID, isOpen])
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const formData = {
+      season_number: season,
+      total_episode: totalEpisode,
+      series_id: SeriesID,
+    }
+    try {
+      let _result
+      if (Status == 'New') {
+        _result = await createSeason(formData)
+      } else if (Status == 'Edit') {
+        _result = await updateSeason(SeasonID, formData)
+      }
+      console.log(_result, formData)
+      onOpenChange(false) // Close the modal after successful creation
+      window.location.reload() // Replace router.refresh() with window.location.reload()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleDelete = async () => {
+    setSeasonToDelete(SeasonID)
+    setConfirmOpen(true)
+  }
+  const onDelete = async (seasonToDelete) => {
+    await deleteSeason(seasonToDelete)
+    window.location.reload()
+  }
+  const onClose = () => {
+    onOpenChange(false)
+    setSeason('')
+    setTotalEpisode('')
+  }
+  const Title = Status == 'New' ? 'Add' : 'Edit'
   return (
     <>
       <Button
@@ -333,57 +394,146 @@ const FormSeason = ({ Status }) => {
         className="text-sky-600 font-semibold"
         onPress={onOpen}
       >
-        <Tooltip color="info" content="Add Season">
-          <span className="text-lg  cursor-pointer active:opacity-50">
-            <MdFormatListBulletedAdd className="text-2xl " />
-          </span>
-        </Tooltip>
-        Add Seasons
+        {Status == 'New' ? (
+          <>
+            <Tooltip color="info" content="New Season">
+              <span className="text-lg  cursor-pointer active:opacity-50">
+                <MdFormatListBulletedAdd className="text-2xl " />
+              </span>
+            </Tooltip>
+          </>
+        ) : (
+          <>
+            <Tooltip content="Edit Season">
+              <span className="text-lg text-yellow-600 cursor-pointer active:opacity-50">
+                <CiEdit className="text-2xl" />
+              </span>
+            </Tooltip>
+          </>
+        )}
       </Button>
+      <ConfirmModal
+        isOpen={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={onDelete}
+        title="Confirm Delete"
+        message="Are you sure you want to delete this season?"
+        SeasonID={SeasonID}
+      />
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isDismissable={true}
         isKeyboardDismissDisabled={true}
+        onClose={onClose}
+        backdrop="blur"
       >
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {Status} Season
-              </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+          <ModalHeader className="flex gap-2 justify-between ">
+            {Title} Season
+            {SeasonID && (
+              <>
+                <Code className="mr-4">
+                  ID {SeasonID}-{SeriesID}
+                </Code>
+              </>
+            )}
+          </ModalHeader>
+          <form onSubmit={handleSubmit}>
+            <ModalBody>
+              <Input
+                type="number"
+                label="Season"
+                labelPlacement={'outside'}
+                value={season}
+                onChange={(event) => setSeason(event.target.value)}
+                required
+              />
+              <Input
+                type="number"
+                label="Total Episode"
+                labelPlacement={'outside'}
+                value={totalEpisode}
+                onChange={(event) => setTotalEpisode(event.target.value)}
+                required
+              />
+
+              <ModalFooter className="flex justify-between">
+                {Status == 'Edit' && (
+                  <Button
+                    color="danger"
+                    variant="bordered"
+                    startContent={<FaTrashCanArrowUp />}
+                    type="button"
+                    onPress={handleDelete}
+                  >
+                    Delete
+                  </Button>
+                )}
+                {/* <div
+                  className={`flex gap-2 ${
+                    Status !== 'Edit' && 'justify-between'
+                  }`}
+                > */}
+                <Button
+                  color="primary"
+                  variant="light"
+                  type="button"
+                  startContent={<IoReturnDownBack />}
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
-                <Button color="primary" onPress={onClose}>
+
+                <Button
+                  color="primary"
+                  type="submit"
+                  startContent={<LuSaveAll />}
+                >
                   Save
                 </Button>
+                {/* </div> */}
               </ModalFooter>
-            </>
-          )}
+            </ModalBody>
+          </form>
         </ModalContent>
       </Modal>
     </>
+  )
+}
+
+const ConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  SeasonID,
+}) => {
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} backdrop="blur">
+      <ModalContent>
+        <ModalHeader>{title}</ModalHeader>
+
+        <ModalBody>{message}</ModalBody>
+        <ModalFooter>
+          <Button
+            color="danger"
+            variant="light"
+            type="button"
+            onPress={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            type="button"
+            onPress={() => onConfirm(SeasonID)}
+          >
+            Confirm
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   )
 }
