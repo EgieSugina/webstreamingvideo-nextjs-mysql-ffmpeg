@@ -1,17 +1,17 @@
-"use server";
+'use server'
 
-import Comments from "@/db/models/m_comments";
-import Like from "@/db/models/m_likes";
-import MyList from "@/db/models/m_my_list";
-import Videos from "@/db/models/m_videos";
-import History from "@/db/models/m_history"; // Import History model
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth/next";
-import Episodes from "@/db/models/m_episodes";
-import Season from "@/db/models/m_season"; 
-import TVSeriesDetail from "@/db/models/m_tv_series_detail";
-import sequelize from "@/db/sequelize";
-import { Op } from "sequelize";
+import Comments from '@/db/models/m_comments'
+import Like from '@/db/models/m_likes'
+import MyList from '@/db/models/m_my_list'
+import Videos from '@/db/models/m_videos'
+import History from '@/db/models/m_history' // Import History model
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth/next'
+import Episodes from '@/db/models/m_episodes'
+import Season from '@/db/models/m_season'
+import TVSeriesDetail from '@/db/models/m_tv_series_detail'
+import sequelize from '@/db/sequelize'
+import { Op } from 'sequelize'
 
 export async function findAll() {
   const data = await Videos.findAll({
@@ -20,22 +20,22 @@ export async function findAll() {
       type: 'movie',
     },
     attributes: [
-      "video_id",
-      "title",
-      "description",
-      "status",
-      "upload_date",
-      "user_id",
-      "duration",
-      "genre",
-      "release_date",
-      "type",
-      "views",
-      "public",
-      [sequelize.fn("COUNT", sequelize.col("likes.like_id")), "like_count"],
+      'video_id',
+      'title',
+      'description',
+      'status',
+      'upload_date',
+      'user_id',
+      'duration',
+      'genre',
+      'release_date',
+      'type',
+      'views',
+      'public',
+      [sequelize.fn('COUNT', sequelize.col('likes.like_id')), 'like_count'],
       [
-        sequelize.fn("COUNT", sequelize.col("comments.comments_id")),
-        "comment_count",
+        sequelize.fn('COUNT', sequelize.col('comments.comments_id')),
+        'comment_count',
       ],
     ],
     include: [
@@ -50,13 +50,12 @@ export async function findAll() {
         required: false,
       },
     ],
-    group: ["videos.video_id"],
-  });
-  return data;
+    group: ['videos.video_id'],
+  })
+  return data
 }
 export async function findAllTvSeries() {
   const tvSeries = await TVSeriesDetail.findAll({
-     
     // include: [
     //   {
     //     required: true,
@@ -81,7 +80,7 @@ export async function findAllTvSeries() {
     //                 required: false,
     //               },
     //             ],
-                
+
     //           },
     //         ],
     //       },
@@ -89,10 +88,10 @@ export async function findAllTvSeries() {
     //   },
     // ],
     raw: true,
-  });
-  console.log(tvSeries);
-  
-  return tvSeries;
+  })
+  console.log(tvSeries)
+
+  return tvSeries
 }
 export async function Search({ search }) {
   const data = await Videos.findAll({
@@ -102,23 +101,23 @@ export async function Search({ search }) {
       // type: "movie",
       title: { [Op.like]: `%${search}%` },
     },
-  });
-  return data;
+  })
+  return data
 }
 export async function ListMovie({ genre }) {
   const data = await Videos.findAll({
     raw: true,
     where: {
       public: true,
-      type: "movie",
+      type: 'movie',
       genre:
-        genre !== "All" ? { [Op.like]: `%${genre}%` } : { [Op.like]: `%%` },
+        genre !== 'All' ? { [Op.like]: `%${genre}%` } : { [Op.like]: `%%` },
     },
-  });
-  return data;
+  })
+  return data
 }
 export async function OnlyMyList() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   const data = await MyList.findAll({
     raw: true,
     attributes: [
@@ -126,19 +125,19 @@ export async function OnlyMyList() {
       `video_id`,
       `user_id`,
       `mylistadd_date`,
-      [sequelize.col(`video.video_id`), "video_id"],
-      [sequelize.col(`video.title`), "title"],
-      [sequelize.col(`video.description`), "description"],
-      [sequelize.col(`video.status`), "status"],
-      [sequelize.col(`video.upload_date`), "upload_date"],
-      [sequelize.col(`video.user_id`), "user_id"],
-      [sequelize.col(`video.views`), "views"],
-      [sequelize.col(`video.public`), "public"],
-      [sequelize.col(`video.duration`), "duration"],
-      [sequelize.col(`video.genre`), "genre"],
-      [sequelize.col(`video.format_raw`), "format_raw"],
-      [sequelize.col(`video.release_date`), "release_date"],
-      [sequelize.col(`video.type`), "type"],
+      [sequelize.col(`video.video_id`), 'video_id'],
+      [sequelize.col(`video.title`), 'title'],
+      [sequelize.col(`video.description`), 'description'],
+      [sequelize.col(`video.status`), 'status'],
+      [sequelize.col(`video.upload_date`), 'upload_date'],
+      [sequelize.col(`video.user_id`), 'user_id'],
+      [sequelize.col(`video.views`), 'views'],
+      [sequelize.col(`video.public`), 'public'],
+      [sequelize.col(`video.duration`), 'duration'],
+      [sequelize.col(`video.genre`), 'genre'],
+      [sequelize.col(`video.format_raw`), 'format_raw'],
+      [sequelize.col(`video.release_date`), 'release_date'],
+      [sequelize.col(`video.type`), 'type'],
     ],
     where: { user_id: session.user.id },
     include: [
@@ -147,12 +146,12 @@ export async function OnlyMyList() {
         required: true,
       },
     ],
-  });
-  return data;
+  })
+  return data
 }
 export async function OnlyRecentlyWatched() {
-  const session = await getServerSession(authOptions);
-  if(session){
+  const session = await getServerSession(authOptions)
+  if (session) {
     const data = await History.findAll({
       raw: true,
       where: {
@@ -166,19 +165,19 @@ export async function OnlyRecentlyWatched() {
         `user_id`,
         `video_id`,
         `last_watch`,
-        [sequelize.col(`video.video_id`), "video_id"],
-        [sequelize.col(`video.title`), "title"],
-        [sequelize.col(`video.description`), "description"],
-        [sequelize.col(`video.status`), "status"],
-        [sequelize.col(`video.upload_date`), "upload_date"],
-        [sequelize.col(`video.user_id`), "user_id"],
-        [sequelize.col(`video.views`), "views"],
-        [sequelize.col(`video.public`), "public"],
-        [sequelize.col(`video.duration`), "duration"],
-        [sequelize.col(`video.genre`), "genre"],
-        [sequelize.col(`video.format_raw`), "format_raw"],
-        [sequelize.col(`video.release_date`), "release_date"],
-        [sequelize.col(`video.type`), "type"],
+        [sequelize.col(`video.video_id`), 'video_id'],
+        [sequelize.col(`video.title`), 'title'],
+        [sequelize.col(`video.description`), 'description'],
+        [sequelize.col(`video.status`), 'status'],
+        [sequelize.col(`video.upload_date`), 'upload_date'],
+        [sequelize.col(`video.user_id`), 'user_id'],
+        [sequelize.col(`video.views`), 'views'],
+        [sequelize.col(`video.public`), 'public'],
+        [sequelize.col(`video.duration`), 'duration'],
+        [sequelize.col(`video.genre`), 'genre'],
+        [sequelize.col(`video.format_raw`), 'format_raw'],
+        [sequelize.col(`video.release_date`), 'release_date'],
+        [sequelize.col(`video.type`), 'type'],
       ],
       include: [
         {
@@ -186,17 +185,16 @@ export async function OnlyRecentlyWatched() {
           required: true,
         },
       ],
-    });
-    return data;
+    })
+    return data
   }
   return []
- 
 }
 export async function OnlyPublic() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
 
-  let whereClause = { public: true };
-  let includeClause = [];
+  let whereClause = { public: true }
+  let includeClause = []
 
   if (session) {
     includeClause = [
@@ -215,31 +213,40 @@ export async function OnlyPublic() {
 
           [
             sequelize.fn(
-              "IF",
-              sequelize.col("histories.video_id"),
+              'IF',
+              sequelize.col('histories.video_id'),
               true,
-              false
+              false,
             ),
-            "isRecentlyWatched",
+            'isRecentlyWatched',
           ],
         ],
       },
-    ];
+    ]
   }
   const data = await Videos.findAll({
     raw: true,
     where: whereClause,
     include: includeClause,
-  });
-  return data;
+  })
+  return data
 }
 export async function contentVisibelity(id, visibelity) {
-  const _video = await Videos.findByPk(id);
+  const _video = await Videos.findByPk(id)
 
-  await _video.update({ public: visibelity });
+  await _video.update({ public: visibelity })
 }
 export async function changeStatus(id, status) {
-  const _video = await Videos.findByPk(id);
+  const _video = await Videos.findByPk(id)
 
-  await _video.update({ status: status });
+  await _video.update({ status: status })
+}
+export async function deleteTVSeries(id) {
+  const season = await TVSeriesDetail.findByPk(id)
+  await season.destroy()
+  return JSON.stringify({ message: 'Season deleted successfully' })
+}
+export async function contentVisibelityTVSeries(id, visibelity) {
+  const _video = await TVSeriesDetail.findByPk(id)
+  await _video.update({ public: visibelity })
 }

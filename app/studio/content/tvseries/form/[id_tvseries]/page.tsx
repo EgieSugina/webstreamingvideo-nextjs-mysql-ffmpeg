@@ -1,70 +1,44 @@
 'use client'
 import 'react-quill/dist/quill.snow.css'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
-import React, { useMemo, useState } from 'react'
-import axios from 'axios'
+import React, { useMemo, useState, useEffect } from 'react'
 import { FormEvent } from 'react'
-import MsgBox from '@/components/ToastMsgBox'
 import dynamic from 'next/dynamic'
 import { navigate } from '@/components/Actions'
 import { toast } from 'react-toastify'
-// import ReactQuill from "react-quill";
-export default function FormUsers() {
+import { UpdateTVSeries, findByPk } from './data'
+import MsgBox from '@/components/ToastMsgBox'
+
+export default function TVSeriesForm({ params }) {
   const ReactQuill = useMemo(
     () => dynamic(() => import('react-quill'), { ssr: false }),
     [],
   )
-  const variant = 'underlined' //["flat", "bordered", "underlined", "faded"];
-  const [value, setValue] = useState('Deskripsi....')
-  const [ProgressUpload, setProgressUpload] = useState(0)
-  const [ValuesSelect, setValuesSelect] = useState([])
+  const { id_tvseries } = params
+  const variant = 'underlined'
+  const [data, setData] = useState(null)
+  const [value, setValue] = useState('')
+  const [ValuesSelect, setValuesSelect] = useState(new Set())
   const handleSelectionChange = (e) => {
     setValuesSelect(new Set(e.target.value.split(',')))
   }
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    try {
-      event.preventDefault()
-      const formData = new FormData(event.currentTarget)
-      // formData.append("files", fileInput.files[0]);
-      const config = {
-        onUploadProgress: function (progressEvent) {
-          var percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total,
-          )
-          setProgressUpload(percentCompleted)
-        },
-      }
-      const response = await axios.post('/api/content', formData, config)
 
-      if (response.status !== 200) {
-        toast.error(<MsgBox MsgError={response.data} />, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-          // transition: Bounce
-        })
-      } else {
-        toast.success('Upload Video Success!', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-          // transition: Bounce
-        })
-        return navigate(`/studio/content/form/${response.data.video_id}`)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      toast.error('An error occurred during the upload.', {
+  useEffect(() => {
+    const getData = async () => {
+      const data = await findByPk(id_tvseries)
+      setData(data)
+      setValue(data.description)
+      setValuesSelect(new Set(data.genre.split(',')))
+    }
+    getData()
+  }, [id_tvseries])
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const response = await UpdateTVSeries(formData, id_tvseries)
+    if (!response.success) {
+      toast.error(<MsgBox MsgError={response.message} />, {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -73,10 +47,31 @@ export default function FormUsers() {
         draggable: true,
         progress: undefined,
         theme: 'dark',
+        // transition: Bounce
       })
+    } else {
+      toast.success(response.message, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+        // transition: Bounce
+      })
+
+      return navigate(`/studio/content/tvseries/${response.data.series_id}`)
     }
   }
-  // SELECT  `user_id`, ``, `description`, `duration`, `status`, `release_date`, `upload_date`, `type` FROM `videos` WHERE 1
+
+  if (!data) {
+    return <>Loading...</>
+  }
+  const Genres = data.genre.split(',').map((v) => v.trimStart())
+  console.log(Genres)
+
   return (
     <>
       <form onSubmit={onSubmit} className={'flex bg-[#212129] '}>
@@ -90,6 +85,7 @@ export default function FormUsers() {
             value={Array.from(ValuesSelect).join(', ')}
             hidden
           />
+          <input name={'id'} type="hidden" value={id_tvseries} />
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <Input
@@ -98,17 +94,19 @@ export default function FormUsers() {
                 type="text"
                 variant={variant}
                 label="Title"
+                defaultValue={data.title}
               />
             </div>
             <div className="w-full md:w-1/2 px-3">
               <Input
-                // isRequired
-                name={'video_file'}
-                accept="video/mp4,video/x-m4v,video/*,.mkv"
+                isRequired
+                name={'cover_file'}
+                accept=".png"
                 type="file"
                 variant={variant}
-                // onChange={handleFileChange}
-                // label="File"
+                labelPlacement="outside"
+                label="Cover TV Series"
+                placeholder="Cover TV Series"
               />
             </div>
           </div>
@@ -117,14 +115,14 @@ export default function FormUsers() {
               <Select
                 items={[
                   {
-                    label: 'Movie',
-                    value: 'movie',
+                    label: 'TV Series',
+                    value: 'tv_series',
                   },
                 ]}
                 isRequired
                 name={'type'}
                 label="Type"
-                // type="text"
+                defaultSelectedKeys={['tv_series']}
                 variant={variant}
               >
                 {(x) => <SelectItem key={x.value}>{x.label}</SelectItem>}
@@ -204,11 +202,11 @@ export default function FormUsers() {
                   },
                 ]}
                 isRequired
-                // name={"genre"}
                 label="Genre"
                 selectionMode="multiple"
-                // type="text"
                 variant={variant}
+                defaultSelectedKeys={Genres}
+                value={Array.from(ValuesSelect).join(', ')}
               >
                 {(x) => <SelectItem key={x.value}>{x.label}</SelectItem>}
               </Select>
@@ -227,17 +225,8 @@ export default function FormUsers() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2 place-content-end">
-            <Button
-              type="submit"
-              color={ProgressUpload === 100 ? 'success' : 'primary'}
-              radius="sm"
-              isLoading={ProgressUpload > 0 && ProgressUpload < 100}
-            >
-              {ProgressUpload === 100
-                ? 'Done'
-                : ProgressUpload === 0
-                ? 'Simpan'
-                : `${ProgressUpload}% Uploading...`}
+            <Button type="submit" color="success" radius="sm">
+              Update
             </Button>
             <Button radius="sm">Back</Button>
           </div>

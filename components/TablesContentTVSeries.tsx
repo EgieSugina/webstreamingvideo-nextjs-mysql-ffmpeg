@@ -19,7 +19,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MdDeleteForever } from 'react-icons/md'
 import React from 'react'
-import { contentVisibelity } from '@/app/studio/content/data'
+import { contentVisibelityTVSeries } from '@/app/studio/content/data'
 
 const statusColorMap = {
   done: 'success',
@@ -41,42 +41,45 @@ function Action({ data }) {
           </Tooltip>
         </Link>
         |
-        {/* <Link
-          href=''
+        <Link
+          href=""
           onClick={async () => {
-            await contentVisibelity(data.id, !Public)
+            await contentVisibelityTVSeries(data.id, !Public)
             // router.push(`/studio/content?id=${data.id}`);
             // router.refresh();
             return setPublic(!Public)
           }}
-        > */}
-        {Public ? (
-          <Tooltip color="success" content="Public">
-            <span className="text-lg  cursor-pointer active:opacity-50">
-              <FaRegEye className="text-2xl text-green-900" />
+        >
+          {Public ? (
+            <Tooltip color="success" content="Public">
+              <span className="text-lg  cursor-pointer active:opacity-50">
+                <FaRegEye className="text-2xl text-green-900" />
+              </span>
+            </Tooltip>
+          ) : (
+            <Tooltip color="danger" content="Private">
+              <span className="text-lg  cursor-pointer active:opacity-50">
+                <FaRegEyeSlash className="text-2xl text-red-900" />
+              </span>
+            </Tooltip>
+          )}
+        </Link>
+        |
+        <Link href={`/studio/content/tvseries/form/${data.id}`}>
+          <Tooltip content="Edit data" color="warning">
+            <span className="text-lg text-warning cursor-pointer active:opacity-50">
+              <CiEdit className="text-2xl" />
             </span>
           </Tooltip>
-        ) : (
-          <Tooltip color="danger" content="Private">
-            <span className="text-lg  cursor-pointer active:opacity-50">
-              <FaRegEyeSlash className="text-2xl text-red-900" />
+        </Link>
+        |
+        <Link href={`/studio/content/tvseries/delete/${data.id}`}>
+          <Tooltip color="danger" content="Delete data">
+            <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <MdDeleteForever className="text-2xl" />
             </span>
           </Tooltip>
-        )}
-        {/* </Link> */}|{/* <Link href={`/studio/content/form/${data.id}`}> */}
-        <Tooltip content="Edit data" color="warning">
-          <span className="text-lg text-warning cursor-pointer active:opacity-50">
-            <CiEdit className="text-2xl" />
-          </span>
-        </Tooltip>
-        {/* </Link> */}|
-        {/* <Link href={`/studio/content/delete/${data.id}`}> */}
-        <Tooltip color="danger" content="Delete data">
-          <span className="text-lg text-danger cursor-pointer active:opacity-50">
-            <MdDeleteForever className="text-2xl" />
-          </span>
-        </Tooltip>
-        {/* </Link> */}
+        </Link>
       </div>
     </>
   )

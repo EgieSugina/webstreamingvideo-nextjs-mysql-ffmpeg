@@ -1,31 +1,31 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize')
 
-import sequelize from "../sequelize";
-import Episodes from "./m_episodes"; // Added import for m_episodes model
+import sequelize from '../sequelize'
+import Episodes from './m_episodes'
 
 const Season = sequelize.define(
-  "season",
+  'season',
   {
     season_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
     },
     series_id: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     total_episode: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     season_number: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
-      },
+  },
   {
     timestamps: false,
-    freezeTableName: true
-  }
-);
+    freezeTableName: true,
+  },
+)
 
-Season.hasMany(Episodes, { foreignKey: 'season_id' }); 
+Season.hasMany(Episodes, { foreignKey: 'season_id' })
 
-export default Season;
+export default Season

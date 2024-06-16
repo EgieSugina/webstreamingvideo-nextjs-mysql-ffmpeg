@@ -42,7 +42,6 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
   useEffect(() => {
     const getData = async () => {
       const data = await findByPk(tv_series_id)
-      console.log(data)
       setData(data)
     }
     if (!hasFetchedData.current) {
@@ -82,7 +81,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
     <>
       <div className="container flex gap-4  p-8 border-b-2 border-zinc-600 border-double text-zinc-300  ">
         <div className="row-span-3 w-56 min-w-56  ">
-          {data.series_id && (
+          {data && data.series_id && (
             <Image
               src={`/api/tvseries/${data.series_id}.png`}
               width={225}
@@ -92,7 +91,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
           )}
         </div>
         <div className="gap-4">
-          {data.title && (
+          {data && data.title && (
             <div className="text-4xl my-2 flex items-center gap-2">
               {data.title}
               <Tooltip color="success" content="Public">
@@ -113,7 +112,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
               </Tooltip>
             </div>
           )}
-          {data.description && (
+          {data && data.description && (
             <div className=" border-y-1 border-zinc-600 py-2 text-justify">
               <p
                 className="text-justify text-medium"
@@ -125,7 +124,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
               ></p>
             </div>
           )}
-          {data.genre && (
+          {data && data.genre && (
             <div
               id="genre"
               className="flex h-5 items-center space-x-4 text-sm flex-wrap my-2 "
@@ -227,8 +226,8 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
             ) : (
               <AccordionItem
                 key={1}
-                aria-label={`Loading...`}
-                title={`Loading...`}
+                aria-label={`No Seasons available`}
+                title={`No Seasons available`}
               ></AccordionItem>
             )}
           </Accordion>
