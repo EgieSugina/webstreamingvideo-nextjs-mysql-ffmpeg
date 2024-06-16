@@ -57,37 +57,37 @@ export async function findAll() {
 export async function findAllTvSeries() {
   const tvSeries = await TVSeriesDetail.findAll({
      
-    include: [
-      {
-        required: true,
-        model: Season,
-        include: [
-          {
-            required: true,
-            model: Episodes,
-            include: [
-              {
-                required: true,
-                model: Videos,
-                include: [
-                  {
-                    model: Like,
-                    attributes: [],
-                    required: false,
-                  },
-                  {
-                    model: Comments,
-                    attributes: [],
-                    required: false,
-                  },
-                ],
+    // include: [
+    //   {
+    //     required: true,
+    //     model: Season,
+    //     include: [
+    //       {
+    //         required: true,
+    //         model: Episodes,
+    //         include: [
+    //           {
+    //             required: true,
+    //             model: Videos,
+    //             include: [
+    //               {
+    //                 model: Like,
+    //                 attributes: [],
+    //                 required: false,
+    //               },
+    //               {
+    //                 model: Comments,
+    //                 attributes: [],
+    //                 required: false,
+    //               },
+    //             ],
                 
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ],
     raw: true,
   });
   console.log(tvSeries);
@@ -152,42 +152,45 @@ export async function OnlyMyList() {
 }
 export async function OnlyRecentlyWatched() {
   const session = await getServerSession(authOptions);
-
-  const data = await History.findAll({
-    raw: true,
-    where: {
-      last_watch: {
-        [Op.gte]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000),
+  if(session){
+    const data = await History.findAll({
+      raw: true,
+      where: {
+        last_watch: {
+          [Op.gte]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000),
+        },
+        user_id: session.user.id,
       },
-      user_id: session.user.id,
-    },
-    attributes: [
-      `history_id`,
-      `user_id`,
-      `video_id`,
-      `last_watch`,
-      [sequelize.col(`video.video_id`), "video_id"],
-      [sequelize.col(`video.title`), "title"],
-      [sequelize.col(`video.description`), "description"],
-      [sequelize.col(`video.status`), "status"],
-      [sequelize.col(`video.upload_date`), "upload_date"],
-      [sequelize.col(`video.user_id`), "user_id"],
-      [sequelize.col(`video.views`), "views"],
-      [sequelize.col(`video.public`), "public"],
-      [sequelize.col(`video.duration`), "duration"],
-      [sequelize.col(`video.genre`), "genre"],
-      [sequelize.col(`video.format_raw`), "format_raw"],
-      [sequelize.col(`video.release_date`), "release_date"],
-      [sequelize.col(`video.type`), "type"],
-    ],
-    include: [
-      {
-        model: Videos,
-        required: true,
-      },
-    ],
-  });
-  return data;
+      attributes: [
+        `history_id`,
+        `user_id`,
+        `video_id`,
+        `last_watch`,
+        [sequelize.col(`video.video_id`), "video_id"],
+        [sequelize.col(`video.title`), "title"],
+        [sequelize.col(`video.description`), "description"],
+        [sequelize.col(`video.status`), "status"],
+        [sequelize.col(`video.upload_date`), "upload_date"],
+        [sequelize.col(`video.user_id`), "user_id"],
+        [sequelize.col(`video.views`), "views"],
+        [sequelize.col(`video.public`), "public"],
+        [sequelize.col(`video.duration`), "duration"],
+        [sequelize.col(`video.genre`), "genre"],
+        [sequelize.col(`video.format_raw`), "format_raw"],
+        [sequelize.col(`video.release_date`), "release_date"],
+        [sequelize.col(`video.type`), "type"],
+      ],
+      include: [
+        {
+          model: Videos,
+          required: true,
+        },
+      ],
+    });
+    return data;
+  }
+  return []
+ 
 }
 export async function OnlyPublic() {
   const session = await getServerSession(authOptions);

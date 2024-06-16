@@ -10,17 +10,11 @@ import { findAllTvSeries } from './data'
 
 export default function TVSeries () {
   const columns = [
-    { name: 'Series', uid: 'title' },
-    // { name: 'Cover', uid: 'thumbnailtvseries' },
-    { name: 'Title', uid: 'seasons.episodes.video.title' },
-    { name: 'Season', uid: 'seasons.season_number' },
-    { name: 'Episode', uid: 'seasons.episodes.episode_number' },
-    { name: 'Genre', uid: 'seasons.episodes.video.genre' },
-    { name: 'Status', uid: 'seasons.episodes.video.status' },
-    { name: 'Thumbnail', uid: 'thumbnail' },
-    // { name: 'Likes', uid: 'seasons.episodes.video.like_count' },
-    // { name: 'Comments', uid: 'seasons.episodes.video.comment_count' },
-    { name: 'Views', uid: 'seasons.episodes.video.views' },
+    { name: 'Series Title', uid: 'title' },
+    { name: 'Genre', uid: 'genre' },
+    { name: 'Description', uid: 'description' },
+
+    { name: 'Cover', uid: 'thumbnailtvseries' },
     { name: 'Actions', uid: 'actions' }
   ]
 
