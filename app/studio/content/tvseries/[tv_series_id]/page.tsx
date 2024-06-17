@@ -10,7 +10,7 @@ import {
   updateSeason,
   deleteSeason,
 } from './data'
-import { contentVisibelityTVSeries } from '../../data'
+import { contentVisibelityTVSeries, contentVisibelity } from '../../data'
 
 import { Tooltip, Button } from '@nextui-org/react'
 import React, { useState, useRef, useEffect } from 'react'
@@ -304,6 +304,8 @@ const CardEpisodes = ({ Data, Season, SeasonID, SeriesID }) => {
       getData(video_id)
     }
   }, [video_id])
+  const [Public, setPublic] = React.useState(Video.public)
+
   return (
     <>
       <div
@@ -331,11 +333,29 @@ const CardEpisodes = ({ Data, Season, SeasonID, SeriesID }) => {
           }}
         ></div>
         <div className="flex gap-2">
-          <Tooltip color="success" content="Public">
-            <span className="text-lg  cursor-pointer active:opacity-50">
-              <FaRegEye className="text-2xl text-green-600" />
-            </span>
-          </Tooltip>
+          <Button
+            isIconOnly
+            variant="light"
+            href=""
+            onClick={async () => {
+              await contentVisibelity(video_id, !Public)
+              return setPublic(!Public)
+            }}
+          >
+            {Public ? (
+              <Tooltip color="success" content="Public">
+                <span className="text-lg  cursor-pointer active:opacity-50">
+                  <FaRegEye className="text-2xl text-green-600" />
+                </span>
+              </Tooltip>
+            ) : (
+              <Tooltip color="danger" content="Private">
+                <span className="text-lg  cursor-pointer active:opacity-50">
+                  <FaRegEyeSlash className="text-2xl text-red-600" />
+                </span>
+              </Tooltip>
+            )}
+          </Button>
           <Link
             href={`/studio/content/tvseries/${SeriesID}/${SeasonID}/${video_id}`}
           >

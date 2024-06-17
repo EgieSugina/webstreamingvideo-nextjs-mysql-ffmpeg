@@ -117,10 +117,14 @@ export default function Tables({ Data, Columns = [] }) {
         return (
           <div
             dangerouslySetInnerHTML={{
-              __html: data['seasons.episodes.video.description'],
+              __html: data['seasons.episodes.video.description']
+                .split('</p><p>')[0]
+                .replace('<p>', ''),
             }}
           />
         )
+      case 'description':
+        return <div dangerouslySetInnerHTML={{ __html: data.description }} />
       case 'status':
         return (
           <Chip

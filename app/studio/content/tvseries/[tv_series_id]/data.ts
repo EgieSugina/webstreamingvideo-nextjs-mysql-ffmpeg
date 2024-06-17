@@ -45,7 +45,11 @@ export async function getSeasonById(SeasonId) {
   })
   return _season
 }
-import { NextRequest, NextResponse } from 'next/server'
+export async function contentVisibelity(id, visibelity) {
+  const _video = await Videos.findByPk(id)
+
+  await _video.update({ public: visibelity })
+}
 
 export async function createSeason(data) {
   const seasonData = { ...data }

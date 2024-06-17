@@ -111,7 +111,7 @@ export default function TVSeriesForm({ params }) {
             </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full md:w-1/2 px-3">
+            {/* <div className="w-full md:w-1/2 px-3">
               <Select
                 items={[
                   {
@@ -127,7 +127,7 @@ export default function TVSeriesForm({ params }) {
               >
                 {(x) => <SelectItem key={x.value}>{x.label}</SelectItem>}
               </Select>
-            </div>
+            </div> */}
             <div className="w-full md:w-1/2 px-3">
               <Select
                 onChange={handleSelectionChange}
