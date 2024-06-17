@@ -74,11 +74,13 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
       <>
         <FormSeason SeriesID={SeriesID} Status={'Edit'} SeasonID={SeasonID} />
 
-        <Tooltip content="Add Episode">
-          <span className="text-lg text-sky-600 cursor-pointer active:opacity-50">
-            <MdFormatListBulletedAdd className="text-2xl" />
-          </span>
-        </Tooltip>
+        <Link href={`/studio/content/tvseries/${SeriesID}/${SeasonID}`}>
+          <Tooltip content="Add Episode">
+            <span className="text-lg text-sky-600 cursor-pointer active:opacity-50">
+              <MdFormatListBulletedAdd className="text-2xl" />
+            </span>
+          </Tooltip>
+        </Link>
       </>
     )
   }
@@ -268,7 +270,11 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
                   }
                   // indicator={MenuAccordion}
                 >
-                  <ListEpisodes Season={item} />
+                  <ListEpisodes
+                    Season={item}
+                    SeasonID={item.season_id}
+                    SeriesID={tv_series_id}
+                  />
                 </AccordionItem>
               ))
             ) : (
@@ -284,7 +290,7 @@ export default function TvSeriesSeason({ params: { tv_series_id } }) {
     </>
   )
 }
-const CardEpisodes = ({ Data, Season }) => {
+const CardEpisodes = ({ Data, Season, SeasonID, SeriesID }) => {
   const { episode_number, video_id } = Data
   const [Video, setVideo] = useState([])
   useEffect(() => {
@@ -316,7 +322,6 @@ const CardEpisodes = ({ Data, Season }) => {
         <div className="border-r-2 p-4 min-w-32">
           Episode {Season}-{episode_number}
         </div>
-
         <div className=" min-w-48 border-r-2 py-4">{Video.title}</div>
         <div className=" min-w-48 border-r-2 py-4">{Video.genre}</div>
         <div
@@ -331,23 +336,30 @@ const CardEpisodes = ({ Data, Season }) => {
               <FaRegEye className="text-2xl text-green-600" />
             </span>
           </Tooltip>
-          <Tooltip content="Edit Episode">
-            <span className="text-lg text-yellow-600 cursor-pointer active:opacity-50">
-              <CiEdit className="text-2xl" />
-            </span>
-          </Tooltip>
-
-          <Tooltip color="danger" content="Delete Episode">
-            <span className="text-lg text-danger cursor-pointer active:opacity-50">
-              <MdDeleteForever className="text-2xl" />
-            </span>
-          </Tooltip>
+          <Link
+            href={`/studio/content/tvseries/${SeriesID}/${SeasonID}/${video_id}`}
+          >
+            <Tooltip content="Edit Episode">
+              <span className="text-lg text-yellow-600 cursor-pointer active:opacity-50">
+                <CiEdit className="text-2xl" />
+              </span>
+            </Tooltip>
+          </Link>
+          <Link
+            href={`/studio/content/tvseries/${SeriesID}/${SeasonID}/delete/${video_id}`}
+          >
+            <Tooltip color="danger" content="Delete Episode">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <MdDeleteForever className="text-2xl" />
+              </span>
+            </Tooltip>
+          </Link>
         </div>
       </div>
     </>
   )
 }
-const ListEpisodes = ({ Season }) => {
+const ListEpisodes = ({ Season, SeasonID, SeriesID }) => {
   const [Episode, setEpisode] = useState([])
   useEffect(() => {
     async function getData(id) {
@@ -367,6 +379,8 @@ const ListEpisodes = ({ Season }) => {
               key={index}
               Data={episode}
               Season={Season.season_number}
+              SeasonID={SeasonID}
+              SeriesID={SeriesID}
             />
           ))
         ) : (
