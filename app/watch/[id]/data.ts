@@ -27,5 +27,11 @@ export async function getTitle(id) {
 
   // Update last_watch using ON UPDATE CURRENT_TIMESTAMP()
 
+  // Increment video views by 1
+  await Videos.update(
+    { views: sequelize.literal("views + 1") },
+    { where: { video_id: id } }
+  );
+
   return data;
 }

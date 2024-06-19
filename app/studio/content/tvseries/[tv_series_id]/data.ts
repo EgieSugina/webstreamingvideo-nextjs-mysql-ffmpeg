@@ -46,7 +46,9 @@ export async function getSeasonById(SeasonId) {
   return _season
 }
 export async function contentVisibelity(id, visibelity) {
-  const _video = await Videos.findByPk(id)
+  console.log(id, visibelity);
+  
+  const _video = await Video.findByPk(id)
 
   await _video.update({ public: visibelity })
 }

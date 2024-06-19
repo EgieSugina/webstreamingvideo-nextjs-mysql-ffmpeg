@@ -21,20 +21,29 @@ export async function getSeasonBySeries(id) {
   });
   return season;
 }
-
 export async function getEpisodesBySeason(seasonId) {
   const episodes = await Episodes.findAll({
     where: {
       season_id: seasonId,
     },
+    include: [
+      {
+        model: Video,
+        where: {
+          public: true,
+        },
+      },
+    ],
     raw: true,
   });
   return episodes;
 }
-
 export async function getVideoById(videoId) {
   const video = await Video.findByPk(videoId, {
     raw: true,
+    where: {
+      public: 1,
+    },
   });
   return video;
 }
@@ -54,6 +63,7 @@ export async function getTVSeriesWithSeasonsAndEpisodes(id) {
                 required: true,
                 model: Video,
                 where: {
+                  public: true,
                   video_id: id,
                 },
               },

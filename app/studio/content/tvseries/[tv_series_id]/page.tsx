@@ -10,7 +10,8 @@ import {
   updateSeason,
   deleteSeason,
 } from './data'
-import { contentVisibelityTVSeries, contentVisibelity } from '../../data'
+import { contentVisibelityTVSeries } from '../../data'
+import {  contentVisibelity } from './data'
 
 import { Tooltip, Button } from '@nextui-org/react'
 import React, { useState, useRef, useEffect } from 'react'
@@ -296,7 +297,7 @@ const CardEpisodes = ({ Data, Season, SeasonID, SeriesID }) => {
   useEffect(() => {
     async function getData(id) {
       const data_episode = await getVideoById(id)
-
+      setPublic(data_episode.public)
       setVideo(data_episode)
     }
 
